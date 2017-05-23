@@ -1,4 +1,4 @@
-package padrao;
+package principal;
 
 public class Main {
 
