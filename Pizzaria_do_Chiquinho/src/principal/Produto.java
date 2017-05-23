@@ -1,5 +1,11 @@
 package principal;
 
+/**Classe para objetos do tipo Produtos, onde serão contidos, valores e métodos para o mesmo.
+ * @author 
+ * @version 1.0
+ * @since Release 0
+ */
+
 public class Produto {
 	
 	private int quantidade;

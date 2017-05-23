@@ -1,5 +1,11 @@
 package principal;
 
+/**Classe para objetos do tipo Funcionários, onde serão contidos, valores e métodos para o mesmo.
+ * @author 
+ * @version 1.0
+ * @since Release 0
+ */
+
 public class Funcionarios {
 	private int codigo;
 	private String nome;
@@ -12,13 +18,14 @@ public class Funcionarios {
 	private String login;
 	
 	
+	
+	
 	public String getTipo() {
 		return tipo;
 	}
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
 	
 	public int getCodigo() {
 		return codigo;
