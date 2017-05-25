@@ -9,10 +9,10 @@ package principal;
 public class Pedido {
 	
 	private Cliente pessoa;
-	private string obs;
+	private String obs;
 	private String status;
 	private float total;
-	private Item_produto[] produtos;
+	private Item_pedido[] produtos;
 	
 	public String getObs() {
 		return obs;

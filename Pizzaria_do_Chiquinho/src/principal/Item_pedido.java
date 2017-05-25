@@ -10,7 +10,7 @@ public class Item_pedido {
 	
 	private Produto prod;
 	
-	public Item_produto getProd() {
+	public Produto getProd() {
 		return prod;
 	}
 	public void setProd(Produto prod) {
