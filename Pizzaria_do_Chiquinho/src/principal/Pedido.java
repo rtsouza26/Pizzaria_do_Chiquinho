@@ -23,7 +23,7 @@ public class Pedido {
 	public float getTotal() {
 		return total;
 	}
-	public void setTotal(int valor) {
+	public void setTotal(float valor) {
 		this.total = valor;
 	}
 	public String getStatus() {
