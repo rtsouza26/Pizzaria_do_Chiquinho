@@ -1,5 +1,7 @@
 package principal;
 
+
+
 /**Classe para objetos do tipo Funcionários, onde serão contidos, valores e métodos para o mesmo.
  * @author 
  * @version 1.0
