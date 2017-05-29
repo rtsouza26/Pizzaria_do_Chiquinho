@@ -2,6 +2,7 @@ package principal;
 
 import java.util.Scanner;
 import conexaoBD.FuncionariosBD;
+import view.TLogin;
 
 /**Pizzaria do Chiquinho
  * 
@@ -19,7 +20,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		String login;
+	/*	String login;
 		String senha;
 		Scanner entrada = new Scanner(System.in);
 		
@@ -36,11 +37,9 @@ public class Main {
 			System.out.println("Usuário correto");
 		}else{
 			System.out.println("Login ou Senha errados");
-		}
+		}*/
 		
-		
-		
-		
+		new TLogin().setVisible(true);	
 
 	}
 
