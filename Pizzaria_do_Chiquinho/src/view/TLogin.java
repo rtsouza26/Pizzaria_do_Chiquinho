@@ -1,7 +1,8 @@
 package view;
 
 import javax.swing.JOptionPane;
-import conexaoBD.FuncionariosBD;
+import conexaoBD.LoginBD;
+import principal.Funcionarios;
 
 public class TLogin extends javax.swing.JFrame  {
 	
@@ -109,13 +110,21 @@ public class TLogin extends javax.swing.JFrame  {
 	
 	
 	private void jBokActionPerformed(java.awt.event.ActionEvent evt) {                                     
-        FuncionariosBD funcbd= new FuncionariosBD();
+        LoginBD funcbd= new LoginBD();
+        Funcionarios funcheck = null;
        
 		
-		if(funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword()))){
+		if((funcheck=funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword())))!=null){
          // new Principal().setVisible(true);
 			this.dispose();
-			JOptionPane.showMessageDialog(null,"Login efetivado com sucesso");
+			if(funcheck.getTipo().equals("Administrador")){
+				JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
+			}if(funcheck.getTipo().equals("Atendente")){
+				JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
+			}if (funcheck.getTipo().equals("Cozinha")){
+				JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
+			}
+			
 			
 		}else{
 			JOptionPane.showMessageDialog(null,"Login ou Senha errados");

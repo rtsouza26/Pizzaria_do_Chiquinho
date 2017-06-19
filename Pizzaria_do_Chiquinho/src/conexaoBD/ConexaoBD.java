@@ -12,9 +12,9 @@ import java.util.logging.*;
 public class ConexaoBD {
 	
 	static final String driver = "com.mysql.jdbc.Driver";
-	static final String user = "sql10178383";
-	static final String pass = "Zp8QulGVDB";
-	static final String url = "jdbc:mysql://sql10.freemysqlhosting.net:3306/sql10178383";
+	static final String user = "root";
+	static final String pass = "rtsouza26";
+	static final String url = "jdbc:mysql://localhost:3306/pizzaria";
 	
 	static final String nao  = "Não conectou";
 	static final String sim = "Conectou";
@@ -55,6 +55,19 @@ public class ConexaoBD {
         }
 
     }
+	public static void closeConnection(Connection con,ResultSet rs){
+		closeConnection(con);
+		
+		if(rs!=null){
+	           try {
+	               rs.close();
+	               
+	           } catch (SQLException ex) {
+	               Logger.getLogger(ConexaoBD.class.getName()).log(Level.SEVERE, null, ex);
+	           }
+	       }
+		
+	}
 	public static void closeConnection(Connection con, PreparedStatement stmp){
         
         closeConnection(con);

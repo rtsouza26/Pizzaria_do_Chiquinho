@@ -1,7 +1,10 @@
 package principal;
 
+
 import java.util.Scanner;
+
 import conexaoBD.FuncionariosBD;
+import conexaoBD.LoginBD;
 import view.TLogin;
 
 /**Pizzaria do Chiquinho
@@ -20,7 +23,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-	/*	String login;
+		/*String login;
 		String senha;
 		Scanner entrada = new Scanner(System.in);
 		
@@ -31,8 +34,9 @@ public class Main {
 		System.out.println("Senha :");
 		senha = entrada.next();
 		
-		FuncionariosBD funcBD = new FuncionariosBD();
-		if(funcBD.checkLogin(login, senha)){
+		LoginBD funcBD = new LoginBD();
+		Funcionarios func = null;
+		if((func = funcBD.checkLogin(login, senha))!=null){
 			
 			System.out.println("Usuário correto");
 		}else{

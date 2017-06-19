@@ -20,7 +20,19 @@ public class Funcionarios {
 	private String login;
 	
 	
-	
+	public Funcionarios(){
+		
+	}
+	public Funcionarios( 
+			int cod,String nome,String endereco,int cpf,String telefone,String tipo,String login){
+		this.codigo=cod;
+		this.nome=nome;
+		this.endereco=endereco;
+		this.cpf=cpf;
+		this.telefone=telefone;
+		this.tipo=tipo;
+		this.login=login;
+	}
 	
 	public String getTipo() {
 		return tipo;
