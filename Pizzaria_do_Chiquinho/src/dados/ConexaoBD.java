@@ -1,4 +1,4 @@
-package conexaoBD;
+package dados;
 
 /**Classe para a conexão de todas as outras classes com o banco de dados, onde serão contidos, valores e métodos para o mesmo.
  * @author 

@@ -8,11 +8,12 @@ package principal;
 
 public class Pedido {
 	
-	private Cliente pessoa;
+	private Cliente cliente;
+	private Funcionarios func;
 	private String obs;
 	private String status;
 	private float total;
-	private Item_pedido[] produtos;
+	private Item_pedido listadeprodutos;
 	
 	public String getObs() {
 		return obs;
@@ -33,10 +34,10 @@ public class Pedido {
 		this.status = situacao;
 	}
 	public Cliente getCliente(){
-		return pessoa;
+		return cliente;
 	}
-	public void setPessoa(Cliente pessoa){
-		this.pessoa=pessoa;
+	public void setCliente(Cliente cliente){
+		this.cliente=cliente;
 	}
 	
 }

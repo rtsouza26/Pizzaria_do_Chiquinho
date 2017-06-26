@@ -3,8 +3,8 @@ package principal;
 
 import java.util.Scanner;
 
-import conexaoBD.FuncionariosBD;
-import conexaoBD.LoginBD;
+import dados.FuncionariosBD;
+import dados.LoginBD;
 import view.TLogin;
 
 /**Pizzaria do Chiquinho

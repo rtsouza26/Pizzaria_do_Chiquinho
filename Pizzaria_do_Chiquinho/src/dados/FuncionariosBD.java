@@ -1,4 +1,4 @@
-package conexaoBD;
+package dados;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

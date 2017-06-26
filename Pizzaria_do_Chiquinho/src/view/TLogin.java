@@ -1,7 +1,8 @@
 package view;
 
 import javax.swing.JOptionPane;
-import conexaoBD.LoginBD;
+
+import dados.LoginBD;
 import principal.Funcionarios;
 
 public class TLogin extends javax.swing.JFrame  {
