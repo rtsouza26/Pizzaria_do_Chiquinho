@@ -8,9 +8,25 @@ package principal;
 
 public class Produto {
 	
+	private int codigo;
+	private String nome;
 	private int quantidade;
 	private double preco;
-	private String nome;
+	
+	public Produto(){
+		
+	}
+	
+	public Produto( 
+			
+			int cod,String nome,int quantidade,double preco){
+		this.codigo=cod;
+		this.nome=nome;
+		this.quantidade=quantidade;
+		this.preco=preco;
+
+	}
+
 	
 	public String getNome() {
 		return nome;
@@ -30,6 +46,11 @@ public class Produto {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-	
+	public int getCodigo(){
+		return this.codigo;
+	}
+	public void setCodigo(int codigo){
+		this.codigo = codigo;
+	}
 
 }

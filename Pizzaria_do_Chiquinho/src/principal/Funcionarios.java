@@ -1,36 +1,46 @@
 package principal;
 
-/**Classe para objetos do tipo Cliente, onde serão contidos, valores e métodos para o mesmo.
- * @author
+
+
+/**Classe para objetos do tipo Funcionários, onde serão contidos, valores e métodos para o mesmo.
+ * @author 
  * @version 1.0
  * @since Release 0
  */
 
-public class Cliente {
-	
+public class Funcionarios {
 	private int codigo;
 	private String nome;
 	private String endereco;
-	private String cep;
 	private int cpf;
 	private String telefone;
+	private String tipo;
 	
-	public Cliente(){
+	private String senha;
+	private String login;
+	
+	
+	public Funcionarios(){
 		
 	}
-	
-	public Cliente( 
+	public Funcionarios( 
 			
-			int cod,String nome,String endereco,int cpf,String telefone){
+			int cod,String nome,String endereco,int cpf,String telefone,String tipo,String login){
 		this.codigo=cod;
 		this.nome=nome;
 		this.endereco=endereco;
 		this.cpf=cpf;
 		this.telefone=telefone;
-
+		this.tipo=tipo;
+		this.login=login;
 	}
 	
-	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	
 	public int getCodigo() {
 		return codigo;
@@ -50,12 +60,6 @@ public class Cliente {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public String getCep() {
-		return cep;
-	}
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
 	public int getCpf() {
 		return cpf;
 	}
@@ -68,7 +72,18 @@ public class Cliente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
 	
 	
 
