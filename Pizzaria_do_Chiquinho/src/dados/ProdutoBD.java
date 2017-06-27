@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import principal.Produto;
 
-/**Classe para a conexão do classe funcionários com o banco de dados, onde serão contidos, valores e métodos para o mesmo.
+/**Classe para a conexão do classe produto com o banco de dados, onde serão contidos, valores e métodos para o mesmo.
  * @author 
  * @version 1.0
  * @since Release 0
@@ -97,7 +97,7 @@ public class ProdutoBD {
 				prod.setCodigo(rs.getInt("cod"));
 				prod.setQuantidade(rs.getInt("quantidade"));
 				prod.setPreco(rs.getDouble("preco"));
-				prod.setString(rs.getString("nome"));
+				prod.setNome(rs.getString("nome"));
 				
 					
 			}

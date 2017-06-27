@@ -142,7 +142,7 @@ public class ClienteBD {
 				clientes = new ArrayList<Cliente>();
 				while(rs.next()){
 					clientes.add(new Cliente(
-						rs.getString("cod"),
+						rs.getInt("cod"),
 						rs.getString("nome"),
 						rs.getString("endereco"),
 						rs.getInt("cpf"),
