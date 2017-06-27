@@ -1,4 +1,4 @@
-package principal;
+package negocio;
 
 
 public class Fachada {

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
-import principal.Funcionarios;
+import principal.Funcionario;
 
 /**Classe para a conexão do classe funcionários com o banco de dados, onde serão contidos, valores e métodos para o mesmo.
  * @author 
@@ -15,7 +15,7 @@ import principal.Funcionarios;
  * @since Release 0
  */
 
-public class FuncionariosBD {
+public class FuncionariosBD{
 
 	private PreparedStatement inserir = null;
 	private PreparedStatement remover = null;
@@ -39,7 +39,7 @@ public class FuncionariosBD {
 			listar = con.prepareStatement("SELECT * FROM Funcionarios");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("problemas com o drive de Bnco de dados");
+			System.out.println("problemas com o drive de Banco de dados");
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -72,7 +72,7 @@ public class FuncionariosBD {
 			
 		return inserido;
 	}
-	public boolean ExisteBD(String login){
+	public boolean existeBD(String login){
 		boolean existe = false;
 			try {
 				buscarlogin.setString(1, login);
@@ -91,13 +91,13 @@ public class FuncionariosBD {
 		
 	}
 	
-	public Funcionarios BuscarFuncBD(String nome){
-		Funcionarios func = null;
+	public Funcionario BuscarFuncBD(String nome){
+		Funcionario func = null;
 		try {
 			buscar.setString(1, nome);
 			
 			if((rs = buscar.executeQuery())!=null){;
-				func = new Funcionarios();
+				func = new Funcionario();
 				func.setCodigo(rs.getInt("cod"));
 				func.setNome(rs.getString("nome"));
 				func.setEndereco(rs.getString("endereco"));
@@ -125,7 +125,7 @@ public class FuncionariosBD {
 	
 	public boolean removerFuncBD( String nome){
 		boolean removido = false;
-		Funcionarios func = new Funcionarios();
+		Funcionario func = new Funcionario();
 		
 		func = this.BuscarFuncBD(nome);
 		try {
@@ -141,14 +141,14 @@ public class FuncionariosBD {
 		return removido;
 	}
 	
-	public List<Funcionarios> listarFuncBD(){
-		List<Funcionarios> funcionarios = null;
+	public List<Funcionario> listarFuncBD(){
+		List<Funcionario> funcionarios = null;
 		
 		try {
 			if((rs = listar.executeQuery())!=null){
-				funcionarios = new ArrayList<Funcionarios>();
+				funcionarios = new ArrayList<Funcionario>();
 				while(rs.next()){
-					funcionarios.add(new Funcionarios(
+					funcionarios.add(new Funcionario(
 							rs.getInt("cod"),
 							rs.getString("nome"),
 							rs.getString("endereco"),

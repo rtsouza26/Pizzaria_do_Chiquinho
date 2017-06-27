@@ -3,7 +3,7 @@ package view;
 import javax.swing.JOptionPane;
 
 import dados.LoginBD;
-import principal.Funcionarios;
+import principal.Funcionario;
 
 public class TLogin extends javax.swing.JFrame  {
 	
@@ -112,7 +112,7 @@ public class TLogin extends javax.swing.JFrame  {
 	
 	private void jBokActionPerformed(java.awt.event.ActionEvent evt) {                                     
         LoginBD funcbd= new LoginBD();
-        Funcionarios funcheck = null;
+        Funcionario funcheck = null;
        
 		
 		if((funcheck=funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword())))!=null){

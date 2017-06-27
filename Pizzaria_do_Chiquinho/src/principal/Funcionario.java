@@ -8,7 +8,7 @@ package principal;
  * @since Release 0
  */
 
-public class Funcionarios {
+public class Funcionario {
 	private int codigo;
 	private String nome;
 	private String endereco;
@@ -20,10 +20,10 @@ public class Funcionarios {
 	private String login;
 	
 	
-	public Funcionarios(){
+	public Funcionario(){
 		
 	}
-	public Funcionarios( 
+	public Funcionario( 
 			int cod,String nome,String endereco,int cpf,String telefone,String tipo,String login){
 		this.codigo=cod;
 		this.nome=nome;

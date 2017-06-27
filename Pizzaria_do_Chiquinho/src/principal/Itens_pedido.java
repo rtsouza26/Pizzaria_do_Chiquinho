@@ -9,11 +9,12 @@ import java.util.List;
  * @since Release 0
  */
 
-public class Item_pedido{
+public class Itens_pedido{
+	private static 
 	
 	private List <Produto> itensPedido;
 	
-	public Item_pedido(){
+	public Itens_pedido(){
 		itensPedido =  new ArrayList<Produto>();
 	}
 	

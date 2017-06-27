@@ -8,12 +8,52 @@ package principal;
 
 public class Pedido {
 	
+	private int codigo;
 	private Cliente cliente;
-	private Funcionarios func;
+	private Funcionario func;
 	private String obs;
 	private String status;
 	private float total;
-	private Item_pedido listadeprodutos;
+	private Itens_pedido listadeprodutos;
+	
+	public Pedido(){
+		
+	}
+	
+	
+
+	public Pedido(int codigo, Cliente cliente, Funcionario func, String obs, String status, float total, Itens_pedido listadeprodutos) {
+		// TODO Auto-generated constructor stub
+		
+		this.codigo=codigo;
+		this.cliente = cliente;
+		this.func = func;
+		this.obs = obs;
+		this.status = status;
+		this.total = total;
+		this.listadeprodutos = listadeprodutos;
+	}
+
+
+
+	public int getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+	public Funcionario getFunc() {
+		return func;
+	}
+	public void setFunc(Funcionario func) {
+		this.func = func;
+	}
+	public Itens_pedido getListadeprodutos() {
+		return listadeprodutos;
+	}
+	public void setListadeprodutos(Itens_pedido listadeprodutos) {
+		this.listadeprodutos = listadeprodutos;
+	}
 	
 	public String getObs() {
 		return obs;
