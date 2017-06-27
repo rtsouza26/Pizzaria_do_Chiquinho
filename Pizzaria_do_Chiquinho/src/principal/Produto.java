@@ -8,7 +8,7 @@ package principal;
 
 public class Produto {
 	
-	private int codigo;
+	private int codi;
 	private int quantidade;
 	private double preco;
 	private String nome;
