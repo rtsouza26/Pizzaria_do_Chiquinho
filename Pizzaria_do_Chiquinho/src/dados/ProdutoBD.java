@@ -39,7 +39,7 @@ public class ProdutoBD {
 			buscarnome = con.prepareStatement("SELECT * FROM produto WHERE nome = ?");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("problemas com o drive de Bnco de dados");
+			System.out.println("problemas com o drive de Banco de dados");
 			e.printStackTrace();
 			System.exit(1);
 		}
