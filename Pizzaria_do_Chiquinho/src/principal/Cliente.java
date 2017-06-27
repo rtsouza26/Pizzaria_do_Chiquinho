@@ -8,13 +8,36 @@ package principal;
 
 public class Cliente {
 	
+	private int codigo;
 	private String nome;
 	private String endereco;
 	private String cep;
 	private int cpf;
 	private String telefone;
 	
+	public Cliente(){
+		
+	}
 	
+	public Cliente( 
+			
+			int cod,String nome,String endereco,int cpf,String telefone){
+		this.codigo=cod;
+		this.nome=nome;
+		this.endereco=endereco;
+		this.cpf=cpf;
+		this.telefone=telefone;
+
+	}
+	
+	
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
 	public String getNome() {
 		return nome;
 	}

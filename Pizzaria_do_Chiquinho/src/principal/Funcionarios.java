@@ -24,6 +24,7 @@ public class Funcionarios {
 		
 	}
 	public Funcionarios( 
+			
 			int cod,String nome,String endereco,int cpf,String telefone,String tipo,String login){
 		this.codigo=cod;
 		this.nome=nome;
