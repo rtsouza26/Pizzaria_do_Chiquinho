@@ -12,7 +12,7 @@ public class Cliente {
 	private String nome;
 	private String endereco;
 	private String cep;
-	private int cpf;
+	private String cpf;
 	private String telefone;
 	
 	public Cliente(){
@@ -21,7 +21,7 @@ public class Cliente {
 	
 	public Cliente( 
 			
-			int cod,String nome,String endereco,int cpf,String telefone){
+			int cod,String nome,String endereco,String cpf,String telefone){
 		this.codigo=cod;
 		this.nome=nome;
 		this.endereco=endereco;
@@ -56,10 +56,10 @@ public class Cliente {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	public String getTelefone() {

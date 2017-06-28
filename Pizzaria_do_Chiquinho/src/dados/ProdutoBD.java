@@ -22,6 +22,7 @@ public class ProdutoBD {
 	private PreparedStatement listar = null;
 	private PreparedStatement buscar = null;
 	private PreparedStatement buscarnome = null;
+	private PreparedStatement buscarcod = null;
 	private ResultSet rs = null;
 	private Connection con = null;
 	
@@ -36,7 +37,8 @@ public class ProdutoBD {
 			remover = con.prepareStatement("DELETE FROM produto WHERE nome = ?");
 			buscar = con.prepareStatement("SELECT * FROM produto WHERE nome = ?");
 			listar = con.prepareStatement("SELECT * FROM produto");
-			buscarnome = con.prepareStatement("SELECT * FROM produto WHERE nome = ?");
+			buscarnome = con.prepareStatement("SELECT * FROM produto WHERE nome= ?");
+			buscarcod = con.prepareStatement("SELECT * FROM produto WHERE cod= ?");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("problemas com o drive de Banco de dados");
@@ -68,7 +70,7 @@ public class ProdutoBD {
 			
 		return inserido;
 	}
-	public boolean ExisteBD(String nome){
+	public boolean existeBD(String nome){
 		boolean existe = false;
 			try {
 				buscarnome.setString(1,nome);
@@ -87,10 +89,37 @@ public class ProdutoBD {
 		
 	}
 	
-	public Produto BuscarProdBD(String nome){
+	public Produto buscarProdBD(String nome){
 		Produto prod = null;
 		try {
 			buscar.setString(1, nome);
+			
+			if((rs = buscar.executeQuery())!=null){;
+				prod = new Produto();
+				prod.setCodigo(rs.getInt("cod"));
+				prod.setQuantidade(rs.getInt("quantidade"));
+				prod.setPreco(rs.getDouble("preco"));
+				prod.setNome(rs.getString("nome"));
+				
+					
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			
+			e.printStackTrace();
+		}
+		finally
+		{
+			ConexaoBD.closeConnection(con,rs);
+		}
+		
+		return prod;
+	}
+	public Produto buscarProdBD(int cod){
+		Produto prod = null;
+		try {
+			buscarcod.setInt(1, cod);
 			
 			if((rs = buscar.executeQuery())!=null){;
 				prod = new Produto();
@@ -120,7 +149,7 @@ public class ProdutoBD {
 		boolean removido = false;
 		Produto prod = new Produto();
 		
-		prod = this.BuscarProdBD(nome);
+		prod = this.buscarProdBD(nome);
 		try {
 			remover.setString(1, prod.getNome());
 			removido = remover.execute();

@@ -15,7 +15,7 @@ import principal.Funcionario;
  * @since Release 0
  */
 
-public class FuncionariosBD{
+public class FuncionarioBD{
 
 	private PreparedStatement inserir = null;
 	private PreparedStatement remover = null;
@@ -26,7 +26,7 @@ public class FuncionariosBD{
 	private Connection con = null;
 	
 	
-	public FuncionariosBD(){
+	public FuncionarioBD(){
 		
 		con = ConexaoBD.getConnection();
 		
@@ -47,13 +47,13 @@ public class FuncionariosBD{
 	
 	
 	public boolean inserirFuncBD(
-			String nome, String endereco, int cpf, String telefone, String tipo, String login, String senha){
+			String nome, String endereco, String cpf, String telefone, String tipo, String login, String senha){
 		
 		boolean inserido = false;
 		try {
 			inserir.setString(1, nome);
 			inserir.setString(2, endereco);
-			inserir.setInt(3,cpf);
+			inserir.setString(3,cpf);
 			inserir.setString(4, telefone);
 			inserir.setString(5,tipo);
 			inserir.setString(6,login);
@@ -91,7 +91,7 @@ public class FuncionariosBD{
 		
 	}
 	
-	public Funcionario BuscarFuncBD(String nome){
+	public Funcionario buscarFuncBD(String nome){
 		Funcionario func = null;
 		try {
 			buscar.setString(1, nome);
@@ -101,7 +101,7 @@ public class FuncionariosBD{
 				func.setCodigo(rs.getInt("cod"));
 				func.setNome(rs.getString("nome"));
 				func.setEndereco(rs.getString("endereco"));
-				func.setCpf(rs.getInt("cpf"));
+				func.setCpf(rs.getString("cpf"));
 				func.setTelefone(rs.getString("telefone"));
 				func.setTipo(rs.getString("tipo"));
 				func.setLogin("*****");
@@ -127,7 +127,7 @@ public class FuncionariosBD{
 		boolean removido = false;
 		Funcionario func = new Funcionario();
 		
-		func = this.BuscarFuncBD(nome);
+		func = this.buscarFuncBD(nome);
 		try {
 			remover.setInt(1, func.getCodigo());
 			removido = remover.execute();
@@ -152,7 +152,7 @@ public class FuncionariosBD{
 							rs.getInt("cod"),
 							rs.getString("nome"),
 							rs.getString("endereco"),
-							rs.getInt("cpf"),
+							rs.getString("cpf"),
 							rs.getString("telefone"),
 							rs.getString("tipo"),
 							rs.getString("login")));

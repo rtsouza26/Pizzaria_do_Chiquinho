@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import principal.Cliente;
 import principal.Funcionario;
+import principal.Itens_pedido;
 import principal.Pedido;
 
 public class PedidoBD {
@@ -19,8 +21,9 @@ public class PedidoBD {
 	private PreparedStatement buscarcod = null;
 	private ResultSet rs = null;
 	private Connection con = null;
-	private ClienteBD clienteBD = new ClienteBD();
-	private FuncionariosBD funcBD = new FuncionariosBD();
+	private ClienteBD clienteBD;
+	private FuncionarioBD funcBD;
+	private Itens_pedidoBD itens ;
 	
 	
 	public PedidoBD(){
@@ -28,8 +31,8 @@ public class PedidoBD {
 		con = ConexaoBD.getConnection();
 		
 		try {
-			inserir = con.prepareStatement("INSERT INTO Pedido(cliente,funcionario,obs,status) "
-					+ "VALUE (?,?,?,?,?,?,?)");
+			inserir = con.prepareStatement("INSERT INTO Pedido(cod,cpf_cliente,cpf_funcionario,obs,status,total) "
+					+ "VALUE (?,?,?,?,?,?)");
 			remover = con.prepareStatement("DELETE FROM Pedido WHERE cod = ?");
 			buscar = con.prepareStatement("SELECT * FROM Pedido WHERE cod = ?");
 			buscarcod = con.prepareStatement("SELECT * FROM Pedido WHERE cod = ?");
@@ -43,14 +46,37 @@ public class PedidoBD {
 	}
 	
 	public boolean inserirPedidoBD(Pedido pedido){
+		itens = new Itens_pedidoBD();
 		
-		return true;
+		boolean inserido = false;
+		try {
+			inserir.setInt(1, pedido.getCodigo());
+			inserir.setString(1,pedido.getCliente().getCpf());
+			inserir.setString(2, pedido.getFunc().getCpf());
+			inserir.setString(3,pedido.getObs());
+			inserir.setString(4, pedido.getStatus());
+			inserir.setDouble(5, pedido.getTotal());
+			
+			inserido = inserir.execute();
+			if(!itens.inserirProdutos(pedido.getCodigo(), pedido.getListadeprodutos())){
+				inserido = false;
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return inserido;
+		
 		
 	}
-	public boolean existeBD(int cod){
+	public boolean existeBD(int codigo){
 		boolean existe = false;
 		try {
-			buscarcod.setInt(1, cod);
+			buscarcod.setInt(1, codigo);
 			if((rs = buscarcod.executeQuery())!=null){
 				existe = true;
 			}
@@ -66,8 +92,11 @@ public class PedidoBD {
 		
 		
 	}
-	public Pedido BuscarPedidoBD(int cod){
+	public Pedido buscarPedidoBD(int cod){
 		Pedido pedido = null;
+		clienteBD = new ClienteBD();
+		funcBD = new FuncionarioBD();
+		itens = new Itens_pedidoBD();
 		
 		try {
 			buscar.setInt(1, cod);
@@ -75,13 +104,13 @@ public class PedidoBD {
 			if((rs = buscar.executeQuery())!=null){;
 				pedido = new Pedido();
 				pedido.setCodigo(rs.getInt("cod"));
-				pedido.setCliente(clienteBD.buscarClienBD(rs.getInt("cpf_cliente")));;
-				pedido.setFunc(funcBD.BuscarFuncBD(rs.getString("nome_func")));
+				pedido.setCliente(clienteBD.buscarClienBD(rs.getString("cpf_cliente")));;
+				pedido.setFunc(funcBD.buscarFuncBD(rs.getString("nome_func")));
 				pedido.setStatus(rs.getString("status"));
 				pedido.setObs(rs.getString("obs"));
 				pedido.setTotal(rs.getFloat("total"));
 				
-					
+				pedido.setListadeprodutos(itens.buscarProdutos(pedido.getCodigo()));
 			}
 			
 		} catch (SQLException e) {
@@ -100,10 +129,12 @@ public class PedidoBD {
 	public boolean removerPedidoBD( int cod){
 		boolean removido = false;
 		Pedido pedido = new Pedido();
+		itens = new Itens_pedidoBD();
 		
-		pedido = this.BuscarPedidoBD(cod);
+		pedido = this.buscarPedidoBD(cod);
 		try {
 			remover.setInt(1, pedido.getCodigo());
+			itens.removerProdutos(pedido.getCodigo());
 			removido = remover.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -117,6 +148,10 @@ public class PedidoBD {
 	
 	public List<Pedido> listarPedidoBD(){
 		List<Pedido> pedidos = null;
+		clienteBD = new ClienteBD();
+		funcBD = new FuncionarioBD();
+		itens = new Itens_pedidoBD();
+		
 		
 		try {
 			if((rs = listar.executeQuery())!=null){
@@ -124,12 +159,14 @@ public class PedidoBD {
 				while(rs.next()){
 					pedidos.add(new Pedido(
 							rs.getInt("cod"),
-							rs.getString("nome"),
-							rs.getString("endereco"),
-							rs.getInt("cpf"),
-							rs.getString("telefone"),
-							rs.getString("tipo"),
-							rs.getString("login")));
+							clienteBD.buscarClienBD(rs.getString("cpf_cliente")),
+							funcBD.buscarFuncBD(rs.getString("cpf_funcionario")),
+							rs.getString("obs"),
+							rs.getString("status"),
+							rs.getDouble("total_pedido"),
+							itens.buscarProdutos(rs.getInt("cod"))));
+							
+							
 				}
 			}
 		} catch (SQLException e) {
@@ -137,7 +174,7 @@ public class PedidoBD {
 			e.printStackTrace();
 		}
 		
-		return funcionarios;
+		return pedidos;
 	}
 }
 	

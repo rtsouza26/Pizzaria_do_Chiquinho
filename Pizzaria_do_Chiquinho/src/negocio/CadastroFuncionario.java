@@ -1,15 +1,15 @@
 package negocio;
 
-import dados.FuncionariosBD;
+import dados.FuncionarioBD;
 import principal.Funcionario;
 
 public class CadastroFuncionario {
 	
-	private FuncionariosBD funcBD;
+	private FuncionarioBD funcBD;
 	
 	
 	public CadastroFuncionario(){
-		funcBD = new FuncionariosBD();
+		funcBD = new FuncionarioBD();
 	}
 	
 	public void inserirFunc(Funcionario func){

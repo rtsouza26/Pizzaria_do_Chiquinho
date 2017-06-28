@@ -12,7 +12,7 @@ public class Funcionario {
 	private int codigo;
 	private String nome;
 	private String endereco;
-	private int cpf;
+	private String cpf;
 	private String telefone;
 	private String tipo;
 	
@@ -24,7 +24,7 @@ public class Funcionario {
 		
 	}
 	public Funcionario( 
-			int cod,String nome,String endereco,int cpf,String telefone,String tipo,String login){
+			int cod,String nome,String endereco,String cpf,String telefone,String tipo,String login){
 		this.codigo=cod;
 		this.nome=nome;
 		this.endereco=endereco;
@@ -59,10 +59,10 @@ public class Funcionario {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public int getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(int cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	public String getTelefone() {

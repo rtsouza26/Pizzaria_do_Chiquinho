@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class Itens_pedido{
-	private static 
+	private static double total;
 	
 	private List <Produto> itensPedido;
 	
@@ -39,5 +39,11 @@ public class Itens_pedido{
 				 itensPedido.remove(i);
 			}
 		}
+	}
+	public int tamanho(){
+		return itensPedido.size();
+	}
+	public Produto getProduto(int indice){
+		return itensPedido.get(indice);
 	}
 }

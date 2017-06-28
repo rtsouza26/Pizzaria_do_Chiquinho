@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ArrayList;
 
-import principal.Item_pedido;
+import principal.Itens_pedido;
+import principal.Produto;
 
 
 public class Itens_pedidoBD{
@@ -19,19 +19,22 @@ public class Itens_pedidoBD{
 	private PreparedStatement buscarprod = null;
 	private ResultSet rs = null;
 	private Connection con = null;
+	private ProdutoBD prod = null;
+	private Itens_pedido itens = new Itens_pedido();
 	
 	
 	public Itens_pedidoBD(){
 		
+	    
 		con = ConexaoBD.getConnection();
 		
 		try {
-			inserir = con.prepareStatement("INSERT INTO item_pedido(id,nome,preco,quantidade) "
+			inserir = con.prepareStatement("INSERT INTO itens_pedido(cod_pedido,cod_produto,quantidade) "
 					+ "VALUE (?,?,?,?)");
-			remover = con.prepareStatement("DELETE FROM item_pedido WHERE nome = ?");
-			buscar = con.prepareStatement("SELECT * FROM item_pedido WHERE nome = ?");
+			remover = con.prepareStatement("DELETE FROM item_pedido WHERE cod_pedido = ?");
+			buscar = con.prepareStatement("SELECT * FROM item_pedido WHERE cod_pedido = ?");
 			listar = con.prepareStatement("SELECT * FROM item_pedido");
-			buscarprod = con.prepareStatement("SELECT * FROM item_pedido WHERE nome = ?");
+			buscarprod = con.prepareStatement("SELECT * FROM item_pedido WHERE cod_pedido = ? AND cod_produto = ?");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("problemas com o drive de Banco de dados");
@@ -39,26 +42,56 @@ public class Itens_pedidoBD{
 			System.exit(1);
 		}
 	}
-	public void cadastrarItem(Produto prod){
+	public boolean inserirProdutos(int codigo, Itens_pedido listadeprodutos){
 		boolean inserido = false;
-		try {
-			inserir.setString(1, prod.getId);
-			inserir.setDouble(2, preco);
-			inserir.setInt(3,quantidade);
-		
-			
-			inserido = inserir.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			ConexaoBD.closeConnection(con, inserir);
-			e.printStackTrace();
-			
+		for(int i = 0;i< listadeprodutos.tamanho();i++){
+			try {
+				inserir.setInt(1, codigo);
+				inserir.setInt(2, listadeprodutos.getProduto(i).getCodigo());
+				inserir.setInt(3, listadeprodutos.getProduto(i).getQuantidade());
+				inserido = true;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			};
 		}
-		finally{
-			ConexaoBD.closeConnection(con);
-		}
-			
+	
 		return inserido;
 	}
+	public Itens_pedido buscarProdutos(int codigo){
+		prod = null;
+		itens = new Itens_pedido();
+		try {
+			buscar.setInt(1, codigo);
+			rs = buscar.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			prod = new ProdutoBD();
+			while(rs.next()){
+				itens.addProduto(new Produto(rs.getInt("cod_produto"),prod.buscarProdBD(rs.getInt("cod_produto")).getNome(),
+						rs.getInt("quantidade"),prod.buscarProdBD(rs.getInt("cod_produto")).getPreco()));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return itens;
+	
+	}
+	public void removerProdutos(int codigo){
+		
+		
+		
+	}
+	
+	
 
 }

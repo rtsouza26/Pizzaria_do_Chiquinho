@@ -47,13 +47,13 @@ public class ClienteBD {
 	}
 	
 	public boolean inserirClienBD(
-			String nome, String endereco, int cpf, String telefone){
+			String nome, String endereco, String cpf, String telefone){
 		
 		boolean inserido = false;
 		try {
 			inserir.setString(1, nome);
 			inserir.setString(2, endereco);
-			inserir.setInt(3,cpf);
+			inserir.setString(3,cpf);
 			inserir.setString(4, telefone);
 			
 			inserido = inserir.execute();
@@ -92,14 +92,14 @@ public class ClienteBD {
 	public Cliente buscarClienBD(String cpf){
 		Cliente clien = null;
 		try {
-			buscarcpf.setString(3, cpf);
+			buscarcpf.setString(1, cpf);
 			
 			if((rs = buscar.executeQuery())!=null){;
 				clien = new Cliente();
 				clien.setCodigo(rs.getInt("cod"));
 				clien.setNome(rs.getString("nome"));
 				clien.setEndereco(rs.getString("endereco"));
-				clien.setCpf(rs.getInt("cpf"));
+				clien.setCpf(rs.getString("cpf"));
 				
 			}
 			
@@ -122,7 +122,7 @@ public class ClienteBD {
 		
 		clien = this.buscarClienBD(cpf);
 		try {
-			remover.setInt(3, clien.getCpf());
+			remover.setString(3, clien.getCpf());
 			removido = remover.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -145,7 +145,7 @@ public class ClienteBD {
 						rs.getInt("cod"),
 						rs.getString("nome"),
 						rs.getString("endereco"),
-						rs.getInt("cpf"),
+						rs.getString("cpf"),
 						rs.getString("telefone")));
 				}
 			}

@@ -3,7 +3,7 @@ package principal;
 
 import java.util.Scanner;
 
-import dados.FuncionariosBD;
+import dados.FuncionarioBD;
 import dados.LoginBD;
 import view.TLogin;
 

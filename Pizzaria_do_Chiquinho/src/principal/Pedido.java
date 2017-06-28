@@ -13,19 +13,14 @@ public class Pedido {
 	private Funcionario func;
 	private String obs;
 	private String status;
-	private float total;
+	private double total;
 	private Itens_pedido listadeprodutos;
 	
 	public Pedido(){
-		
 	}
-	
-	
-
-	public Pedido(int codigo, Cliente cliente, Funcionario func, String obs, String status, float total, Itens_pedido listadeprodutos) {
-		// TODO Auto-generated constructor stub
-		
-		this.codigo=codigo;
+	public Pedido(int codigo, Cliente cliente, Funcionario func, String obs, 
+			String status, double total, Itens_pedido listadeprodutos){
+		this.codigo =codigo;
 		this.cliente = cliente;
 		this.func = func;
 		this.obs = obs;
@@ -61,7 +56,7 @@ public class Pedido {
 	public void setObs(String obs) {
 		this.obs = obs;
 	}
-	public float getTotal() {
+	public double getTotal() {
 		return total;
 	}
 	public void setTotal(float valor) {
