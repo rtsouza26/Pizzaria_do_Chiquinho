@@ -35,7 +35,7 @@ public class ProdutoBD {
 			inserir = con.prepareStatement("INSERT INTO produto(nome,preco,quantidade) "
 					+ "VALUE (?,?,?)");
 			remover = con.prepareStatement("DELETE FROM produto WHERE nome = ?");
-			buscar = con.prepareStatement("SELECT * FROM produto WHERE nome = ?");
+			buscar = con.prepareStatement("SELECT * FROM produto WHERE cod = ?");
 			listar = con.prepareStatement("SELECT * FROM produto");
 			buscarnome = con.prepareStatement("SELECT * FROM produto WHERE nome= ?");
 			buscarcod = con.prepareStatement("SELECT * FROM produto WHERE cod= ?");
@@ -89,10 +89,10 @@ public class ProdutoBD {
 		
 	}
 	
-	public Produto buscarProdBD(String nome){
+	public Produto buscarProdBD(int cod){
 		Produto prod = null;
 		try {
-			buscar.setString(1, nome);
+			buscar.setInt(1, cod);
 			
 			if((rs = buscar.executeQuery())!=null){;
 				prod = new Produto();
