@@ -38,7 +38,7 @@ public class ProdutoBD {
 			buscar = con.prepareStatement("SELECT * FROM produto WHERE cod = ?");
 			listar = con.prepareStatement("SELECT * FROM produto");
 			buscarnome = con.prepareStatement("SELECT * FROM produto WHERE nome= ?");
-			buscarcod = con.prepareStatement("SELECT * FROM produto WHERE cod= ?");
+			//buscarcod = con.prepareStatement("SELECT * FROM produto WHERE cod= ?");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("problemas com o drive de Banco de dados");
@@ -116,7 +116,7 @@ public class ProdutoBD {
 		
 		return prod;
 	}
-	public Produto buscarProdBD(int cod){
+	/*public Produto buscarProdBD(int cod){
 		Produto prod = null;
 		try {
 			buscarcod.setInt(1, cod);
@@ -142,7 +142,7 @@ public class ProdutoBD {
 		}
 		
 		return prod;
-	}
+	}*/
 	
 	
 	public boolean removerProdBD( String nome){
