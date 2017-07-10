@@ -1,5 +1,11 @@
 package principal;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+
 /**Classe para objetos do tipo Produtos, onde serão contidos, valores e métodos para o mesmo.
  * @author 
  * @version 1.0
@@ -8,7 +14,7 @@ package principal;
 
 public class Pedido {
 	
-	private int codigo;
+	private String codigo;
 	private Cliente cliente;
 	private Funcionario func;
 	private String obs;
@@ -17,8 +23,10 @@ public class Pedido {
 	private Itens_pedido listadeprodutos;
 	
 	public Pedido(){
+		
+		this.codigo = this.getDateTime();
 	}
-	public Pedido(int codigo, Cliente cliente, Funcionario func, String obs, 
+	public Pedido(String codigo, Cliente cliente, Funcionario func, String obs, 
 			String status, double total, Itens_pedido listadeprodutos){
 		this.codigo =codigo;
 		this.cliente = cliente;
@@ -30,11 +38,10 @@ public class Pedido {
 	}
 
 
-
-	public int getCodigo() {
+	public String getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(int codigo) {
+	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
 	public Funcionario getFunc() {
@@ -74,5 +81,11 @@ public class Pedido {
 	public void setCliente(Cliente cliente){
 		this.cliente=cliente;
 	}
+	private String getDateTime() { 
+		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss"); 
+		Date date = new Date(); 
+		return dateFormat.format(date); 
+	}
+	
 	
 }

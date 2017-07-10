@@ -44,7 +44,7 @@ public class Main {
 		}*/
 		
 		new TLogin().setVisible(true);	
-
+		
 	}
 
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
+import principal.Pedido;
 import principal.Produto;
 
 /**Classe para a conexão do classe produto com o banco de dados, onde serão contidos, valores e métodos para o mesmo.
@@ -22,7 +23,6 @@ public class ProdutoBD {
 	private PreparedStatement listar = null;
 	private PreparedStatement buscar = null;
 	private PreparedStatement buscarnome = null;
-	private PreparedStatement buscarcod = null;
 	private ResultSet rs = null;
 	private Connection con = null;
 	
@@ -38,7 +38,7 @@ public class ProdutoBD {
 			buscar = con.prepareStatement("SELECT * FROM produto WHERE cod = ?");
 			listar = con.prepareStatement("SELECT * FROM produto");
 			buscarnome = con.prepareStatement("SELECT * FROM produto WHERE nome= ?");
-			//buscarcod = con.prepareStatement("SELECT * FROM produto WHERE cod= ?");
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("problemas com o drive de Banco de dados");
@@ -48,13 +48,13 @@ public class ProdutoBD {
 	}
 	
 	
-	public boolean inserirprodBD(String nome, double preco, int quantidade){
+	public boolean inserirProdBD(Produto produto){
 		
 		boolean inserido = false;
 		try {
-			inserir.setString(1, nome);
-			inserir.setDouble(2, preco);
-			inserir.setInt(3,quantidade);
+			inserir.setString(1, produto.getNome());
+			inserir.setDouble(2, produto.getPreco());
+			inserir.setInt(3,produto.getQuantidade());
 		
 			
 			inserido = inserir.execute();
@@ -116,12 +116,12 @@ public class ProdutoBD {
 		
 		return prod;
 	}
-	/*public Produto buscarProdBD(int cod){
+	public Produto buscarProdBD(String nome){
 		Produto prod = null;
 		try {
-			buscarcod.setInt(1, cod);
+			buscarnome.setString(1, nome);
 			
-			if((rs = buscar.executeQuery())!=null){;
+			if((rs = buscarnome.executeQuery())!=null){;
 				prod = new Produto();
 				prod.setCodigo(rs.getInt("cod"));
 				prod.setQuantidade(rs.getInt("quantidade"));
@@ -142,7 +142,7 @@ public class ProdutoBD {
 		}
 		
 		return prod;
-	}*/
+	}
 	
 	
 	public boolean removerProdBD( String nome){
@@ -161,6 +161,19 @@ public class ProdutoBD {
 		}
 				
 		return removido;
+	}
+	
+	public boolean atualizarPedidoBD(Produto produto){
+		boolean atualizado = false;
+		
+		if(this.removerProdBD(produto.getNome())){
+			if(this.inserirProdBD(produto)){
+				atualizado = true;
+			}
+		}
+		
+		
+		return atualizado;
 	}
 	
 	public List<Produto> listarProdBD(){

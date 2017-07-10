@@ -6,6 +6,9 @@ import principal.Funcionario;
 public class CadastroFuncionario {
 	
 	private FuncionarioBD funcBD;
+	private String invalido = "Funcionario Inválido";
+	private String nãoexiste = "Funcionario não existe";
+	
 	
 	
 	public CadastroFuncionario(){
@@ -25,10 +28,25 @@ public class CadastroFuncionario {
 			}else{
 				System.out.println("Funcionario já existe");
 			}
+		}else{
+			System.out.println(invalido);
 		}
-	}//Daqui pra baixo foi eu que fiz, qualquer erro vcs me avisem, blz?
+	}
+	
+	
+	//Daqui pra baixo foi eu que fiz, qualquer erro vcs me avisem, blz?
 	public Funcionario buscarFunc(String nome){
-		return this.funcBD.buscarFuncBD(nome);
+		Funcionario aux = null;
+		if(nome!=null){
+			if(funcBD.existeBD(nome)){
+				aux = funcBD.buscarFuncBD(nome);
+			}else{
+				System.out.println(nãoexiste);
+			}
+		}else{
+			System.out.println(invalido);
+		}
+		return aux;
 	}
 	public void removerFunc(String nome){
 		if(this.funcBD.removerFuncBD(nome)){

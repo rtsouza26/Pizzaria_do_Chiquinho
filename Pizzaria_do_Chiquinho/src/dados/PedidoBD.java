@@ -50,7 +50,7 @@ public class PedidoBD {
 		
 		boolean inserido = false;
 		try {
-			inserir.setInt(1, pedido.getCodigo());
+			inserir.setString(1, pedido.getCodigo());
 			inserir.setString(1,pedido.getCliente().getCpf());
 			inserir.setString(2, pedido.getFunc().getCpf());
 			inserir.setString(3,pedido.getObs());
@@ -73,10 +73,10 @@ public class PedidoBD {
 		
 		
 	}
-	public boolean existeBD(int codigo){
+	public boolean existeBD(String codigo){
 		boolean existe = false;
 		try {
-			buscarcod.setInt(1, codigo);
+			buscarcod.setString(1, codigo);
 			if((rs = buscarcod.executeQuery())!=null){
 				existe = true;
 			}
@@ -92,18 +92,18 @@ public class PedidoBD {
 		
 		
 	}
-	public Pedido buscarPedidoBD(int cod){
+	public Pedido buscarPedidoBD(String cod){
 		Pedido pedido = null;
 		clienteBD = new ClienteBD();
 		funcBD = new FuncionarioBD();
 		itens = new Itens_pedidoBD();
 		
 		try {
-			buscar.setInt(1, cod);
+			buscar.setString(1, cod);
 			
 			if((rs = buscar.executeQuery())!=null){;
 				pedido = new Pedido();
-				pedido.setCodigo(rs.getInt("cod"));
+				pedido.setCodigo(rs.getString("cod"));
 				pedido.setCliente(clienteBD.buscarClienBD(rs.getString("cpf_cliente")));;
 				pedido.setFunc(funcBD.buscarFuncBD(rs.getString("nome_func")));
 				pedido.setStatus(rs.getString("status"));
@@ -126,14 +126,14 @@ public class PedidoBD {
 		return pedido;
 	}
 	
-	public boolean removerPedidoBD( int cod){
+	public boolean removerPedidoBD( String cod){
 		boolean removido = false;
 		Pedido pedido = new Pedido();
 		itens = new Itens_pedidoBD();
 		
 		pedido = this.buscarPedidoBD(cod);
 		try {
-			remover.setInt(1, pedido.getCodigo());
+			remover.setString(1, pedido.getCodigo());
 			itens.removerProdutos(pedido.getCodigo());
 			removido = remover.execute();
 		} catch (SQLException e) {
@@ -144,6 +144,19 @@ public class PedidoBD {
 		}
 				
 		return removido;
+	}
+	
+	public boolean atualizarPedidoBD(Pedido pedido){
+		boolean atualizado = false;
+		
+		if(this.removerPedidoBD(pedido.getCodigo())){
+			if(this.inserirPedidoBD(pedido)){
+				atualizado = true;
+			}
+		}
+		
+		
+		return atualizado;
 	}
 	
 	public List<Pedido> listarPedidoBD(){
@@ -158,13 +171,13 @@ public class PedidoBD {
 				pedidos = new ArrayList<Pedido>();
 				while(rs.next()){
 					pedidos.add(new Pedido(
-							rs.getInt("cod"),
+							rs.getString("cod"),
 							clienteBD.buscarClienBD(rs.getString("cpf_cliente")),
 							funcBD.buscarFuncBD(rs.getString("cpf_funcionario")),
 							rs.getString("obs"),
 							rs.getString("status"),
 							rs.getDouble("total_pedido"),
-							itens.buscarProdutos(rs.getInt("cod"))));
+							itens.buscarProdutos(rs.getString("cod"))));
 							
 							
 				}
