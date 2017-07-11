@@ -4,12 +4,13 @@ import java.util.List;
 
 import principal.Pedido;
 import principal.Produto;
+import principal.Funcionario;
 
 public class Fachada {
 	private  static Fachada instance;
 	private CadastroPedido pedido;
 	private CadastroProduto produto;
-	
+	private CadastroFuncionario funcionario;
 	
 	public Fachada(){
 		pedido = new CadastroPedido();
@@ -54,6 +55,19 @@ public class Fachada {
 	}
 	public List<Produto> listarProduto(){
 		return this.produto.listarProdutos();
+	}
+	
+	public void inserir(Funcionario funcionario){
+		this.funcionario.inserirFunc(funcionario);
+	}
+	public void remover(Funcionario funcionario){
+		this.funcionario.removerFunc(funcionario.getLogin());
+	}
+	public Funcionario buscar(Funcionario funcionario){
+		return this.funcionario.buscarFunc(funcionario.getLogin());
+	}
+	public List<Funcionario> listarFuncionario(){
+		return this.funcionario.listarFunc();
 	}
 
 }
