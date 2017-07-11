@@ -66,6 +66,9 @@ public class Fachada {
 	public Funcionario buscar(Funcionario funcionario){
 		return this.funcionario.buscarFunc(funcionario.getLogin());
 	}
+	public void atualizar(Funcionario funcionario){
+		this.funcionario.atualizarFunc(funcionario);
+	}
 	public List<Funcionario> listarFuncionario(){
 		return this.funcionario.listarFunc();
 	}

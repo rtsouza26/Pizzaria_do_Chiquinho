@@ -63,6 +63,23 @@ public class CadastroFuncionario {
 			System.out.println(invalido);
 		}		
 	}
+	public void atualizarFunc(Funcionario func){
+			
+			if(func!=null){
+				if(funcBD.existeBD(func.getLogin())){
+					if(funcBD.atualizarFuncBD(func)){
+						System.out.println("Funcionário atualizado com sucesso");
+					}else{
+						System.out.println("Não foi possível atualizar o funcionário");
+					}
+				}else{
+					System.out.println(nãoexiste);
+				}
+			}else{
+				System.out.println(invalido);
+			}
+	}
+	
 	public List<Funcionario> listarFunc(){
 		
 		return FuncBD.listarFuncBD();
