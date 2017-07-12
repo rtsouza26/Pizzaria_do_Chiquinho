@@ -140,6 +140,18 @@ public class FuncionarioBD{
 				
 		return removido;
 	}
+	public boolean atualizarFuncBD(Funcionario func){
+		boolean atualizado = false;
+		
+		if(this.removerFuncBD(func.getNome())){
+			if(this.inserirFuncBD(func)){
+				atualizado = true;
+			}
+		}
+		
+		
+		return atualizado;
+	}
 	
 	public List<Funcionario> listarFuncBD(){
 		List<Funcionario> funcionarios = null;

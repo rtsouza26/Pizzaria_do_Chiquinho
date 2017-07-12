@@ -7,7 +7,7 @@ public class CadastroFuncionario {
 	
 	private FuncionarioBD funcBD;
 	private String invalido = "Funcionario Inválido";
-	private String nãoexiste = "Funcionario não existe";
+	private String naoexiste = "Funcionario não existe";
 	
 	
 	
@@ -35,25 +35,55 @@ public class CadastroFuncionario {
 	
 	
 	//Daqui pra baixo foi eu que fiz, qualquer erro vcs me avisem, blz?
-	public Funcionario buscarFunc(String nome){
+	public Funcionario buscarFunc(String login){
 		Funcionario aux = null;
-		if(nome!=null){
-			if(funcBD.existeBD(nome)){
-				aux = funcBD.buscarFuncBD(nome);
+		if(login!=null){
+			if(funcBD.existeBD(login)){
+				aux = funcBD.buscarFuncBD(login);
 			}else{
-				System.out.println(nãoexiste);
+				System.out.println(naoexiste);
 			}
 		}else{
 			System.out.println(invalido);
 		}
 		return aux;
 	}
-	public void removerFunc(String nome){
-		if(this.funcBD.removerFuncBD(nome)){
-			System.out.println("Funcionário deletado com sucesso");
+	public void removerFunc(String login){
+		if(login!=null){
+			if(funcBD.existeBD(login)){	
+				if(this.funcBD.removerFuncBD(login)){
+					System.out.println("Funcionário deletado com sucesso");
+				}else{
+					System.out.println("Erro ao deletar funcionário");
+				}
+			}else{
+				System.out.prinln(naoexiste);
+			}	
 		}else{
-			System.out.println("Não foi possível deletar funcionário");
-		}
+			System.out.println(invalido);
+		}		
+	}
+	public void atualizarFunc(Funcionario func){
+			
+			if(func!=null){
+				if(funcBD.existeBD(func.getLogin())){
+					if(funcBD.atualizarFuncBD(func)){
+						System.out.println("Funcionário atualizado com sucesso");
+					}else{
+						System.out.println("Não foi possível atualizar o funcionário");
+					}
+				}else{
+					System.out.println(nãoexiste);
+				}
+			}else{
+				System.out.println(invalido);
+			}
+	}
+	
+	public List<Funcionario> listarFunc(){
+		
+		return FuncBD.listarFuncBD();
+	
 	}
 	
 
