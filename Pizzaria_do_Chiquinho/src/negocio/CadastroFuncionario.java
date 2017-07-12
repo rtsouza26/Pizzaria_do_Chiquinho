@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.List;
+
 import dados.FuncionarioBD;
 import principal.Funcionario;
 
@@ -19,8 +21,7 @@ public class CadastroFuncionario {
 		
 		if(func != null){
 			if(!(funcBD.existeBD(func.getLogin()))){
-				if(funcBD.inserirFuncBD(func.getNome(), func.getEndereco(), func.getCpf(), func.getTelefone(), func.getTipo(), func.getLogin()
-						, func.getSenha())){
+				if(funcBD.inserirFuncBD(func)){
 					System.out.println("Funcionario cadastrado com sucesso");
 				}else{
 					System.out.println("Não foi possível cadastrar o funcionario");
@@ -57,7 +58,7 @@ public class CadastroFuncionario {
 					System.out.println("Erro ao deletar funcionário");
 				}
 			}else{
-				System.out.prinln(naoexiste);
+				System.out.println(naoexiste);
 			}	
 		}else{
 			System.out.println(invalido);
@@ -73,7 +74,7 @@ public class CadastroFuncionario {
 						System.out.println("Não foi possível atualizar o funcionário");
 					}
 				}else{
-					System.out.println(nãoexiste);
+					System.out.println(naoexiste);
 				}
 			}else{
 				System.out.println(invalido);
@@ -82,7 +83,7 @@ public class CadastroFuncionario {
 	
 	public List<Funcionario> listarFunc(){
 		
-		return FuncBD.listarFuncBD();
+		return funcBD.listarFuncBD();
 	
 	}
 	

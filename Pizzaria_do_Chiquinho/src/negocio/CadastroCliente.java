@@ -1,8 +1,9 @@
 package negocio;
 
 import java.util.List;
-import dados.ClientBD;
-import principal.Cliente
+import dados.ClienteBD;
+import dados.ClienteBD;
+import principal.Cliente;
 
 
 public class CadastroCliente {

@@ -46,18 +46,17 @@ public class FuncionarioBD{
 	}
 	
 	
-	public boolean inserirFuncBD(
-			String nome, String endereco, String cpf, String telefone, String tipo, String login, String senha){
+	public boolean inserirFuncBD(Funcionario func){
 		
 		boolean inserido = false;
 		try {
-			inserir.setString(1, nome);
-			inserir.setString(2, endereco);
-			inserir.setString(3,cpf);
-			inserir.setString(4, telefone);
-			inserir.setString(5,tipo);
-			inserir.setString(6,login);
-			inserir.setString(7,senha);
+			inserir.setString(1, func.getNome());
+			inserir.setString(2, func.getEndereco());
+			inserir.setString(3,func.getCpf());
+			inserir.setString(4, func.getTelefone());
+			inserir.setString(5,func.getTipo());
+			inserir.setString(6,func.getLogin());
+			inserir.setString(7,func.getSenha());
 			
 			inserido = inserir.execute();
 		} catch (SQLException e) {
