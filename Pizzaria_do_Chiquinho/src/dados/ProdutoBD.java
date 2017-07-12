@@ -23,6 +23,8 @@ public class ProdutoBD {
 	private PreparedStatement listar = null;
 	private PreparedStatement buscar = null;
 	private PreparedStatement buscarnome = null;
+	private PreparedStatement atualizar = null;
+	private PreparedStatement buscarquantidade = null;
 	private ResultSet rs = null;
 	private Connection con = null;
 	
@@ -32,12 +34,13 @@ public class ProdutoBD {
 		con = ConexaoBD.getConnection();
 		
 		try {
-			inserir = con.prepareStatement("INSERT INTO produto(nome,preco,quantidade) "
+			inserir = con.prepareStatement("INSERT INTO Produtos(nome,preco,quantidade) "
 					+ "VALUE (?,?,?)");
-			remover = con.prepareStatement("DELETE FROM produto WHERE nome = ?");
-			buscar = con.prepareStatement("SELECT * FROM produto WHERE cod = ?");
-			listar = con.prepareStatement("SELECT * FROM produto");
-			buscarnome = con.prepareStatement("SELECT * FROM produto WHERE nome= ?");
+			remover = con.prepareStatement("DELETE FROM Produtos WHERE nome = ?");
+			buscar = con.prepareStatement("SELECT * FROM Produtos WHERE cod = ?");
+			listar = con.prepareStatement("SELECT * FROM Produtos");
+			buscarnome = con.prepareStatement("SELECT * FROM Produtos WHERE nome= ?");
+			atualizar = con.prepareStatement("UPDATE Produtos SET quantidade = ? WHERE cod = ?");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -172,6 +175,32 @@ public class ProdutoBD {
 			}
 		}
 		
+		
+		return atualizado;
+	}
+	
+	public int buscarQuantidadeBD(String nome){
+		Produto auxproduto = null;
+		int aux = -1;
+		
+		auxproduto = buscarProdBD(nome);
+		aux = auxproduto.getQuantidade();
+		return aux;
+	}
+	
+	
+	public boolean atualizarQuatidadeBD(int quantidade,int cod){
+		boolean atualizado = false;
+		try {
+			atualizar.setInt(1, quantidade);
+			atualizar.setInt(2, cod);
+			if(atualizar.execute()){
+				atualizado = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return atualizado;
 	}
