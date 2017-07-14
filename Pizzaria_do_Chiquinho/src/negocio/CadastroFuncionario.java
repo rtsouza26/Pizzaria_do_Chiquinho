@@ -1,5 +1,6 @@
 package negocio;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import dados.FuncionarioBD;
@@ -13,11 +14,11 @@ public class CadastroFuncionario {
 	
 	
 	
-	public CadastroFuncionario(){
+	public CadastroFuncionario() throws ClassNotFoundException, SQLException{
 		funcBD = new FuncionarioBD();
 	}
 	
-	public void inserirFunc(Funcionario func){
+	public void inserirFunc(Funcionario func) throws SQLException{
 		
 		if(func != null){
 			if(!(funcBD.existeBD(func.getLogin()))){
@@ -36,7 +37,7 @@ public class CadastroFuncionario {
 	
 	
 	//Daqui pra baixo foi eu que fiz, qualquer erro vcs me avisem, blz?
-	public Funcionario buscarFunc(String login){
+	public Funcionario buscarFunc(String login) throws SQLException{
 		Funcionario aux = null;
 		if(login!=null){
 			if(funcBD.existeBD(login)){
@@ -49,7 +50,7 @@ public class CadastroFuncionario {
 		}
 		return aux;
 	}
-	public void removerFunc(String login){
+	public void removerFunc(String login) throws SQLException{
 		if(login!=null){
 			if(funcBD.existeBD(login)){	
 				if(this.funcBD.removerFuncBD(login)){
@@ -64,7 +65,7 @@ public class CadastroFuncionario {
 			System.out.println(invalido);
 		}		
 	}
-	public void atualizarFunc(Funcionario func){
+	public void atualizarFunc(Funcionario func) throws SQLException{
 			
 			if(func!=null){
 				if(funcBD.existeBD(func.getLogin())){
@@ -81,7 +82,7 @@ public class CadastroFuncionario {
 			}
 	}
 	
-	public List<Funcionario> listarFunc(){
+	public List<Funcionario> listarFunc() throws SQLException{
 		
 		return funcBD.listarFuncBD();
 	

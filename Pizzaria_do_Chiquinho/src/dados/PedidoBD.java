@@ -26,30 +26,25 @@ public class PedidoBD {
 	private Itens_pedidoBD itens ;
 	
 	
-	public PedidoBD(){
+	public PedidoBD() throws ClassNotFoundException, SQLException{
 		
 		con = ConexaoBD.getConnection();
 		
-		try {
+	
 			inserir = con.prepareStatement("INSERT INTO Pedido(cod,cpf_cliente,cpf_funcionario,obs,status,total) "
 					+ "VALUE (?,?,?,?,?,?)");
 			remover = con.prepareStatement("DELETE FROM Pedido WHERE cod = ?");
 			buscar = con.prepareStatement("SELECT * FROM Pedido WHERE cod = ?");
 			buscarcod = con.prepareStatement("SELECT * FROM Pedido WHERE cod = ?");
 			listar = con.prepareStatement("SELECT * FROM Pedido");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("problemas com o drive de Banco de dados");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		
 	}
 	
-	public boolean inserirPedidoBD(Pedido pedido){
+	public boolean inserirPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException{
 		itens = new Itens_pedidoBD();
 		
 		boolean inserido = false;
-		try {
+		
 			inserir.setString(1, pedido.getCodigo());
 			inserir.setString(1,pedido.getCliente().getCpf());
 			inserir.setString(2, pedido.getFunc().getCpf());
@@ -62,44 +57,29 @@ public class PedidoBD {
 				inserido = false;
 			}
 			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
 		return inserido;
 		
 		
 	}
-	public boolean existeBD(String codigo){
+	public boolean existeBD(String codigo) throws SQLException{
 		boolean existe = false;
-		try {
+		
 			buscarcod.setString(1, codigo);
 			if((rs = buscarcod.executeQuery())!=null){
 				existe = true;
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally{
-			ConexaoBD.closeConnection(con);
-		}
 		
 	 return existe;
 		
 		
 	}
-	public Pedido buscarPedidoBD(String cod){
+	public Pedido buscarPedidoBD(String cod) throws ClassNotFoundException, SQLException{
 		Pedido pedido = null;
 		clienteBD = new ClienteBD();
 		funcBD = new FuncionarioBD();
 		itens = new Itens_pedidoBD();
 		
-		try {
-			buscar.setString(1, cod);
+				buscar.setString(1, cod);
 			
 			if((rs = buscar.executeQuery())!=null){;
 				pedido = new Pedido();
@@ -112,41 +92,27 @@ public class PedidoBD {
 				
 				pedido.setListadeprodutos(itens.buscarProdutos(pedido.getCodigo()));
 			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			
-			e.printStackTrace();
-		}
-		finally
-		{
-			ConexaoBD.closeConnection(con,rs);
-		}
+		
 		
 		return pedido;
 	}
 	
-	public boolean removerPedidoBD( String cod){
+	public boolean removerPedidoBD( String cod) throws ClassNotFoundException, SQLException{
 		boolean removido = false;
 		Pedido pedido = new Pedido();
 		itens = new Itens_pedidoBD();
 		
 		pedido = this.buscarPedidoBD(cod);
-		try {
+	
 			remover.setString(1, pedido.getCodigo());
 			itens.removerProdutos(pedido.getCodigo());
 			removido = remover.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			ConexaoBD.closeConnection(con, remover);
-			e.printStackTrace();
-			
-		}
+	
 				
 		return removido;
 	}
 	
-	public boolean atualizarPedidoBD(Pedido pedido){
+	public boolean atualizarPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException{
 		boolean atualizado = false;
 		
 		if(this.removerPedidoBD(pedido.getCodigo())){
@@ -159,14 +125,14 @@ public class PedidoBD {
 		return atualizado;
 	}
 	
-	public List<Pedido> listarPedidoBD(){
+	public List<Pedido> listarPedidoBD() throws ClassNotFoundException, SQLException{
 		List<Pedido> pedidos = null;
 		clienteBD = new ClienteBD();
 		funcBD = new FuncionarioBD();
 		itens = new Itens_pedidoBD();
 		
 		
-		try {
+		
 			if((rs = listar.executeQuery())!=null){
 				pedidos = new ArrayList<Pedido>();
 				while(rs.next()){
@@ -182,10 +148,7 @@ public class PedidoBD {
 							
 				}
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		return pedidos;
 	}

@@ -1,5 +1,6 @@
 package negocio;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import dados.ProdutoBD;
@@ -12,12 +13,12 @@ public class CadastroProduto{
 	private String invalido = "Produto Inválido";
 	private String nãoexiste = "Produto não existe";	
 	
-	public CadastroProduto(){
+	public CadastroProduto() throws ClassNotFoundException, SQLException{
 		 prodBD = new ProdutoBD();
 		
 	}
 	
-	public void inserirProduto(Produto prod){
+	public void inserirProduto(Produto prod) throws SQLException{
 		
 		if(prod != null){
 			if(!(prodBD.existeBD(prod.getNome()))){
@@ -34,7 +35,7 @@ public class CadastroProduto{
 		}
 	}
 	
-	public Produto buscarProduto(String nome){
+	public Produto buscarProduto(String nome) throws SQLException{
 		Produto aux = null;
 		if(nome !=null){
 			if(prodBD.existeBD(nome)){
@@ -48,7 +49,7 @@ public class CadastroProduto{
 		return aux;
 	}
 	
-	public void removerProduto(String nome){
+	public void removerProduto(String nome) throws SQLException{
 		if(nome!=null){
 			if(prodBD.existeBD(nome)){
 				if(this.prodBD.removerProdBD(nome)){
@@ -65,7 +66,7 @@ public class CadastroProduto{
 		
 	}
 	
-	public void atualizarProduto(Produto produto){
+	public void atualizarProduto(Produto produto) throws SQLException{
 		
 		if(produto!= null){
 			if(prodBD.existeBD(produto.getNome())){
@@ -84,7 +85,7 @@ public class CadastroProduto{
 		
 	}
 	
-	public List<Produto> listarProdutos(){
+	public List<Produto> listarProdutos() throws SQLException{
 		return this.prodBD.listarProdBD();
 	}
 }

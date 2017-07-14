@@ -26,30 +26,25 @@ public class FuncionarioBD{
 	private Connection con = null;
 	
 	
-	public FuncionarioBD(){
+	public FuncionarioBD() throws ClassNotFoundException, SQLException{
 		
 		con = ConexaoBD.getConnection();
 		
-		try {
+		
 			inserir = con.prepareStatement("INSERT INTO funcionarios(nome,endereco,cpf,telefone,tipo,login,senha) "
 					+ "VALUE (?,?,?,?,?,?,?)");
 			remover = con.prepareStatement("DELETE FROM funcionarios WHERE cod = ?");
 			buscar = con.prepareStatement("SELECT * FROM funcionarios WHERE nome = ?");
 			buscarlogin = con.prepareStatement("SELECT * FROM funcionarios WHERE login = ?");
 			listar = con.prepareStatement("SELECT * FROM Funcionarios");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("problemas com o drive de Banco de dados");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		
 	}
 	
 	
-	public boolean inserirFuncBD(Funcionario func){
+	public boolean inserirFuncBD(Funcionario func) throws SQLException{
 		
 		boolean inserido = false;
-		try {
+		
 			inserir.setString(1, func.getNome());
 			inserir.setString(2, func.getEndereco());
 			inserir.setString(3,func.getCpf());
@@ -59,40 +54,29 @@ public class FuncionarioBD{
 			inserir.setString(7,func.getSenha());
 			
 			inserido = inserir.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			ConexaoBD.closeConnection(con, inserir);
-			e.printStackTrace();
-			
-		}
-		finally{
+	
 			ConexaoBD.closeConnection(con);
-		}
+		
 			
 		return inserido;
 	}
-	public boolean existeBD(String login){
+	public boolean existeBD(String login) throws SQLException{
 		boolean existe = false;
-			try {
+			
 				buscarlogin.setString(1, login);
 				if((rs = buscarlogin.executeQuery())!=null){
 					existe = true;
 				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			finally{
 				ConexaoBD.closeConnection(con);
-			}
+			
 			
 		 return existe;
 		
 	}
 	
-	public Funcionario buscarFuncBD(String nome){
+	public Funcionario buscarFuncBD(String nome) throws SQLException{
 		Funcionario func = null;
-		try {
+
 			buscar.setString(1, nome);
 			
 			if((rs = buscar.executeQuery())!=null){;
@@ -108,38 +92,29 @@ public class FuncionarioBD{
 					
 			}
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			
-			e.printStackTrace();
-		}
-		finally
-		{
+		
 			ConexaoBD.closeConnection(con,rs);
-		}
+		
 		
 		return func;
 	}
 	
 	
-	public boolean removerFuncBD( String nome){
+	public boolean removerFuncBD( String nome) throws SQLException{
 		boolean removido = false;
 		Funcionario func = new Funcionario();
 		
 		func = this.buscarFuncBD(nome);
-		try {
+		
 			remover.setInt(1, func.getCodigo());
 			removido = remover.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+	
 			ConexaoBD.closeConnection(con, remover);
-			e.printStackTrace();
 			
-		}
 				
 		return removido;
 	}
-	public boolean atualizarFuncBD(Funcionario func){
+	public boolean atualizarFuncBD(Funcionario func) throws SQLException{
 		boolean atualizado = false;
 		
 		if(this.removerFuncBD(func.getNome())){
@@ -152,10 +127,10 @@ public class FuncionarioBD{
 		return atualizado;
 	}
 	
-	public List<Funcionario> listarFuncBD(){
+	public List<Funcionario> listarFuncBD() throws SQLException{
 		List<Funcionario> funcionarios = null;
 		
-		try {
+		
 			if((rs = listar.executeQuery())!=null){
 				funcionarios = new ArrayList<Funcionario>();
 				while(rs.next()){
@@ -169,10 +144,7 @@ public class FuncionarioBD{
 							rs.getString("login")));
 				}
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		return funcionarios;
 	}

@@ -15,21 +15,17 @@ public class LoginBD {
 	private Connection con = null;
 	private Funcionario check = null;
 	
-	public LoginBD(){
+	public LoginBD() throws ClassNotFoundException, SQLException{
 		con = ConexaoBD.getConnection();
-		try {
+		
 			String sql = "SELECT * FROM funcionarios WHERE login =? AND senha =?" ;
 			testelogin = con.prepareStatement(sql);
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 	}
-	public Funcionario checkLogin( String login, String senha){
+	public Funcionario checkLogin( String login, String senha) throws SQLException{
 
-		try {
+		
 			
 			testelogin.setString(1, login);
 			testelogin.setString(2, senha);
@@ -43,13 +39,7 @@ public class LoginBD {
 					
 			}
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally{
-			ConexaoBD.closeConnection(con, rs);
-		}
+	
 		return check;
 	}
 	

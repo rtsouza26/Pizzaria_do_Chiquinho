@@ -29,11 +29,11 @@ public class ProdutoBD {
 	private Connection con = null;
 	
 	
-	public ProdutoBD(){
+	public ProdutoBD() throws ClassNotFoundException, SQLException{
 		
 		con = ConexaoBD.getConnection();
 		
-		try {
+		
 			inserir = con.prepareStatement("INSERT INTO Produtos(nome,preco,quantidade) "
 					+ "VALUE (?,?,?)");
 			remover = con.prepareStatement("DELETE FROM Produtos WHERE nome = ?");
@@ -42,59 +42,39 @@ public class ProdutoBD {
 			buscarnome = con.prepareStatement("SELECT * FROM Produtos WHERE nome= ?");
 			atualizar = con.prepareStatement("UPDATE Produtos SET quantidade = ? WHERE cod = ?");
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("problemas com o drive de Banco de dados");
-			e.printStackTrace();
-			System.exit(1);
-		}
 	}
 	
 	
-	public boolean inserirProdBD(Produto produto){
+	public boolean inserirProdBD(Produto produto) throws SQLException{
 		
 		boolean inserido = false;
-		try {
+	
 			inserir.setString(1, produto.getNome());
 			inserir.setDouble(2, produto.getPreco());
 			inserir.setInt(3,produto.getQuantidade());
 		
 			
 			inserido = inserir.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			ConexaoBD.closeConnection(con, inserir);
-			e.printStackTrace();
-			
-		}
-		finally{
-			ConexaoBD.closeConnection(con);
-		}
+		
 			
 		return inserido;
 	}
-	public boolean existeBD(String nome){
+	public boolean existeBD(String nome) throws SQLException{
 		boolean existe = false;
-			try {
+		
 				buscarnome.setString(1,nome);
 				if((rs = buscarnome.executeQuery())!=null){
 					existe = true;
 				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			finally{
-				ConexaoBD.closeConnection(con);
-			}
+			
 			
 		 return existe;
 		
 	}
 	
-	public Produto buscarProdBD(int cod){
+	public Produto buscarProdBD(int cod) throws SQLException{
 		Produto prod = null;
-		try {
+
 			buscar.setInt(1, cod);
 			
 			if((rs = buscar.executeQuery())!=null){;
@@ -107,21 +87,12 @@ public class ProdutoBD {
 					
 			}
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			
-			e.printStackTrace();
-		}
-		finally
-		{
-			ConexaoBD.closeConnection(con,rs);
-		}
 		
 		return prod;
 	}
-	public Produto buscarProdBD(String nome){
+	public Produto buscarProdBD(String nome) throws SQLException{
 		Produto prod = null;
-		try {
+	
 			buscarnome.setString(1, nome);
 			
 			if((rs = buscarnome.executeQuery())!=null){;
@@ -134,39 +105,26 @@ public class ProdutoBD {
 					
 			}
 			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			
-			e.printStackTrace();
-		}
-		finally
-		{
-			ConexaoBD.closeConnection(con,rs);
-		}
+	
 		
 		return prod;
 	}
 	
 	
-	public boolean removerProdBD( String nome){
+	public boolean removerProdBD( String nome) throws SQLException{
 		boolean removido = false;
 		Produto prod = new Produto();
 		
 		prod = this.buscarProdBD(nome);
-		try {
+
 			remover.setString(1, prod.getNome());
 			removido = remover.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			ConexaoBD.closeConnection(con, remover);
-			e.printStackTrace();
-			
-		}
+		
 				
 		return removido;
 	}
 	
-	public boolean atualizarPedidoBD(Produto produto){
+	public boolean atualizarPedidoBD(Produto produto) throws SQLException{
 		boolean atualizado = false;
 		
 		if(this.removerProdBD(produto.getNome())){
@@ -179,7 +137,7 @@ public class ProdutoBD {
 		return atualizado;
 	}
 	
-	public int buscarQuantidadeBD(String nome){
+	public int buscarQuantidadeBD(String nome) throws SQLException{
 		Produto auxproduto = null;
 		int aux = -1;
 		
@@ -189,26 +147,22 @@ public class ProdutoBD {
 	}
 	
 	
-	public boolean atualizarQuatidadeBD(int quantidade,int cod){
+	public boolean atualizarQuatidadeBD(int quantidade,int cod) throws SQLException{
 		boolean atualizado = false;
-		try {
+	
 			atualizar.setInt(1, quantidade);
 			atualizar.setInt(2, cod);
 			if(atualizar.execute()){
 				atualizado = true;
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return atualizado;
 	}
 	
-	public List<Produto> listarProdBD(){
+	public List<Produto> listarProdBD() throws SQLException{
 		List<Produto> produtos = null;
 		
-		try {
+		
 			if((rs = listar.executeQuery())!=null){
 				produtos = new ArrayList<Produto>();
 				while(rs.next()){
@@ -219,10 +173,7 @@ public class ProdutoBD {
 							rs.getDouble("preco")));
 				}
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		return produtos;
 	}
