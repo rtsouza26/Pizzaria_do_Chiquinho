@@ -27,27 +27,22 @@ public class ClienteBD {
 	private Connection con = null;
 
 	
-	public ClienteBD(){
+	public ClienteBD() throws ClassNotFoundException, SQLException{
 	
 		con = ConexaoBD.getConnection();
 	
-		try {
+	
 			inserir = con.prepareStatement("INSERT INTO Clientes(nome,endereco,cpf,telefone) "
 				+ "VALUE (?,?,?,?)");
 			remover = con.prepareStatement("DELETE FROM Clientes WHERE cod = ?");
 			buscar = con.prepareStatement("SELECT * FROM Clientes WHERE nome = ?");
 			buscarcpf = con.prepareStatement("SELECT * FROM Clientes WHERE cpf = ?");
 			listar = con.prepareStatement("SELECT * FROM Clientes");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("problemas com o drive de Bnco de dados");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		
 	}
 	
 	public boolean inserirClienBD(
-			String nome, String endereco, String cpf, String telefone){
+			String nome, String endereco, String cpf, String telefone) throws SQLException{
 		
 		boolean inserido = false;
 		try {
@@ -70,7 +65,7 @@ public class ClienteBD {
 		return inserido;
 	}
 	
-	public boolean existeBD(String cpf){
+	public boolean existeBD(String cpf) throws SQLException{
 		boolean existe = false;
 			try {
 				buscarcpf.setString(3, cpf);
@@ -89,7 +84,7 @@ public class ClienteBD {
 		
 	}
 	
-	public Cliente buscarClienBD(String cpf){
+	public Cliente buscarClienBD(String cpf) throws SQLException{
 		Cliente clien = null;
 		try {
 			buscarcpf.setString(1, cpf);
@@ -116,7 +111,7 @@ public class ClienteBD {
 		return clien;
 	}
 	
-	public boolean removerClienBD(String cpf){
+	public boolean removerClienBD(String cpf) throws SQLException{
 		boolean removido = false;
 		Cliente clien = new Cliente();
 		

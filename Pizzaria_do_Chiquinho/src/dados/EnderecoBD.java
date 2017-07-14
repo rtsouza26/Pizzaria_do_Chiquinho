@@ -15,7 +15,7 @@ public class EnderecoBD {
 	private Connection con = null;
 
 	
-	public EnderecoBD(){
+	public EnderecoBD() throws ClassNotFoundException, SQLException{
 		
 		con = ConexaoBD.getConnection();
 	

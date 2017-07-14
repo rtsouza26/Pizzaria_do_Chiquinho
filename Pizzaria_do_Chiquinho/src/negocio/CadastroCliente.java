@@ -1,5 +1,6 @@
 package negocio;
 
+import java.sql.SQLException;
 import java.util.List;
 import dados.ClienteBD;
 import dados.ClienteBD;
@@ -12,7 +13,7 @@ public class CadastroCliente {
 	private String invalido = "Cliente Inválido";
 	private String nãoexiste = "Cliente não existe";
 	
-	public CadastroCliente(){
+	public CadastroCliente() throws ClassNotFoundException, SQLException{
 		clienteBD= new ClienteBD();
 	}
 	

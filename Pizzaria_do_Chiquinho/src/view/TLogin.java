@@ -1,5 +1,8 @@
 package view;
 
+import java.awt.HeadlessException;
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 import dados.LoginBD;
@@ -111,24 +114,35 @@ public class TLogin extends javax.swing.JFrame  {
 	
 	
 	private void jBokActionPerformed(java.awt.event.ActionEvent evt) {                                     
-        LoginBD funcbd= new LoginBD();
+        LoginBD funcbd = null;
+		try {
+			funcbd = new LoginBD();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         Funcionario funcheck = null;
        
 		
-		if((funcheck=funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword())))!=null){
-         // new Principal().setVisible(true);
-			this.dispose();
-			if(funcheck.getTipo().equals("Administrador")){
-				JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
-			}if(funcheck.getTipo().equals("Atendente")){
-				JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
-			}if (funcheck.getTipo().equals("Cozinha")){
-				JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
+		try {
+			if((funcheck=funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword())))!=null){
+			 // new Principal().setVisible(true);
+				this.dispose();
+				if(funcheck.getTipo().equals("Administrador")){
+					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
+				}if(funcheck.getTipo().equals("Atendente")){
+					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
+				}if (funcheck.getTipo().equals("Cozinha")){
+					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
+				}
+				
+				
+			}else{
+				JOptionPane.showMessageDialog(null,"Login ou Senha errados");
 			}
-			
-			
-		}else{
-			JOptionPane.showMessageDialog(null,"Login ou Senha errados");
+		} catch (HeadlessException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
         
     }   

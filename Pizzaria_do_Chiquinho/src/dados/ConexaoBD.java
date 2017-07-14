@@ -20,55 +20,41 @@ public class ConexaoBD {
 	static final String sim = "Conectou";
 	static final String fim = "Desconectou";
 	
-	public static  java.sql.Connection getConnection(){
+	public static  java.sql.Connection getConnection() throws ClassNotFoundException, SQLException{
 		
 		Connection con = null;
 		
-		try {
+		
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, user, pass);
 			System.out.println(sim);
 			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println(nao);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println(nao);
-			
-		}
+		
 		return con;
 		
 	}
-	public static void closeConnection(Connection con){
+	public static void closeConnection(Connection con) throws SQLException{
         
         if(con!=null){
-            try {
+            
                 con.close();
                 System.out.println(fim);
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(ConexaoBD.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           
+            
         }
 
     }
-	public static void closeConnection(Connection con,ResultSet rs){
+	public static void closeConnection(Connection con,ResultSet rs) throws SQLException{
 		closeConnection(con);
 		
 		if(rs!=null){
-	           try {
-	               rs.close();
-	               
-	           } catch (SQLException ex) {
-	               Logger.getLogger(ConexaoBD.class.getName()).log(Level.SEVERE, null, ex);
-	           }
-	       }
+	           
+	               rs.close();   
+		}
+	    
 		
 	}
-	public static void closeConnection(Connection con, PreparedStatement stmp){
+	public static void closeConnection(Connection con, PreparedStatement stmp) throws SQLException{
         
         closeConnection(con);
        if(stmp!=null){
@@ -80,7 +66,7 @@ public class ConexaoBD {
        }
 
    }
-	public static void closeConnection(Connection con, PreparedStatement stmp, ResultSet rs ){
+	public static void closeConnection(Connection con, PreparedStatement stmp, ResultSet rs ) throws SQLException{
         
         closeConnection(con,stmp);
        if(rs!=null){
