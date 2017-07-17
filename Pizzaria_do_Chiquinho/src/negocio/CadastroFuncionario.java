@@ -41,7 +41,7 @@ public class CadastroFuncionario {
 		Funcionario aux = null;
 		if(login!=null){
 			if(funcBD.existeBD(login)){
-				aux = funcBD.buscarFuncBD(login);
+				aux = funcBD.buscarFuncBD(login); 
 			}else{
 				System.out.println(naoexiste);
 			}

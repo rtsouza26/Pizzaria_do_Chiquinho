@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import principal.Cliente;
+import principal.Funcionario;
 
 /**Classe para a conexão da classe cliente com o banco de dados, onde serão contidos, valores e métodos para o mesmo.
  * @author 
@@ -41,15 +42,14 @@ public class ClienteBD {
 		
 	}
 	
-	public boolean inserirClienBD(
-			String nome, String endereco, String cpf, String telefone) throws SQLException{
+	public boolean inserirClienBD(Cliente cliente) throws SQLException{
 		
 		boolean inserido = false;
 		try {
-			inserir.setString(1, nome);
-			inserir.setString(2, endereco);
-			inserir.setString(3,cpf);
-			inserir.setString(4, telefone);
+			inserir.setString(1, cliente.getNome());
+			inserir.setString(2, cliente.getEndereco());
+			inserir.setString(3, cliente.getCpf());
+			inserir.setString(4, cliente.getTelefone());
 			
 			inserido = inserir.execute();
 		} catch (SQLException e) {
@@ -150,6 +150,19 @@ public class ClienteBD {
 		}
 		
 		return clientes;
+	}
+	
+	public boolean atualizarClienBD(Cliente cliente) throws SQLException{
+		boolean atualizado = false;
+		
+		if(this.removerClienBD(cliente.getCpf())){
+			if(this.inserirClienBD(cliente)){
+				atualizado = true;
+			}
+		}
+		
+		
+		return atualizado;
 	}
 	
 }
