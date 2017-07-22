@@ -1,0 +1,222 @@
+CREATE DATABASE pizzaria
+;
+
+USE pizzaria;
+
+CREATE USER 'admin'@'%' IDENTIFIED BY '12345'
+
+GRANT ALL PRIVILEGES ON pizzaria.* TO admin;
+
+
+
+CREATE TABLE `pizzaria`.`codigos` (
+  
+				    `idcodigos` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  
+				    `cod_endereco` INT UNSIGNED NOT NULL DEFAULT 0,
+  
+                                    `cod_funcionario` INT UNSIGNED NOT NULL DEFAULT 0,
+  
+                                    `cod_cliente` INT UNSIGNED NOT NULL DEFAULT 0,
+  
+                                    `cod_tipo` INT UNSIGNED NOT NULL DEFAULT 0,
+  
+                                    `cod_produto` INT UNSIGNED NOT NULL DEFAULT 0,
+  
+                                    `cod_pagforma` INT UNSIGNED NOT NULL,
+  
+                                     PRIMARY KEY (`idcodigos`))
+ENGINE = InnoDB;
+
+
+CREATE TABLE `pizzaria`.`endereco` (
+  `idendereco` INT UNSIGNED NOT NULL,
+  
+                                      `logradouro` VARCHAR(200) NOT NULL,
+  
+                                      `numero` VARCHAR(80) NOT NULL,
+  
+                                      `bairro` VARCHAR(200) NOT NULL,
+  
+                                      `cidade` VARCHAR(100) NOT NULL,
+  
+                                      `cep` VARCHAR(100) NOT NULL,
+  
+                                      `complemento` MEDIUMTEXT NULL,
+  
+                                      `ponto_referencia` MEDIUMTEXT NOT NULL,
+  
+                                       PRIMARY KEY (`idendereco`));
+
+CREATE TABLE `pizzaria`.`tipo_funcionario` (
+  `idtipo_funcionario` INT UNSIGNED NOT NULL,
+  
+                                              `tipo` VARCHAR(100) NOT NULL,
+  
+                                               PRIMARY KEY (`idtipo_funcionario`),
+  
+                                               UNIQUE INDEX `idtipo_funcionario_UNIQUE` (`idtipo_funcionario` ASC),
+  
+                                               UNIQUE INDEX `tipo_UNIQUE` (`tipo` ASC));
+
+
+CREATE TABLE `pizzaria`.`funcionario` (
+  `idfuncionario` INT UNSIGNED NOT NULL,
+  
+                                         `nome` VARCHAR(200) NOT NULL,
+  
+                                         `cpf` VARCHAR(100) NOT NULL,
+  
+                                         `cod_endereco` INT UNSIGNED NOT NULL,
+  
+                                         `telefone` VARCHAR(100) NOT NULL,
+  
+                                         `cod_tipo` INT UNSIGNED NOT NULL,
+  
+                                         `login` VARCHAR(10) NOT NULL,
+  
+                                         `senha` VARCHAR(50) NOT NULL,
+  
+                                          PRIMARY KEY (`idfuncionario`),
+  
+                                          UNIQUE INDEX `nome_UNIQUE` (`nome` ASC),
+  
+                                          UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
+  
+                                          UNIQUE INDEX `telefone_UNIQUE` (`telefone` ASC),
+  
+                                          UNIQUE INDEX `login_UNIQUE` (`login` ASC),
+  
+                                          UNIQUE INDEX `senha_UNIQUE` (`senha` ASC),
+  
+                                          INDEX `fk_cod_endereco_idx` (`cod_endereco` ASC),
+  
+                                          INDEX `fk_cod_tipo_idx` (`cod_tipo` ASC),
+  
+                                          CONSTRAINT `fk_cod_endereco`
+    FOREIGN KEY (`cod_endereco`)
+    REFERENCES `pizzaria`.`endereco` (`idendereco`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  
+                                          CONSTRAINT `fk_cod_tipo`
+    FOREIGN KEY (`cod_tipo`)
+    REFERENCES `pizzaria`.`tipo_funcionario` (`idtipo_funcionario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `pizzaria`.`formas_pagamento` (
+  `idformas_pagamento` INT UNSIGNED NOT NULL,
+  
+					      `forma` VARCHAR(100) NOT NULL,
+  
+                                               PRIMARY KEY (`idformas_pagamento`),
+  
+                                               UNIQUE INDEX `forma_UNIQUE` (`forma` ASC));
+
+
+CREATE TABLE `pizzaria`.`cliente` (
+  `idcliente` INT UNSIGNED NOT NULL,
+  
+                                     `nome` VARCHAR(200) NOT NULL,
+  
+                                     `telefone` VARCHAR(100) NOT NULL,
+  
+                                     `cod_endereco` INT UNSIGNED NOT NULL,
+  
+                                     `cod_forma_pagamento` INT UNSIGNED NOT NULL,
+  
+                                      PRIMARY KEY (`idcliente`),
+  
+                                      UNIQUE INDEX `nome_UNIQUE` (`nome` ASC),
+ 
+                                      UNIQUE INDEX `telefone_UNIQUE` (`telefone` ASC),
+  
+                                      INDEX `fk_cod_endereco_idx` (`cod_endereco` ASC),
+  
+                                      INDEX `fk_cod_forma_pagamento_idx` (`cod_forma_pagamento` ASC),
+  
+                                      CONSTRAINT `fk_cod_endereco`
+    FOREIGN KEY (`cod_endereco`)
+    REFERENCES `pizzaria`.`endereco` (`idendereco`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  
+                                      CONSTRAINT `fk_cod_forma_pagamento`
+    FOREIGN KEY (`cod_forma_pagamento`)
+    REFERENCES `pizzaria`.`formas_pagamento` (`idformas_pagamento`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `pizzaria`.`produto` (
+  `idproduto` INT UNSIGNED NOT NULL,
+  
+				     `nome` VARCHAR(100) NOT NULL,
+  
+                                     `quantidade` INT UNSIGNED NOT NULL,
+  
+                                     `preco_unitario` DECIMAL(2) UNSIGNED NOT NULL,
+  
+                                      PRIMARY KEY (`idproduto`),
+  
+                                      UNIQUE INDEX `nome_UNIQUE` (`nome` ASC));
+
+CREATE TABLE `pizzaria`.`pedido` (
+  `idpedido` VARCHAR(50) NOT NULL,
+  
+                                    `cod_cliente` INT UNSIGNED NOT NULL,
+  
+                                    `cod_funcionario` INT UNSIGNED NOT NULL,
+  
+                                    `status` VARCHAR(50) NOT NULL,
+  
+                                    `valor_total` DECIMAL(2) UNSIGNED NOT NULL,
+  
+                                     PRIMARY KEY (`idpedido`),
+  
+                                     UNIQUE INDEX `idpedido_UNIQUE` (`idpedido` ASC),
+  
+                                     INDEX `fk_cod_cliente_idx` (`cod_cliente` ASC),
+ 
+                                     INDEX `fk_cod_funcionario_idx` (`cod_funcionario` ASC),
+  
+                                     CONSTRAINT `fk_cod_cliente`
+    FOREIGN KEY (`cod_cliente`)
+    REFERENCES `pizzaria`.`cliente` (`idcliente`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+  
+                                     CONSTRAINT `fk_cod_funcionario`
+    FOREIGN KEY (`cod_funcionario`)
+    REFERENCES `pizzaria`.`funcionario` (`idfuncionario`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE);
+
+CREATE TABLE `pizzaria`.`itens_pedido` (
+  `iditens_pedido` INT UNSIGNED NOT NULL,
+  
+                                          `cod_pedido` VARCHAR(50) NOT NULL,
+  
+                                          `cod_produto` INT UNSIGNED NOT NULL,
+  
+                                          `quantidade` INT UNSIGNED NOT NULL,
+  
+                                          `valor_porproduto` DECIMAL(2) UNSIGNED NOT NULL,
+ 
+                                           PRIMARY KEY (`iditens_pedido`),
+ 
+                                           UNIQUE INDEX `cod_pedido_UNIQUE` (`cod_pedido` ASC),
+ 
+                                           INDEX `fk_cod_produto_idx` (`cod_produto` ASC),
+  
+                                           CONSTRAINT `fk_cod_pedido`
+    FOREIGN KEY (`cod_pedido`)
+    REFERENCES `pizzaria`.`pedido` (`idpedido`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  
+                                           CONSTRAINT `fk_cod_produto`
+    FOREIGN KEY (`cod_produto`)
+    REFERENCES `pizzaria`.`produto` (`idproduto`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE);

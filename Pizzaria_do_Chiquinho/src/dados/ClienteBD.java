@@ -45,23 +45,15 @@ public class ClienteBD {
 	public boolean inserirClienBD(Cliente cliente) throws SQLException{
 		
 		boolean inserido = false;
-		try {
 			inserir.setString(1, cliente.getNome());
 			inserir.setString(2, cliente.getEndereco());
 			inserir.setString(3, cliente.getCpf());
 			inserir.setString(4, cliente.getTelefone());
 			
 			inserido = inserir.execute();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			ConexaoBD.closeConnection(con, inserir);
-			e.printStackTrace();
+		
 			
-		}
-		finally{
-			ConexaoBD.closeConnection(con);
-		}
-			
+	
 		return inserido;
 	}
 	
