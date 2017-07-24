@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import dados.exception.BuscaProdutoErro;
 import principal.Itens_pedido;
 import principal.Produto;
 
@@ -51,7 +52,7 @@ public class Itens_pedidoBD{
 	
 		return inserido;
 	}
-	public Itens_pedido buscarProdutos(String codigo) throws SQLException, ClassNotFoundException{
+	public Itens_pedido buscarProdutos(String codigo) throws SQLException, ClassNotFoundException, BuscaProdutoErro{
 		prod = null;
 		itens = new Itens_pedido();
 		
@@ -62,8 +63,8 @@ public class Itens_pedidoBD{
 		
 			prod = new ProdutoBD();
 			while(rs.next()){
-				itens.addProduto(new Produto(rs.getInt("cod_produto"),prod.buscarProdBD(rs.getInt("cod_produto")).getNome(),
-						rs.getInt("quantidade"),prod.buscarProdBD(rs.getInt("cod_produto")).getPreco()));
+				itens.addProduto(new Produto(rs.getInt("cod_produto"),prod.buscar(rs.getInt("cod_produto")).getNome(),
+						rs.getInt("quantidade"),prod.buscar(rs.getInt("cod_produto")).getPreco()));
 				
 			}
 		

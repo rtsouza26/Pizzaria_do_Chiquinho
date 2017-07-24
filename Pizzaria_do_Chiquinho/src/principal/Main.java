@@ -23,27 +23,9 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		/*String login;
-		String senha;
-		Scanner entrada = new Scanner(System.in);
 		
 		
-		System.out.println("Login :");
-		login = entrada.next();
-		System.out.println("");
-		System.out.println("Senha :");
-		senha = entrada.next();
-		
-		LoginBD funcBD = new LoginBD();
-		Funcionarios func = null;
-		if((func = funcBD.checkLogin(login, senha))!=null){
-			
-			System.out.println("Usuário correto");
-		}else{
-			System.out.println("Login ou Senha errados");
-		}*/
-		
-		new TLogin().setVisible(true);	
+		//new TLogin().setVisible(true);	
 		
 	}
 

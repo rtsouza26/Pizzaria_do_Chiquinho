@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dados.exception.BuscaProdutoErro;
 import principal.Cliente;
 import principal.Funcionario;
 import principal.Itens_pedido;
@@ -73,7 +74,7 @@ public class PedidoBD {
 		
 		
 	}
-	public Pedido buscarPedidoBD(String cod) throws ClassNotFoundException, SQLException{
+	public Pedido buscarPedidoBD(String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		Pedido pedido = null;
 		clienteBD = new ClienteBD();
 		funcBD = new FuncionarioBD();
@@ -97,7 +98,7 @@ public class PedidoBD {
 		return pedido;
 	}
 	
-	public boolean removerPedidoBD( String cod) throws ClassNotFoundException, SQLException{
+	public boolean removerPedidoBD( String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		boolean removido = false;
 		Pedido pedido = new Pedido();
 		itens = new Itens_pedidoBD();
@@ -112,7 +113,7 @@ public class PedidoBD {
 		return removido;
 	}
 	
-	public boolean atualizarPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException{
+	public boolean atualizarPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		boolean atualizado = false;
 		
 		if(this.removerPedidoBD(pedido.getCodigo())){
@@ -125,7 +126,7 @@ public class PedidoBD {
 		return atualizado;
 	}
 	
-	public List<Pedido> listarPedidoBD() throws ClassNotFoundException, SQLException{
+	public List<Pedido> listarPedidoBD() throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		List<Pedido> pedidos = null;
 		clienteBD = new ClienteBD();
 		funcBD = new FuncionarioBD();

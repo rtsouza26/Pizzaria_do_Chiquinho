@@ -12,8 +12,8 @@ import java.util.logging.*;
 public class ConexaoBD {
 	
 	static final String driver = "com.mysql.jdbc.Driver";
-	static final String user = "root";
-	static final String pass = "rtsouza26";
+	static final String user = "admin";
+	static final String pass = "12345";
 	static final String url = "jdbc:mysql://localhost:3306/pizzaria";
 	
 	static final String nao  = "Não conectou";

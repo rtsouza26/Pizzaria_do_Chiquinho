@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import dados.PedidoBD;
+import dados.exception.BuscaProdutoErro;
 import principal.Pedido;
 
 public class CadastroPedido {
@@ -32,7 +33,7 @@ public class CadastroPedido {
 		}
 	}
 	
-	public Pedido buscarPedido(String cod) throws ClassNotFoundException, SQLException{
+	public Pedido buscarPedido(String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		Pedido aux = null;
 		if(Integer.parseInt(cod)>0){
 			if(pedidoBD.existeBD(cod)){
@@ -47,7 +48,7 @@ public class CadastroPedido {
 		return aux;
 	}
 	
-	public void removerPedido(String cod) throws ClassNotFoundException, SQLException{
+	public void removerPedido(String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		
 		if (Integer.parseInt(cod)>0){
 			if(pedidoBD.existeBD(cod)){
@@ -64,7 +65,7 @@ public class CadastroPedido {
 		}
 	}
 	
-	public void atualizarPedido(Pedido pedido) throws ClassNotFoundException, SQLException{
+	public void atualizarPedido(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		
 		if((Integer.parseInt(pedido.getCodigo()))>0){
 			if(pedidoBD.existeBD(pedido.getCodigo())){
@@ -80,7 +81,7 @@ public class CadastroPedido {
 			System.out.println(invalido);
 		}
 	}
-	public List<Pedido> listarPedido() throws ClassNotFoundException, SQLException{
+	public List<Pedido> listarPedido() throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		
 		return pedidoBD.listarPedidoBD();
 		

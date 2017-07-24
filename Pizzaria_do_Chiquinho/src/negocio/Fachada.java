@@ -3,6 +3,16 @@ package negocio;
 import java.sql.SQLException;
 import java.util.List;
 
+import dados.exception.AtualizarProdutoErro;
+import dados.exception.BuscaProdutoErro;
+import dados.exception.InserirProdutoErro;
+import dados.exception.ListarProdutoErro;
+import dados.exception.RemoverProdutoErro;
+import negocio.exception.ProdutoExistenteErro;
+import negocio.exception.ProdutoInvalidoErro;
+import negocio.exception.ProdutoNomeInvalidoErro;
+import negocio.exception.ProdutoPrecoInvalidoErro;
+import negocio.exception.ProdutoQuantidadeInvalidaErro;
 import principal.Pedido;
 import principal.Produto;
 import principal.Funcionario;
@@ -29,32 +39,34 @@ public class Fachada {
 		this.pedido.inserirPedido(pedido);
 	}
 	
-	public void remover(Pedido pedido) throws ClassNotFoundException, SQLException{
+	public void remover(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		this.pedido.removerPedido(pedido.getCodigo());
 	}
-	public Pedido buscar(Pedido pedido) throws ClassNotFoundException, SQLException{
+	public Pedido buscar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		return this.pedido.buscarPedido(pedido.getCodigo());
 	}
-	public void atualizar(Pedido pedido) throws ClassNotFoundException, SQLException{
+	public void atualizar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		this.pedido.atualizarPedido(pedido);
 	}
-	public List<Pedido> listar() throws ClassNotFoundException, SQLException{
+	public List<Pedido> listar() throws ClassNotFoundException, SQLException, BuscaProdutoErro{
 		return this.pedido.listarPedido();
 	}
 	
-	public void inserir(Produto produto) throws SQLException{
+	public void inserir(Produto produto) throws SQLException, InserirProdutoErro, ProdutoInvalidoErro, ProdutoExistenteErro, 
+	ProdutoPrecoInvalidoErro, ProdutoNomeInvalidoErro, ProdutoQuantidadeInvalidaErro{
 		this.produto.inserirProduto(produto);
 	}
-	public void remover(Produto produto) throws SQLException{
+	public void remover(Produto produto) throws SQLException, ClassNotFoundException, BuscaProdutoErro, RemoverProdutoErro, 
+	ProdutoInvalidoErro{
 		this.produto.removerProduto(produto.getNome());
 	}
-	public Produto buscar(Produto produto) throws SQLException{
+	public Produto buscar(Produto produto) throws SQLException, ClassNotFoundException, ProdutoInvalidoErro, BuscaProdutoErro{
 		return this.produto.buscarProduto(produto.getNome());
 	}
-	public void atualizar(Produto produto) throws SQLException{
+	public void atualizar(Produto produto) throws SQLException, ClassNotFoundException, BuscaProdutoErro, AtualizarProdutoErro, ProdutoInvalidoErro{
 		this.produto.atualizarProduto(produto);
 	}
-	public List<Produto> listarProduto() throws SQLException{
+	public List<Produto> listarProduto() throws SQLException, ListarProdutoErro{
 		return this.produto.listarProdutos();
 	}
 	

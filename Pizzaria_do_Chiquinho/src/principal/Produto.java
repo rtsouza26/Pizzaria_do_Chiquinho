@@ -1,5 +1,9 @@
 package principal;
 
+import java.sql.SQLException;
+
+import dados.CodigosBD;
+
 /**Classe para objetos do tipo Produtos, onde serão contidos, valores e métodos para o mesmo.
  * @author 
  * @version 1.0
@@ -13,13 +17,13 @@ public class Produto {
 	private int quantidade;
 	private double preco;
 	
-	public Produto(){
+	public Produto() throws SQLException, ClassNotFoundException{
+		CodigosBD codigo = new CodigosBD();
 		
+		this.codigo = codigo.buscar("cod_produto").getCodigo_produto();
 	}
 	
-	public Produto( 
-			
-			int cod,String nome,int quantidade,double preco){
+	public Produto( int cod,String nome,int quantidade,double preco){
 		this.codigo=cod;
 		this.nome=nome;
 		this.quantidade=quantidade;

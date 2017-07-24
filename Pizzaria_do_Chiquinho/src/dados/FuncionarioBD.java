@@ -17,7 +17,7 @@ import principal.Funcionario;
 
 public class FuncionarioBD{
 
-	private PreparedStatement inserir = null;
+	private PreparedStatement inserir = null;  
 	private PreparedStatement remover = null;
 	private PreparedStatement listar = null;
 	private PreparedStatement buscar = null;
