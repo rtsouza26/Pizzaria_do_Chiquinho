@@ -3,11 +3,19 @@ package negocio;
 import java.sql.SQLException;
 import java.util.List;
 
+import dados.exception.AtualizarFuncionarioErro;
 import dados.exception.AtualizarProdutoErro;
 import dados.exception.BuscaProdutoErro;
+import dados.exception.BuscarFuncionarioErro;
+import dados.exception.InserirFuncionarioErro;
 import dados.exception.InserirProdutoErro;
+import dados.exception.ListarFuncionarioErro;
 import dados.exception.ListarProdutoErro;
+import dados.exception.RemoverFuncionarioErro;
 import dados.exception.RemoverProdutoErro;
+import negocio.exception.FuncionarioExistente;
+import negocio.exception.FuncionarioInexistente;
+import negocio.exception.FuncionarioInvalido;
 import negocio.exception.ProdutoExistenteErro;
 import negocio.exception.ProdutoInvalidoErro;
 import negocio.exception.ProdutoNomeInvalidoErro;
@@ -39,16 +47,16 @@ public class Fachada {
 		this.pedido.inserirPedido(pedido);
 	}
 	
-	public void remover(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
+	public void remover(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
 		this.pedido.removerPedido(pedido.getCodigo());
 	}
-	public Pedido buscar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
+	public Pedido buscar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
 		return this.pedido.buscarPedido(pedido.getCodigo());
 	}
-	public void atualizar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
+	public void atualizar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
 		this.pedido.atualizarPedido(pedido);
 	}
-	public List<Pedido> listar() throws ClassNotFoundException, SQLException, BuscaProdutoErro{
+	public List<Pedido> listar() throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
 		return this.pedido.listarPedido();
 	}
 	
@@ -70,19 +78,19 @@ public class Fachada {
 		return this.produto.listarProdutos();
 	}
 	
-	public void inserir(Funcionario funcionario) throws SQLException{
+	public void inserir(Funcionario funcionario) throws SQLException, FuncionarioInvalido, FuncionarioExistente, InserirFuncionarioErro{
 		this.funcionario.inserirFunc(funcionario);
 	}
-	public void remover(Funcionario funcionario) throws SQLException{
+	public void remover(Funcionario funcionario) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, BuscarFuncionarioErro{
 		this.funcionario.removerFunc(funcionario.getLogin());
 	}
-	public Funcionario buscar(Funcionario funcionario) throws SQLException{
+	public Funcionario buscar(Funcionario funcionario) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, BuscarFuncionarioErro{
 		return this.funcionario.buscarFunc(funcionario.getLogin());
 	}
-	public void atualizar(Funcionario funcionario) throws SQLException{
+	public void atualizar(Funcionario funcionario) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, InserirFuncionarioErro, BuscarFuncionarioErro, AtualizarFuncionarioErro{
 		this.funcionario.atualizarFunc(funcionario);
 	}
-	public List<Funcionario> listarFuncionario() throws SQLException{
+	public List<Funcionario> listarFuncionario() throws SQLException, ListarFuncionarioErro{
 		return this.funcionario.listarFunc();
 	}
 

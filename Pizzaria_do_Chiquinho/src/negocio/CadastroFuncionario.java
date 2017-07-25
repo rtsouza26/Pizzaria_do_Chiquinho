@@ -4,13 +4,19 @@ import java.sql.SQLException;
 import java.util.List;
 
 import dados.FuncionarioBD;
+import dados.exception.AtualizarFuncionarioErro;
+import dados.exception.BuscarFuncionarioErro;
+import dados.exception.InserirFuncionarioErro;
+import dados.exception.ListarFuncionarioErro;
+import dados.exception.RemoverFuncionarioErro;
 import principal.Funcionario;
+import negocio.exception.*;
 
 public class CadastroFuncionario {
 	
 	private FuncionarioBD funcBD;
-	private String invalido = "Funcionario Inválido";
-	private String naoexiste = "Funcionario não existe";
+	//private String invalido = "Funcionario Inválido";
+	//private String naoexiste = "Funcionario não existe";
 	
 	
 	
@@ -18,7 +24,7 @@ public class CadastroFuncionario {
 		funcBD = new FuncionarioBD();
 	}
 	
-	public void inserirFunc(Funcionario func) throws SQLException{
+	public void inserirFunc(Funcionario func) throws SQLException, FuncionarioInvalido, FuncionarioExistente, InserirFuncionarioErro{
 		
 		if(func != null){
 			if(!(funcBD.existeBD(func.getLogin()))){
@@ -28,61 +34,60 @@ public class CadastroFuncionario {
 					System.out.println("Não foi possível cadastrar o funcionario");
 				}
 			}else{
-				System.out.println("Funcionario já existe");
+				throw new FuncionarioExistente();
 			}
 		}else{
-			System.out.println(invalido);
+			throw new FuncionarioInvalido();
 		}
 	}
 	
 	
-	//Daqui pra baixo foi eu que fiz, qualquer erro vcs me avisem, blz?
-	public Funcionario buscarFunc(String login) throws SQLException{
+	public Funcionario buscarFunc(String cpf) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, BuscarFuncionarioErro{
 		Funcionario aux = null;
-		if(login!=null){
-			if(funcBD.existeBD(login)){
-				aux = funcBD.buscarFuncBD(login); 
+		if(cpf!=null){
+			if(funcBD.existeBD(cpf)){
+				aux = funcBD.buscarFuncBD(cpf); 
 			}else{
-				System.out.println(naoexiste);
+				throw new FuncionarioInexistente();
 			}
 		}else{
-			System.out.println(invalido);
+			throw new FuncionarioInvalido();
 		}
 		return aux;
 	}
-	public void removerFunc(String login) throws SQLException{
-		if(login!=null){
-			if(funcBD.existeBD(login)){	
-				if(this.funcBD.removerFuncBD(login)){
+	public void removerFunc(String cpf) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, BuscarFuncionarioErro{
+		if(cpf!=null){
+			if(funcBD.existeBD(cpf)){	
+				if(this.funcBD.removerFuncBD(cpf)){
 					System.out.println("Funcionário deletado com sucesso");
 				}else{
 					System.out.println("Erro ao deletar funcionário");
 				}
 			}else{
-				System.out.println(naoexiste);
+				throw new FuncionarioInexistente();
 			}	
 		}else{
-			System.out.println(invalido);
+			throw new FuncionarioInvalido();
 		}		
 	}
-	public void atualizarFunc(Funcionario func) throws SQLException{
+	public void atualizarFunc(Funcionario func) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, InserirFuncionarioErro, BuscarFuncionarioErro, AtualizarFuncionarioErro{
 			
 			if(func!=null){
-				if(funcBD.existeBD(func.getLogin())){
+				if(funcBD.existeBD(func.getCpf())){
 					if(funcBD.atualizarFuncBD(func)){
 						System.out.println("Funcionário atualizado com sucesso");
 					}else{
 						System.out.println("Não foi possível atualizar o funcionário");
 					}
 				}else{
-					System.out.println(naoexiste);
+					throw new FuncionarioInexistente();
 				}
 			}else{
-				System.out.println(invalido);
+				throw new FuncionarioInvalido();
 			}
 	}
 	
-	public List<Funcionario> listarFunc() throws SQLException{
+	public List<Funcionario> listarFunc() throws SQLException, ListarFuncionarioErro{
 		
 		return funcBD.listarFuncBD();
 	

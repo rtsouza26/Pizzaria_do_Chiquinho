@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dados.exception.BuscaProdutoErro;
+import dados.exception.BuscarFuncionarioErro;
 import principal.Cliente;
 import principal.Funcionario;
 import principal.Itens_pedido;
@@ -26,7 +27,7 @@ public class PedidoBD {
 	private FuncionarioBD funcBD;
 	private Itens_pedidoBD itens ;
 	
-	
+//Eu precisei mexer em pedidoBD e cadastro pedido pois haviam métodos que chamavam métodos de funcionários, que é da minha parte, eu apenas coloquei os exceptions de Funcionários que era preciso	
 	public PedidoBD() throws ClassNotFoundException, SQLException{
 		
 		con = ConexaoBD.getConnection();
@@ -74,7 +75,7 @@ public class PedidoBD {
 		
 		
 	}
-	public Pedido buscarPedidoBD(String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
+	public Pedido buscarPedidoBD(String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
 		Pedido pedido = null;
 		clienteBD = new ClienteBD();
 		funcBD = new FuncionarioBD();
@@ -98,7 +99,7 @@ public class PedidoBD {
 		return pedido;
 	}
 	
-	public boolean removerPedidoBD( String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
+	public boolean removerPedidoBD( String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
 		boolean removido = false;
 		Pedido pedido = new Pedido();
 		itens = new Itens_pedidoBD();
@@ -113,7 +114,7 @@ public class PedidoBD {
 		return removido;
 	}
 	
-	public boolean atualizarPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro{
+	public boolean atualizarPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
 		boolean atualizado = false;
 		
 		if(this.removerPedidoBD(pedido.getCodigo())){
@@ -126,7 +127,7 @@ public class PedidoBD {
 		return atualizado;
 	}
 	
-	public List<Pedido> listarPedidoBD() throws ClassNotFoundException, SQLException, BuscaProdutoErro{
+	public List<Pedido> listarPedidoBD() throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
 		List<Pedido> pedidos = null;
 		clienteBD = new ClienteBD();
 		funcBD = new FuncionarioBD();
