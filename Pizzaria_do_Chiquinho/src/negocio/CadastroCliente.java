@@ -3,21 +3,26 @@ package negocio;
 import java.sql.SQLException;
 import java.util.List;
 import dados.ClienteBD;
+import dados.exception.AtualizarClienteErro;
+import dados.exception.BuscarClienteErro;
+import dados.exception.InserirClienteErro;
+import dados.exception.ListarClienteErro;
+import dados.exception.RemoverClienteErro;
+import negocio.exception.ClienteExistenteErro;
+import negocio.exception.ClienteInexistenteErro;
+import negocio.exception.ClienteInvalidoErro;
 import principal.Cliente;
-import principal.Funcionario;
 
 
 public class CadastroCliente {
 
 	private ClienteBD clienteBD;
-	private String invalido = "Cliente Inválido";
-	private String naoexiste = "Cliente não existe";
 	
 	public CadastroCliente() throws ClassNotFoundException, SQLException{
 		clienteBD= new ClienteBD();
 }
 	
-	public void inserirCliente(Cliente cliente) throws SQLException{
+	public void inserirCliente(Cliente cliente) throws SQLException, InserirClienteErro, ClienteExistenteErro, ClienteInvalidoErro{
 		
 		if(cliente != null){
 			if(!(clienteBD.existeBD(cliente.getCpf()))){	
@@ -27,65 +32,61 @@ public class CadastroCliente {
 						System.out.println("Não foi possível cadastrar o cliente");
 					}			
 				}else{
-					System.out.println("Funcionario já existe");
+					throw new ClienteExistenteErro();
 				}			
 			}else{
-				System.out.println(this.invalido);
+				throw new ClienteInvalidoErro();
 			}	
 		}
 		
 	
-	public void removerCliente(String cpf) throws SQLException{
+	public void removerCliente(String cpf) throws SQLException, BuscarClienteErro, RemoverClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
 		
 		if(cpf != null){
 			if(clienteBD.existeBD(cpf)){
 				if(clienteBD.removerClienBD(cpf)){
 					System.out.println("Cliente deletado com sucesso");
-				}else{
-					System.out.println("Erro ao deletar cliente");
 				}
 			}else{
-				System.out.println(this.naoexiste);
+				throw new ClienteInexistenteErro();
 			}
 		}else{
-			System.out.println(this.invalido);
+			throw new ClienteInvalidoErro();
 		}
 	}
 	
 	
-	public Cliente buscarCliente(String cpf) throws SQLException {
+	public Cliente buscarCliente(String cpf) throws SQLException, BuscarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro {
 		Cliente aux = null;
 		if(cpf != null){
 			if(clienteBD.existeBD(cpf)){
 				aux = clienteBD.buscarClienBD(cpf);
 			}else{
-				System.out.println(this.naoexiste);
+				throw new ClienteInexistenteErro();
 			}
 		}else{
-			System.out.println(this.invalido);
+			throw new ClienteInvalidoErro();
 		}
 		return aux;
 	}
 	
-	public void atualizarCliente(Cliente cliente) throws SQLException{
+	public void atualizarCliente(Cliente cliente) throws SQLException, InserirClienteErro, BuscarClienteErro, RemoverClienteErro, AtualizarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
 		
 		if(cliente != null){
 			if(clienteBD.existeBD(cliente.getCpf())){
 				if(clienteBD.atualizarClienBD(cliente)){
 					System.out.println("Cliente atualizado com sucesso");
-				}else{
-					System.out.println("Não foi possivel atulizar o cliente");
 				}
 			}else{
-				System.out.println(naoexiste);
+				throw new ClienteInexistenteErro();
 			}
 		}else{
-			System.out.println(invalido);
+			throw new ClienteInvalidoErro();
 		}
 	}
 	
 	
-	public List<Cliente> listarCliente() throws SQLException{
+	public List<Cliente> listarCliente() throws SQLException, ListarClienteErro{
 		
 		return clienteBD.listarClienBD();
 	

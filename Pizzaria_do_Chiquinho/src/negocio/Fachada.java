@@ -6,6 +6,7 @@ import java.util.List;
 import dados.exception.AtualizarFuncionarioErro;
 import dados.exception.AtualizarProdutoErro;
 import dados.exception.BuscaProdutoErro;
+import dados.exception.BuscarClienteErro;
 import dados.exception.BuscarFuncionarioErro;
 import dados.exception.InserirFuncionarioErro;
 import dados.exception.InserirProdutoErro;
@@ -47,16 +48,16 @@ public class Fachada {
 		this.pedido.inserirPedido(pedido);
 	}
 	
-	public void remover(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
+	public void remover(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
 		this.pedido.removerPedido(pedido.getCodigo());
 	}
-	public Pedido buscar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
+	public Pedido buscar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
 		return this.pedido.buscarPedido(pedido.getCodigo());
 	}
-	public void atualizar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
+	public void atualizar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
 		this.pedido.atualizarPedido(pedido);
 	}
-	public List<Pedido> listar() throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro{
+	public List<Pedido> listar() throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
 		return this.pedido.listarPedido();
 	}
 	
