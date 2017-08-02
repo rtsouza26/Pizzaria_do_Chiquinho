@@ -25,6 +25,7 @@ public class FuncionarioBD{
 	private PreparedStatement buscarlogin = null;
 	private ResultSet rs = null;
 	private Connection con = null;
+	private PreparedStatement atualizar=null;
 	
 	
 	public FuncionarioBD() throws ClassNotFoundException, SQLException{
@@ -32,36 +33,33 @@ public class FuncionarioBD{
 		con = ConexaoBD.getConnection();
 		
 		
-			inserir = con.prepareStatement("INSERT INTO funcionarios(nome,endereco,cpf,telefone,tipo,login,senha) "
+			inserir = con.prepareStatement("INSERT INTO funcionarios(nome,cod_endereco,cpf,telefone,cod_tipo,login,senha) "
 					+ "VALUE (?,?,?,?,?,?,?)");
 			remover = con.prepareStatement("DELETE FROM funcionarios WHERE cpf = ?");
 			buscar = con.prepareStatement("SELECT * FROM funcionarios WHERE cpf = ?");
 			buscarlogin = con.prepareStatement("SELECT * FROM funcionarios WHERE cpf = ?");
 			listar = con.prepareStatement("SELECT * FROM Funcionarios");
-		
+			atualizar = con.prepareStatement("UPDATE produto SET nome = ?, cod_endereco = ?, telefone = ?, cod_tipo = ?, login = ?, senha = ? WHERE cpf = ? ");
 	}
 	
 	
-	public boolean inserirFuncBD(Funcionario func) throws SQLException, InserirFuncionarioErro{
+	public void inserirFuncBD(Funcionario func) throws SQLException, InserirFuncionarioErro{
 		
-		boolean inserido = false;
+		
 		
 			inserir.setString(1, func.getNome());
-			inserir.setString(2, func.getEndereco());
+			inserir.setInt(2, func.getEndereco());
 			inserir.setString(3,func.getCpf());
 			inserir.setString(4, func.getTelefone());
-			inserir.setString(5,func.getTipo());
+			inserir.setInt(5,func.getTipo());
 			inserir.setString(6,func.getLogin());
 			inserir.setString(7,func.getSenha());
 			
-			inserido = inserir.execute();
-	
-			ConexaoBD.closeConnection(con);
-		if(inserido==false){
-			throw new InserirFuncionarioErro();
-		}
+			if(!inserir.execute()){
+				throw new InserirFuncionarioErro(); 
+			};
 			
-		return inserido;
+		
 	}
 	public boolean existeBD(String cpf) throws SQLException{
 		boolean existe = false;
@@ -70,7 +68,7 @@ public class FuncionarioBD{
 				if((rs = buscarlogin.executeQuery())!=null){
 					existe = true;
 				}
-				ConexaoBD.closeConnection(con);
+				//ConexaoBD.closeConnection(con);
 			
 			
 		 return existe;
@@ -86,55 +84,48 @@ public class FuncionarioBD{
 				func = new Funcionario();
 				func.setCodigo(rs.getInt("cod"));
 				func.setNome(rs.getString("nome"));
-				func.setEndereco(rs.getString("endereco"));
+				func.setEndereco(rs.getInt("cod_endereco"));
 				func.setCpf(rs.getString("cpf"));
 				func.setTelefone(rs.getString("telefone"));
-				func.setTipo(rs.getString("tipo"));
+				func.setTipo(rs.getInt("cod_tipo"));
 				func.setLogin("*****");
 				func.setSenha("*****");
-					
+				
+				return func;
+			}else{
+				throw new BuscarFuncionarioErro();
 			}
-			
 		
-			ConexaoBD.closeConnection(con,rs);
-		if(func==null){
-			throw new BuscarFuncionarioErro();
-		}
 		
-		return func;
 	}
 	
 	
-	public boolean removerFuncBD(String cpf) throws SQLException, RemoverFuncionarioErro, BuscarFuncionarioErro{
-		boolean removido = false;
-		Funcionario func = new Funcionario();
-		
-		func = this.buscarFuncBD(cpf);
-		
-			remover.setInt(1, func.getCodigo());
-			removido = remover.execute();
+	public void removerFuncBD(String cpf) throws SQLException, RemoverFuncionarioErro, BuscarFuncionarioErro{
 	
-			ConexaoBD.closeConnection(con, remover);
-			
-		if(removido==false){
+		
+		remover.setInt(1, this.buscarFuncBD(cpf).getCodigo());
+		
+		if(!remover.execute()){
 			throw new RemoverFuncionarioErro();
 		}
 			
-		return removido;
-	}
-	public boolean atualizarFuncBD(Funcionario func) throws SQLException, RemoverFuncionarioErro, InserirFuncionarioErro, BuscarFuncionarioErro, AtualizarFuncionarioErro{
-		boolean atualizado = false;
 		
-		if(this.removerFuncBD(func.getNome())){
-			if(this.inserirFuncBD(func)){
-				atualizado = true;
-			}
-		}
-		if(atualizado==false){
+	}
+	public void atualizarFuncBD(Funcionario func) throws SQLException, BuscarFuncionarioErro, AtualizarFuncionarioErro{
+		buscarFuncBD(func.getCpf());
+		
+		atualizar.setString(1, func.getNome());
+		atualizar.setInt(2, func.getEndereco());
+		atualizar.setString(4, func.getTelefone());
+		atualizar.setInt(5, func.getTipo());
+		atualizar.setString(6,func.getLogin());
+		atualizar.setString(7, func.getSenha());
+		
+		if(!atualizar.execute()){
 			throw new AtualizarFuncionarioErro();
 		}
 		
-		return atualizado;
+		
 	}
 	
 	public List<Funcionario> listarFuncBD() throws SQLException, ListarFuncionarioErro{
@@ -147,19 +138,19 @@ public class FuncionarioBD{
 					funcionarios.add(new Funcionario(
 							rs.getInt("cod"),
 							rs.getString("nome"),
-							rs.getString("endereco"),
+							rs.getInt("cod_endereco"),
 							rs.getString("cpf"),
 							rs.getString("telefone"),
-							rs.getString("tipo"),
+							rs.getInt("cod_tipo"),
 							rs.getString("login")));
 				}
-			}
-		
-		if(funcionarios==null){
-			throw new ListarFuncionarioErro();
+				return funcionarios;
+			}else{
+			
+				throw new ListarFuncionarioErro();
 		}
 			
-		return funcionarios;
+		
 	}
 	
 }

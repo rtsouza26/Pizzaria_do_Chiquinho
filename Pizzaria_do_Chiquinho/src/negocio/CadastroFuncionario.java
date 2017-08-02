@@ -28,11 +28,7 @@ public class CadastroFuncionario {
 		
 		if(func != null){
 			if(!(funcBD.existeBD(func.getLogin()))){
-				if(funcBD.inserirFuncBD(func)){
-					System.out.println("Funcionario cadastrado com sucesso");
-				}else{
-					System.out.println("Não foi possível cadastrar o funcionario");
-				}
+				funcBD.inserirFuncBD(func);
 			}else{
 				throw new FuncionarioExistente();
 			}
@@ -57,12 +53,9 @@ public class CadastroFuncionario {
 	}
 	public void removerFunc(String cpf) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, BuscarFuncionarioErro{
 		if(cpf!=null){
-			if(funcBD.existeBD(cpf)){	
-				if(this.funcBD.removerFuncBD(cpf)){
-					System.out.println("Funcionário deletado com sucesso");
-				}else{
-					System.out.println("Erro ao deletar funcionário");
-				}
+			if(this.funcBD.existeBD(cpf)){	
+				this.funcBD.removerFuncBD(cpf);
+				
 			}else{
 				throw new FuncionarioInexistente();
 			}	
@@ -70,15 +63,17 @@ public class CadastroFuncionario {
 			throw new FuncionarioInvalido();
 		}		
 	}
-	public void atualizarFunc(Funcionario func) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, InserirFuncionarioErro, BuscarFuncionarioErro, AtualizarFuncionarioErro{
+	public void atualizarFunc(Funcionario func) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, AtualizarFuncionarioErro, BuscarFuncionarioErro{
 			
 			if(func!=null){
-				if(funcBD.existeBD(func.getCpf())){
-					if(funcBD.atualizarFuncBD(func)){
-						System.out.println("Funcionário atualizado com sucesso");
-					}else{
-						System.out.println("Não foi possível atualizar o funcionário");
+				if(this.funcBD.existeBD(func.getCpf())){
+					try {
+						this.funcBD.atualizarFuncBD(func);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
+						
 				}else{
 					throw new FuncionarioInexistente();
 				}
@@ -89,7 +84,7 @@ public class CadastroFuncionario {
 	
 	public List<Funcionario> listarFunc() throws SQLException, ListarFuncionarioErro{
 		
-		return funcBD.listarFuncBD();
+		return this.funcBD.listarFuncBD();
 	
 	}
 	

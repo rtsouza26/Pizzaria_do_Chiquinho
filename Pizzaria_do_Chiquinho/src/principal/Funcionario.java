@@ -11,10 +11,10 @@ package principal;
 public class Funcionario {
 	private int codigo;
 	private String nome;
-	private String endereco;
+	private int endereco;
 	private String cpf;
 	private String telefone;
-	private String tipo;
+	private int tipo;
 	
 	private String senha;
 	private String login;
@@ -24,7 +24,7 @@ public class Funcionario {
 		
 	}
 	public Funcionario( 
-			int cod,String nome,String endereco,String cpf,String telefone,String tipo,String login){
+			int cod,String nome,int endereco,String cpf,String telefone,int tipo,String login){
 		this.codigo=cod;
 		this.nome=nome;
 		this.endereco=endereco;
@@ -34,10 +34,10 @@ public class Funcionario {
 		this.login=login;
 	}
 	
-	public String getTipo() {
+	public int getTipo() {
 		return tipo;
 	}
-	public void setTipo(String tipo) {
+	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
 	
@@ -53,10 +53,10 @@ public class Funcionario {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getEndereco() {
+	public int getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(String endereco) {
+	public void setEndereco(int endereco) {
 		this.endereco = endereco;
 	}
 	public String getCpf() {
