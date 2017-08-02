@@ -12,6 +12,7 @@ import principal.Funcionario;
 
 /**Classe para a conexão do classe funcionários com o banco de dados, onde serão contidos, valores e métodos para o mesmo.
  * @author 
+ * 
  * @version 1.0
  * @since Release 0
  */
@@ -116,10 +117,11 @@ public class FuncionarioBD{
 		
 		atualizar.setString(1, func.getNome());
 		atualizar.setInt(2, func.getEndereco());
-		atualizar.setString(4, func.getTelefone());
-		atualizar.setInt(5, func.getTipo());
-		atualizar.setString(6,func.getLogin());
-		atualizar.setString(7, func.getSenha());
+		atualizar.setString(3, func.getTelefone());
+		atualizar.setInt(4, func.getTipo());
+		atualizar.setString(5,func.getLogin());
+		atualizar.setString(6, func.getSenha());
+		atualizar.setString(7,func.getCpf());
 		
 		if(!atualizar.execute()){
 			throw new AtualizarFuncionarioErro();
