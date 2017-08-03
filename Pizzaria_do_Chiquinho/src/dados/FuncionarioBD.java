@@ -52,7 +52,7 @@ public class FuncionarioBD{
 			inserir.setInt(2, func.getEndereco());
 			inserir.setString(3,func.getCpf());
 			inserir.setString(4, func.getTelefone());
-			inserir.setInt(5,func.getTipo());
+			inserir.setString(5,func.getTipo());
 			inserir.setString(6,func.getLogin());
 			inserir.setString(7,func.getSenha());
 			
@@ -88,7 +88,7 @@ public class FuncionarioBD{
 				func.setEndereco(rs.getInt("cod_endereco"));
 				func.setCpf(rs.getString("cpf"));
 				func.setTelefone(rs.getString("telefone"));
-				func.setTipo(rs.getInt("cod_tipo"));
+				func.setTipo(rs.getString("cod_tipo"));
 				func.setLogin("*****");
 				func.setSenha("*****");
 				
@@ -118,7 +118,7 @@ public class FuncionarioBD{
 		atualizar.setString(1, func.getNome());
 		atualizar.setInt(2, func.getEndereco());
 		atualizar.setString(3, func.getTelefone());
-		atualizar.setInt(4, func.getTipo());
+		atualizar.setString(4, func.getTipo());
 		atualizar.setString(5,func.getLogin());
 		atualizar.setString(6, func.getSenha());
 		atualizar.setString(7,func.getCpf());
@@ -143,7 +143,7 @@ public class FuncionarioBD{
 							rs.getInt("cod_endereco"),
 							rs.getString("cpf"),
 							rs.getString("telefone"),
-							rs.getInt("cod_tipo"),
+							rs.getString("cod_tipo"),
 							rs.getString("login")));
 				}
 				return funcionarios;

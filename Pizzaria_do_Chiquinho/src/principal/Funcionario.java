@@ -14,7 +14,7 @@ public class Funcionario {
 	private int endereco;
 	private String cpf;
 	private String telefone;
-	private int tipo;
+	private String tipo;
 	
 	private String senha;
 	private String login;
@@ -24,7 +24,7 @@ public class Funcionario {
 		
 	}
 	public Funcionario( 
-			int cod,String nome,int endereco,String cpf,String telefone,int tipo,String login){
+			int cod,String nome,int endereco,String cpf,String telefone,String tipo,String login){
 		this.codigo=cod;
 		this.nome=nome;
 		this.endereco=endereco;
@@ -34,10 +34,10 @@ public class Funcionario {
 		this.login=login;
 	}
 	
-	public int getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
-	public void setTipo(int tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 	

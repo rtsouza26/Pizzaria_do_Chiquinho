@@ -128,11 +128,11 @@ public class TLogin extends javax.swing.JFrame  {
 			if((funcheck=funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword())))!=null){
 			 // new Principal().setVisible(true);
 				this.dispose();
-				if(funcheck.getTipo()==1){
+				if(funcheck.getTipo().equals("Administrador")){
 					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
-				}if(funcheck.getTipo()==2){
+				}if(funcheck.getTipo().equals("Atendente")){
 					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
-				}if (funcheck.getTipo()==3){
+				}if (funcheck.getTipo().equals("Cozinha")){
 					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
 				}
 				
