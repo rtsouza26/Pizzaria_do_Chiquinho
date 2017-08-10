@@ -18,6 +18,7 @@ import dados.exception.RemoverProdutoErro;
 import negocio.exception.FuncionarioExistente;
 import negocio.exception.FuncionarioInexistente;
 import negocio.exception.FuncionarioInvalido;
+import negocio.exception.LoginJaExiste;
 import negocio.exception.ProdutoExistenteErro;
 import negocio.exception.ProdutoInvalidoErro;
 import negocio.exception.ProdutoNomeInvalidoErro;
@@ -80,7 +81,7 @@ public class Fachada {
 		return this.produto.listarProdutos();
 	}
 	
-	public void inserir(Funcionario funcionario) throws SQLException, FuncionarioInvalido, FuncionarioExistente, InserirFuncionarioErro{
+	public void inserir(Funcionario funcionario) throws SQLException, FuncionarioInvalido, FuncionarioExistente, InserirFuncionarioErro, LoginJaExiste{
 		this.funcionario.inserirFunc(funcionario);
 	}
 	public void remover(Funcionario funcionario) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, BuscarFuncionarioErro{
