@@ -38,7 +38,7 @@ public class FuncionarioBD{
 					+ "VALUE (?,?,?,?,?,?,?)");
 			remover = con.prepareStatement("DELETE FROM funcionarios WHERE cpf = ?");
 			buscar = con.prepareStatement("SELECT * FROM funcionarios WHERE cpf = ?");
-			buscarlogin = con.prepareStatement("SELECT * FROM funcionarios WHERE cpf = ?");
+			buscarlogin = con.prepareStatement("SELECT * FROM funcionarios WHERE login = ?");
 			listar = con.prepareStatement("SELECT * FROM Funcionarios");
 			atualizar = con.prepareStatement("UPDATE produto SET nome = ?, cod_endereco = ?, telefone = ?, cod_tipo = ?, login = ?, senha = ? WHERE cpf = ? ");
 	}
