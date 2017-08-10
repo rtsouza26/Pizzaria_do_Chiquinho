@@ -24,11 +24,15 @@ public class CadastroFuncionario {
 		funcBD = new FuncionarioBD();
 	}
 	
-	public void inserirFunc(Funcionario func) throws SQLException, FuncionarioInvalido, FuncionarioExistente, InserirFuncionarioErro{
+	public void inserirFunc(Funcionario func) throws SQLException, FuncionarioInvalido, FuncionarioExistente, InserirFuncionarioErro, LoginJaExiste{
 		
 		if(func != null){
-			if(!(funcBD.existeBD(func.getLogin()))){
-				funcBD.inserirFuncBD(func);
+			if(!(funcBD.existeBD(func.getCpf()))){
+				if(!(funcBD.existeLoginBD(func.getLogin()))){
+					funcBD.inserirFuncBD(func);
+				}else{
+					throw new LoginJaExiste();
+				}
 			}else{
 				throw new FuncionarioExistente();
 			}

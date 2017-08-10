@@ -61,12 +61,26 @@ public class FuncionarioBD{
 			};
 			
 		
+	}public boolean existeLoginBD(String login) throws SQLException{
+		boolean existe = false;
+		
+		buscarlogin.setString(1, login);
+		if((rs = buscarlogin.executeQuery())!=null){
+			existe = true;
+		}
+		//ConexaoBD.closeConnection(con);
+	
+	
+		return existe;
+
 	}
+	
+	
 	public boolean existeBD(String cpf) throws SQLException{
 		boolean existe = false;
 			
-				buscarlogin.setString(1, cpf);
-				if((rs = buscarlogin.executeQuery())!=null){
+				buscar.setString(1, cpf);
+				if((rs = buscar.executeQuery())!=null){
 					existe = true;
 				}
 				//ConexaoBD.closeConnection(con);
