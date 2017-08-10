@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import dados.exception.BuscaProdutoErro;
+import dados.exception.RemoverItem_pedidoErro;
+import dados.exception.RemoverProdutoErro;
 import principal.Itens_pedido;
 import principal.Produto;
 
@@ -73,9 +75,14 @@ public class Itens_pedidoBD{
 		return itens;
 	
 	}
-	public void removerProdutos(String codigo ){
+	public void removerProdutos(String codigo ) throws ClassNotFoundException, SQLException, BuscaProdutoErro, RemoverItem_pedidoErro{
+		Itens_pedido item;
+		item= buscarProdutos(codigo);
 		
-		
+		remover.setString(1,codigo);
+		if(!remover.execute()){
+			throw new RemoverItem_pedidoErro();
+		}
 		
 		
 	}

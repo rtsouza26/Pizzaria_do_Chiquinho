@@ -7,6 +7,7 @@ import dados.PedidoBD;
 import dados.exception.BuscaProdutoErro;
 import dados.exception.BuscarClienteErro;
 import dados.exception.BuscarFuncionarioErro;
+import dados.exception.RemoverItem_pedidoErro;
 import principal.Pedido;
 
 public class CadastroPedido {
@@ -50,7 +51,7 @@ public class CadastroPedido {
 		return aux;
 	}
 	
-	public void removerPedido(String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
+	public void removerPedido(String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro, RemoverItem_pedidoErro{
 		
 		if (Integer.parseInt(cod)>0){
 			if(pedidoBD.existeBD(cod)){
@@ -67,7 +68,7 @@ public class CadastroPedido {
 		}
 	}
 	
-	public void atualizarPedido(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
+	public void atualizarPedido(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro, RemoverItem_pedidoErro{
 		
 		if((Integer.parseInt(pedido.getCodigo()))>0){
 			if(pedidoBD.existeBD(pedido.getCodigo())){

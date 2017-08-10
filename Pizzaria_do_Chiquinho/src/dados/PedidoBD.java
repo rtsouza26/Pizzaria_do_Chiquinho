@@ -10,6 +10,7 @@ import java.util.List;
 import dados.exception.BuscaProdutoErro;
 import dados.exception.BuscarClienteErro;
 import dados.exception.BuscarFuncionarioErro;
+import dados.exception.RemoverItem_pedidoErro;
 import principal.Cliente;
 import principal.Funcionario;
 import principal.Itens_pedido;
@@ -100,7 +101,7 @@ public class PedidoBD {
 		return pedido;
 	}
 	
-	public boolean removerPedidoBD( String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
+	public boolean removerPedidoBD( String cod) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro, RemoverItem_pedidoErro{
 		boolean removido = false;
 		Pedido pedido = new Pedido();
 		itens = new Itens_pedidoBD();
@@ -115,7 +116,7 @@ public class PedidoBD {
 		return removido;
 	}
 	
-	public boolean atualizarPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
+	public boolean atualizarPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro, RemoverItem_pedidoErro{
 		boolean atualizado = false;
 		
 		if(this.removerPedidoBD(pedido.getCodigo())){

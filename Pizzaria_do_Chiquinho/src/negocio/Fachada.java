@@ -13,6 +13,7 @@ import dados.exception.InserirProdutoErro;
 import dados.exception.ListarFuncionarioErro;
 import dados.exception.ListarProdutoErro;
 import dados.exception.RemoverFuncionarioErro;
+import dados.exception.RemoverItem_pedidoErro;
 import dados.exception.RemoverProdutoErro;
 import negocio.exception.FuncionarioExistente;
 import negocio.exception.FuncionarioInexistente;
@@ -48,13 +49,13 @@ public class Fachada {
 		this.pedido.inserirPedido(pedido);
 	}
 	
-	public void remover(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
+	public void remover(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro, RemoverItem_pedidoErro{
 		this.pedido.removerPedido(pedido.getCodigo());
 	}
 	public Pedido buscar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
 		return this.pedido.buscarPedido(pedido.getCodigo());
 	}
-	public void atualizar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
+	public void atualizar(Pedido pedido) throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro, RemoverItem_pedidoErro{
 		this.pedido.atualizarPedido(pedido);
 	}
 	public List<Pedido> listar() throws ClassNotFoundException, SQLException, BuscaProdutoErro, BuscarFuncionarioErro, BuscarClienteErro{
