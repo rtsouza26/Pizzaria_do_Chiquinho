@@ -84,11 +84,11 @@ public class Fachada {
 	public void inserir(Funcionario funcionario) throws SQLException, FuncionarioInvalido, FuncionarioExistente, InserirFuncionarioErro, LoginJaExiste{
 		this.funcionario.inserirFunc(funcionario);
 	}
-	public void remover(String cpf) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, BuscarFuncionarioErro{
-		this.funcionario.removerFunc(cpf);
+	public void remover(Funcionario funcionario) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, BuscarFuncionarioErro{
+		this.funcionario.removerFunc(funcionario.getCpf());
 	}
-	public Funcionario buscar(String cpf) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, BuscarFuncionarioErro{
-		return this.funcionario.buscarFunc(cpf);
+	public Funcionario buscar(Funcionario funcionario) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, BuscarFuncionarioErro{
+		return this.funcionario.buscarFunc(funcionario.getCpf());
 	}
 	public void atualizar(Funcionario funcionario) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, InserirFuncionarioErro, BuscarFuncionarioErro, AtualizarFuncionarioErro{
 		this.funcionario.atualizarFunc(funcionario);

@@ -179,8 +179,10 @@ public class FuncionarioGUI extends JFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textField_2.getText() != null){
+					Funcionario func = new Funcionario();
+					func.setCpf(textField_2.getText());
 					try {
-						Fachada.getInstance().buscar(textField_2.getText());
+						Fachada.getInstance().buscar(func);
 					} catch (ClassNotFoundException | SQLException | FuncionarioInexistente | FuncionarioInvalido
 							| BuscarFuncionarioErro e1) {
 						// TODO Auto-generated catch block
@@ -198,15 +200,17 @@ public class FuncionarioGUI extends JFrame {
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(textField_2.getText() != null){
+					Funcionario func = new Funcionario();
+					func.setCpf(textField_2.getText());
 					try {
-						Fachada.getInstance().remover(textField_2.getText());
+						Fachada.getInstance().remover(func);
 					} catch (ClassNotFoundException | SQLException | FuncionarioInexistente | FuncionarioInvalido
 							| BuscarFuncionarioErro | RemoverFuncionarioErro e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 					}
 				}else{
-					JOptionPane.showMessageDialog(null, "Informe o CPF para ser realizado a busca");
+					JOptionPane.showMessageDialog(null, "Informe o CPF para ser realizado a remoção");
 				}
 			}
 		});
