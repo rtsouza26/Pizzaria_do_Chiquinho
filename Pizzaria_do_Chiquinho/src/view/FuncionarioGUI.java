@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import dados.exception.AtualizarFuncionarioErro;
 import dados.exception.BuscarFuncionarioErro;
@@ -28,6 +29,7 @@ import principal.Funcionario;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class FuncionarioGUI extends JFrame {
 
@@ -40,7 +42,7 @@ public class FuncionarioGUI extends JFrame {
 	private JTextField textField_4;
 	private JPasswordField passwordField;
 	private JTextField textField_5;
-	private JTable table;
+	private JTable table_funcionario;
 	private JRadioButton rdbtnAdministrador;
 	private JRadioButton rdbtnCozinha;
 	private JRadioButton rdbtnAtendente;
@@ -79,6 +81,9 @@ public class FuncionarioGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		table_funcionario = new JTable();
+		table_funcionario.setBounds(302, 460, 366, -187);
+		//contentPane.add(table_funcionario);
 		
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setBounds(10, 11, 46, 14);
@@ -245,11 +250,29 @@ public class FuncionarioGUI extends JFrame {
 		});
 		btnAtualizar.setBounds(285, 176, 89, 23);
 		contentPane.add(btnAtualizar);
+		String data[][] = { { "Row1/1", "Row1/2", "Row1/3" },
+	            { "Row2/1", "Row2/2", "Row2/3" },
+	            { "Row3/1", "Row3/2", "Row3/3" },
+	            { "Row4/1", "Row4/2", "Row4/3" }, };
+
+	    String header[] = { "Column 1", "Column 2", "Column 3" };
+		
+		
 		
 		JButton btnListar = new JButton("Listar");
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Listar funcionarios
+				DefaultTableModel modelo = new DefaultTableModel();
+				modelo.setColumnIdentifiers(new String[]{"nome","CPF"});
+				
+				
+				for (int i = 0; i < 100; i++) {
+					modelo.addRow(new String[]{"nome: "+i,"CPF: "+i});
+				}
+				
+				table_funcionario.setModel(modelo);
+				
 			}
 		});
 		btnListar.setBounds(285, 204, 89, 23);
@@ -264,14 +287,6 @@ public class FuncionarioGUI extends JFrame {
 		lblBuscaremooPorCpf.setBounds(456, 36, 145, 14);
 		contentPane.add(lblBuscaremooPorCpf);
 		
-		table = new JTable();
-		table.setBounds(97, 290, 327, 208);
-		contentPane.add(table);
-		
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(408, 290, 17, 208);
-		contentPane.add(scrollBar);
-		
 		rdbtnAdministrador = new JRadioButton("Administrador");
 		rdbtnAdministrador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -279,6 +294,7 @@ public class FuncionarioGUI extends JFrame {
 				rdbtnAtendente.setSelected(false);
 			}
 		});
+		
 		rdbtnAdministrador.setBounds(47, 111, 109, 23);
 		contentPane.add(rdbtnAdministrador);
 		
@@ -301,5 +317,13 @@ public class FuncionarioGUI extends JFrame {
 		});
 		rdbtnAtendente.setBounds(158, 111, 109, 23);
 		contentPane.add(rdbtnAtendente);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(302, 460, 366, -187);
+		scrollPane.add(table_funcionario);
+		contentPane.add(scrollPane);
+		
+		
+		
+		
 	}
 }
