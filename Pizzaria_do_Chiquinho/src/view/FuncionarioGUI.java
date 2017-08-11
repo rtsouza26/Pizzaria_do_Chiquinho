@@ -25,6 +25,9 @@ import negocio.exception.FuncionarioInexistente;
 import negocio.exception.FuncionarioInvalido;
 import negocio.exception.LoginJaExiste;
 import principal.Funcionario;
+import javax.swing.JTable;
+import javax.swing.JTree;
+import javax.swing.JScrollBar;
 
 public class FuncionarioGUI extends JFrame {
 
@@ -36,6 +39,13 @@ public class FuncionarioGUI extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JPasswordField passwordField;
+	private JTextField textField_5;
+	private JTable table;
+	private JRadioButton rdbtnAdministrador;
+	private JRadioButton rdbtnCozinha;
+	private JRadioButton rdbtnAtendente;
+	private JButton btnAtualizar;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -64,7 +74,7 @@ public class FuncionarioGUI extends JFrame {
 	 */
 	public FuncionarioGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 746, 560);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -118,21 +128,6 @@ public class FuncionarioGUI extends JFrame {
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
-		JRadioButton rdbtnAdmnistrador = new JRadioButton("Administrador");
-		rdbtnAdmnistrador.setEnabled(false);
-		rdbtnAdmnistrador.setBounds(43, 107, 109, 23);
-		contentPane.add(rdbtnAdmnistrador);
-		
-		JRadioButton rdbtnCozinha = new JRadioButton("Cozinha");
-		rdbtnCozinha.setEnabled(false);
-		rdbtnCozinha.setBounds(149, 107, 109, 23);
-		contentPane.add(rdbtnCozinha);
-		
-		JRadioButton rdbtnAtendente = new JRadioButton("Atendente");
-		rdbtnAtendente.setEnabled(false);
-		rdbtnAtendente.setBounds(43, 132, 109, 23);
-		contentPane.add(rdbtnAtendente);
-		
 		textField_4 = new JTextField();
 		textField_4.setBounds(47, 177, 86, 20);
 		contentPane.add(textField_4);
@@ -146,7 +141,7 @@ public class FuncionarioGUI extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Funcionario func = new Funcionario();
-				if(textField.getText() != null && textField_1.getText() != null && textField_2.getText() != null && textField_3.getText() != null && textField_4.getText() != null && passwordField.getPassword() != null){
+				if(!(textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty() || textField_4.getText().isEmpty() || passwordField.getText().isEmpty() || (!(rdbtnAdministrador.isSelected()) && !(rdbtnAtendente.isSelected()) && !(rdbtnCozinha.isSelected())))){
 					func.setCpf(textField_2.getText());
 					func.setNome(textField.getText());
 					func.setEndereco(textField_1.getText());
@@ -154,8 +149,8 @@ public class FuncionarioGUI extends JFrame {
 					func.setLogin(textField_4.getText());
 					String senha = new String (passwordField.getPassword());
 					func.setSenha(senha);
-					if(rdbtnAdmnistrador.isSelected()){
-						func.setTipo(rdbtnAdmnistrador.getText());
+					if(rdbtnAdministrador.isSelected()){
+						func.setTipo(rdbtnAdministrador.getText());
 					}else if(rdbtnAtendente.isSelected()){
 						func.setTipo(rdbtnAtendente.getText());
 					}else if(rdbtnCozinha.isSelected()){
@@ -178,9 +173,9 @@ public class FuncionarioGUI extends JFrame {
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textField_2.getText() != null){
+				if(!(textField_5.getText().isEmpty())){
 					Funcionario func = new Funcionario();
-					func.setCpf(textField_2.getText());
+					func.setCpf(textField_5.getText());
 					try {
 						Fachada.getInstance().buscar(func);
 					} catch (ClassNotFoundException | SQLException | FuncionarioInexistente | FuncionarioInvalido
@@ -199,9 +194,9 @@ public class FuncionarioGUI extends JFrame {
 		JButton btnRemover = new JButton("Remover");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textField_2.getText() != null){
+				if(!(textField_5.getText().isEmpty())){
 					Funcionario func = new Funcionario();
-					func.setCpf(textField_2.getText());
+					func.setCpf(textField_5.getText());
 					try {
 						Fachada.getInstance().remover(func);
 					} catch (ClassNotFoundException | SQLException | FuncionarioInexistente | FuncionarioInvalido
@@ -217,11 +212,12 @@ public class FuncionarioGUI extends JFrame {
 		btnRemover.setBounds(285, 142, 89, 23);
 		contentPane.add(btnRemover);
 		
-		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) { 
+				
 				Funcionario func = new Funcionario();
-				if(textField.getText() != null && textField_1.getText() != null && textField_2.getText() != null && textField_3.getText() != null && textField_4.getText() != null && passwordField.getPassword() != null){
+				if(!(textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty() || textField_4.getText().isEmpty() || passwordField.getText().isEmpty() || (!(rdbtnAdministrador.isSelected()) && !(rdbtnAtendente.isSelected()) && !(rdbtnCozinha.isSelected())))){
 					func.setCpf(textField_2.getText());
 					func.setNome(textField.getText());
 					func.setEndereco(textField_1.getText());
@@ -229,8 +225,8 @@ public class FuncionarioGUI extends JFrame {
 					func.setLogin(textField_4.getText());
 					String senha = new String (passwordField.getPassword());
 					func.setSenha(senha);
-					if(rdbtnAdmnistrador.isSelected()){
-						func.setTipo(rdbtnAdmnistrador.getText());
+					if(rdbtnAdministrador.isSelected()){
+						func.setTipo(rdbtnAdministrador.getText());
 					}else if(rdbtnAtendente.isSelected()){
 						func.setTipo(rdbtnAtendente.getText());
 					}else if(rdbtnCozinha.isSelected()){
@@ -258,7 +254,52 @@ public class FuncionarioGUI extends JFrame {
 		});
 		btnListar.setBounds(285, 204, 89, 23);
 		contentPane.add(btnListar);
+		
+		textField_5 = new JTextField();
+		textField_5.setBounds(611, 33, 86, 20);
+		contentPane.add(textField_5);
+		textField_5.setColumns(10);
+		
+		JLabel lblBuscaremooPorCpf = new JLabel("Busca/Remo\u00E7\u00E3o por CPF");
+		lblBuscaremooPorCpf.setBounds(456, 36, 145, 14);
+		contentPane.add(lblBuscaremooPorCpf);
+		
+		table = new JTable();
+		table.setBounds(97, 290, 327, 208);
+		contentPane.add(table);
+		
+		JScrollBar scrollBar = new JScrollBar();
+		scrollBar.setBounds(408, 290, 17, 208);
+		contentPane.add(scrollBar);
+		
+		rdbtnAdministrador = new JRadioButton("Administrador");
+		rdbtnAdministrador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnCozinha.setSelected(false);
+				rdbtnAtendente.setSelected(false);
+			}
+		});
+		rdbtnAdministrador.setBounds(47, 111, 109, 23);
+		contentPane.add(rdbtnAdministrador);
+		
+		rdbtnCozinha = new JRadioButton("Cozinha");
+		rdbtnCozinha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnAtendente.setSelected(false);
+				rdbtnAdministrador.setSelected(false);
+			}
+		});
+		rdbtnCozinha.setBounds(47, 142, 109, 23);
+		contentPane.add(rdbtnCozinha);
+		
+		rdbtnAtendente = new JRadioButton("Atendente");
+		rdbtnAtendente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnAdministrador.setSelected(false);
+				rdbtnCozinha.setSelected(false);
+			}
+		});
+		rdbtnAtendente.setBounds(158, 111, 109, 23);
+		contentPane.add(rdbtnAtendente);
 	}
-
-	
 }
