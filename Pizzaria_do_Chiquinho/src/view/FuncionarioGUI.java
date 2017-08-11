@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import dados.exception.AtualizarFuncionarioErro;
 import dados.exception.BuscarFuncionarioErro;
 import dados.exception.InserirFuncionarioErro;
+import dados.exception.ListarFuncionarioErro;
 import dados.exception.RemoverFuncionarioErro;
 import negocio.Fachada;
 import negocio.exception.FuncionarioExistente;
@@ -26,28 +30,25 @@ import negocio.exception.FuncionarioInexistente;
 import negocio.exception.FuncionarioInvalido;
 import negocio.exception.LoginJaExiste;
 import principal.Funcionario;
-import javax.swing.JTable;
-import javax.swing.JTree;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 
 public class FuncionarioGUI extends JFrame {
 
 	private JPanel contentPane;
 	private static JFrame funcionario;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField textFieldNome;
+	private JTextField textField_Endereco;
+	private JTextField textField_Cpf;
+	private JTextField textField_Telefone;
+	private JTextField textField_Login;
 	private JPasswordField passwordField;
 	private JTextField textField_5;
-	private JTable table_funcionario;
 	private JRadioButton rdbtnAdministrador;
 	private JRadioButton rdbtnCozinha;
 	private JRadioButton rdbtnAtendente;
 	private JButton btnAtualizar;
-	
+	private JScrollPane scroll;
+	private JTable table;
+	private List<Funcionario> funcio;
 	/**
 	 * Launch the application.
 	 */
@@ -81,8 +82,6 @@ public class FuncionarioGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		table_funcionario = new JTable();
-		table_funcionario.setBounds(302, 460, 366, -187);
 		//contentPane.add(table_funcionario);
 		
 		JLabel lblNome = new JLabel("Nome");
@@ -113,30 +112,30 @@ public class FuncionarioGUI extends JFrame {
 		lblLogin.setBounds(10, 180, 46, 14);
 		contentPane.add(lblLogin);
 		
-		textField = new JTextField();
-		textField.setBounds(47, 8, 86, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textFieldNome = new JTextField();
+		textFieldNome.setBounds(47, 8, 86, 20);
+		contentPane.add(textFieldNome);
+		textFieldNome.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(66, 33, 231, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		textField_Endereco = new JTextField();
+		textField_Endereco.setBounds(66, 33, 231, 20);
+		contentPane.add(textField_Endereco);
+		textField_Endereco.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(47, 58, 86, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		textField_Cpf = new JTextField();
+		textField_Cpf.setBounds(47, 58, 86, 20);
+		contentPane.add(textField_Cpf);
+		textField_Cpf.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(66, 83, 86, 20);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		textField_Telefone = new JTextField();
+		textField_Telefone.setBounds(66, 83, 86, 20);
+		contentPane.add(textField_Telefone);
+		textField_Telefone.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(47, 177, 86, 20);
-		contentPane.add(textField_4);
-		textField_4.setColumns(10);
+		textField_Login = new JTextField();
+		textField_Login.setBounds(47, 177, 86, 20);
+		contentPane.add(textField_Login);
+		textField_Login.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(47, 205, 86, 20);
@@ -146,14 +145,13 @@ public class FuncionarioGUI extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Funcionario func = new Funcionario();
-				if(!(textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty() || textField_4.getText().isEmpty() || passwordField.getText().isEmpty() || (!(rdbtnAdministrador.isSelected()) && !(rdbtnAtendente.isSelected()) && !(rdbtnCozinha.isSelected())))){
-					func.setCpf(textField_2.getText());
-					func.setNome(textField.getText());
-					func.setEndereco(textField_1.getText());
-					func.setTelefone(textField_3.getText());
-					func.setLogin(textField_4.getText());
-					String senha = new String (passwordField.getPassword());
-					func.setSenha(senha);
+				if(!(textFieldNome.getText().isEmpty() || textField_Endereco.getText().isEmpty() || textField_Cpf.getText().isEmpty() || textField_Telefone.getText().isEmpty() || textField_Login.getText().isEmpty() || passwordField.getText().isEmpty() || (!(rdbtnAdministrador.isSelected()) && !(rdbtnAtendente.isSelected()) && !(rdbtnCozinha.isSelected())))){
+					func.setCpf(textField_Cpf.getText());
+					func.setNome(textFieldNome.getText());
+					func.setEndereco(textField_Endereco.getText());
+					func.setTelefone(textField_Telefone.getText());
+					func.setLogin(textField_Login.getText());
+					func.setSenha(passwordField.getText());
 					if(rdbtnAdministrador.isSelected()){
 						func.setTipo(rdbtnAdministrador.getText());
 					}else if(rdbtnAtendente.isSelected()){
@@ -222,14 +220,13 @@ public class FuncionarioGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) { 
 				
 				Funcionario func = new Funcionario();
-				if(!(textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty() || textField_3.getText().isEmpty() || textField_4.getText().isEmpty() || passwordField.getText().isEmpty() || (!(rdbtnAdministrador.isSelected()) && !(rdbtnAtendente.isSelected()) && !(rdbtnCozinha.isSelected())))){
-					func.setCpf(textField_2.getText());
-					func.setNome(textField.getText());
-					func.setEndereco(textField_1.getText());
-					func.setTelefone(textField_3.getText());
-					func.setLogin(textField_4.getText());
-					String senha = new String (passwordField.getPassword());
-					func.setSenha(senha);
+				if(!(textFieldNome.getText().isEmpty() || textField_Endereco.getText().isEmpty() || textField_Cpf.getText().isEmpty() || textField_Telefone.getText().isEmpty() || textField_Login.getText().isEmpty() || passwordField.getText().isEmpty() || (!(rdbtnAdministrador.isSelected()) && !(rdbtnAtendente.isSelected()) && !(rdbtnCozinha.isSelected())))){
+					func.setCpf(textField_Cpf.getText());
+					func.setNome(textFieldNome.getText());
+					func.setEndereco(textField_Endereco.getText());
+					func.setTelefone(textField_Telefone.getText());
+					func.setLogin(textField_Login.getText());
+					func.setSenha(passwordField.getText());
 					if(rdbtnAdministrador.isSelected()){
 						func.setTipo(rdbtnAdministrador.getText());
 					}else if(rdbtnAtendente.isSelected()){
@@ -265,13 +262,18 @@ public class FuncionarioGUI extends JFrame {
 				//Listar funcionarios
 				DefaultTableModel modelo = new DefaultTableModel();
 				modelo.setColumnIdentifiers(new String[]{"nome","CPF"});
-				
-				
-				for (int i = 0; i < 100; i++) {
-					modelo.addRow(new String[]{"nome: "+i,"CPF: "+i});
+				try {
+					funcio = Fachada.getInstance().listarFuncionario();
+				} catch (ClassNotFoundException | SQLException | ListarFuncionarioErro e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 				
-				table_funcionario.setModel(modelo);
+				for (Funcionario func1: funcio) {
+					modelo.addRow(new String[]{func1.getNome()+"" ,func1.getCpf()});
+				}
+				
+				table.setModel(modelo);
 				
 			}
 		});
@@ -317,10 +319,13 @@ public class FuncionarioGUI extends JFrame {
 		});
 		rdbtnAtendente.setBounds(158, 111, 109, 23);
 		contentPane.add(rdbtnAtendente);
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(302, 460, 366, -187);
-		scrollPane.add(table_funcionario);
+		scrollPane.setBounds(47, 283, 327, 192);
 		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		
 		

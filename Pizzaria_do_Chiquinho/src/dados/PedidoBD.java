@@ -89,7 +89,7 @@ public class PedidoBD {
 				pedido = new Pedido();
 				pedido.setCodigo(rs.getString("cod"));
 				pedido.setCliente(clienteBD.buscarClienBD(rs.getString("cpf_cliente")));;
-				pedido.setFunc(funcBD.buscarFuncBD(rs.getString("nome_func")));
+				pedido.setFunc(funcBD.buscarFuncBD(rs.getString("cpf_funcionario")));
 				pedido.setStatus(rs.getString("status"));
 				pedido.setObs(rs.getString("obs"));
 				pedido.setTotal(rs.getFloat("total"));
