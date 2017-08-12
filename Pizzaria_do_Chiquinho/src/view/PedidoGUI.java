@@ -83,7 +83,7 @@ public class PedidoGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public PedidoGUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 774, 534);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -229,13 +229,20 @@ public class PedidoGUI extends JFrame {
 								itens= new Itens_pedido();
 								textFieldTotal.setText("");
 								textFieldProds.setText("");
+								textFieldCpfcliente.setText("");
+								textFieldCpfFunc.setText("");
+								textFieldObs.setText("");
 							} catch (SQLException | BuscarFuncionarioErro | BuscarClienteErro | ClassNotFoundException e1) {
 								// TODO Auto-generated catch block
+								JOptionPane.showMessageDialog(null, e1.getMessage());
 								total=0;
 								itens=null;
 								itens= new Itens_pedido();
 								textFieldTotal.setText("");
-								JOptionPane.showMessageDialog(null, e1.getMessage());
+								textFieldProds.setText("");
+								textFieldCpfcliente.setText("");
+								textFieldCpfFunc.setText("");
+								textFieldObs.setText("");
 							}
 				}
 				
@@ -337,14 +344,20 @@ public class PedidoGUI extends JFrame {
 								itens= new Itens_pedido();
 								textFieldTotal.setText("");
 								textFieldProds.setText("");
+								textFieldCpfcliente.setText("");
+								textFieldCpfFunc.setText("");
+								textFieldObs.setText("");
 							} catch (SQLException | ClassNotFoundException | BuscaProdutoErro | BuscarFuncionarioErro | BuscarClienteErro | RemoverItem_pedidoErro e1) {
 								// TODO Auto-generated catch block
+								JOptionPane.showMessageDialog(null, e1.getMessage());
 								total=0;
 								itens=null;
 								itens= new Itens_pedido();
 								textFieldTotal.setText("");
 								textFieldProds.setText("");
-								JOptionPane.showMessageDialog(null, e1.getMessage());
+								textFieldCpfcliente.setText("");
+								textFieldCpfFunc.setText("");
+								textFieldObs.setText("");
 							}
 				}
 				

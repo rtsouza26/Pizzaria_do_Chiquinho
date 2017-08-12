@@ -76,7 +76,7 @@ public class FuncionarioGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public FuncionarioGUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 746, 560);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -175,9 +175,27 @@ public class FuncionarioGUI extends JFrame {
 								func.setTipo(rdbtnCozinha.getText());
 							}
 							Fachada.getInstance().inserir(func);
+							textFieldNome.setText("");
+							textField_Cpf.setText("");
+							textField_Endereco.setText("");
+							textField_Login.setText("");
+							textField_Telefone.setText("");
+							passwordField.setText("");
+							rdbtnAdministrador.setSelected(false);
+							rdbtnAtendente.setSelected(false);
+							rdbtnCozinha.setSelected(false);
 					} catch (ClassNotFoundException | SQLException | FuncionarioInvalido | FuncionarioExistente | InserirFuncionarioErro | LoginJaExiste e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, e1.getMessage());
+						textFieldNome.setText("");
+						textField_Cpf.setText("");
+						textField_Endereco.setText("");
+						textField_Login.setText("");
+						textField_Telefone.setText("");
+						passwordField.setText("");
+						rdbtnAdministrador.setSelected(false);
+						rdbtnAtendente.setSelected(false);
+						rdbtnCozinha.setSelected(false);
 					}
 				}
 			}
@@ -197,6 +215,7 @@ public class FuncionarioGUI extends JFrame {
 						modelo.setColumnIdentifiers(new String[]{"nome","CPF","codigo","tipo"});
 						modelo.addRow(new String[]{func.getNome()+"" ,func.getCpf()+"",String.valueOf(func.getCodigo())+"", func.getTipo()});
 						table.setModel(modelo);
+						textField_5.setText("");
 					} catch (ClassNotFoundException | SQLException | FuncionarioInexistente | FuncionarioInvalido
 							| BuscarFuncionarioErro e1) {
 						// TODO Auto-generated catch block
@@ -214,10 +233,13 @@ public class FuncionarioGUI extends JFrame {
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!(textField_5.getText().isEmpty())){
-					Funcionario func = new Funcionario();
-					func.setCpf(textField_5.getText());
+					
 					try {
+						Funcionario func = new Funcionario();
+						func.setCpf(textField_5.getText());
 						Fachada.getInstance().remover(func);
+						JOptionPane.showMessageDialog(null,"Remoção realizada com sucesso!");
+						textField_5.setText("");
 					} catch (ClassNotFoundException | SQLException | FuncionarioInexistente | FuncionarioInvalido
 							| BuscarFuncionarioErro | RemoverFuncionarioErro e1) {
 						// TODO Auto-generated catch block
@@ -266,9 +288,27 @@ public class FuncionarioGUI extends JFrame {
 							}
 							
 								Fachada.getInstance().atualizar(func);
+								textFieldNome.setText("");
+								textField_Cpf.setText("");
+								textField_Endereco.setText("");
+								textField_Login.setText("");
+								textField_Telefone.setText("");
+								passwordField.setText("");
+								rdbtnAdministrador.setSelected(false);
+								rdbtnAtendente.setSelected(false);
+								rdbtnCozinha.setSelected(false);
 							} catch (ClassNotFoundException | SQLException | FuncionarioInvalido | InserirFuncionarioErro | FuncionarioInexistente | RemoverFuncionarioErro | BuscarFuncionarioErro | AtualizarFuncionarioErro e1) {
 								// TODO Auto-generated catch block
 								JOptionPane.showMessageDialog(null, e1.getMessage());
+								textFieldNome.setText("");
+								textField_Cpf.setText("");
+								textField_Endereco.setText("");
+								textField_Login.setText("");
+								textField_Telefone.setText("");
+								passwordField.setText("");
+								rdbtnAdministrador.setSelected(false);
+								rdbtnAtendente.setSelected(false);
+								rdbtnCozinha.setSelected(false);
 							}
 						
 					}
@@ -351,7 +391,7 @@ public class FuncionarioGUI extends JFrame {
 		contentPane.add(rdbtnAtendente);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(47, 283, 327, 192);
+		scrollPane.setBounds(47, 283, 511, 192);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
