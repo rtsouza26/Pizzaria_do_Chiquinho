@@ -99,15 +99,15 @@ public class PedidoGUI extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblNewLabel = new JLabel("CPF Cliente:");
-		lblNewLabel.setBounds(28, 11, 64, 14);
+		lblNewLabel.setBounds(28, 11, 81, 14);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblCpfFuncionario = new JLabel("CPF Funcionario:");
-		lblCpfFuncionario.setBounds(28, 39, 81, 14);
+		JLabel lblCpfFuncionario = new JLabel("CPF Funcion\u00E1rio:");
+		lblCpfFuncionario.setBounds(28, 39, 99, 14);
 		contentPane.add(lblCpfFuncionario);
 		
 		JLabel lblObservao = new JLabel("Observa\u00E7\u00E3o:");
-		lblObservao.setBounds(28, 72, 64, 14);
+		lblObservao.setBounds(28, 72, 81, 14);
 		contentPane.add(lblObservao);
 		
 		JLabel lblStatus = new JLabel("Status:");
@@ -115,17 +115,17 @@ public class PedidoGUI extends JFrame {
 		contentPane.add(lblStatus);
 		
 		textFieldCpfcliente = new JTextField();
-		textFieldCpfcliente.setBounds(102, 8, 145, 20);
+		textFieldCpfcliente.setBounds(134, 8, 145, 20);
 		contentPane.add(textFieldCpfcliente);
 		textFieldCpfcliente.setColumns(10);
 		
 		textFieldCpfFunc = new JTextField();
-		textFieldCpfFunc.setBounds(119, 36, 128, 20);
+		textFieldCpfFunc.setBounds(151, 36, 128, 20);
 		contentPane.add(textFieldCpfFunc);
 		textFieldCpfFunc.setColumns(10);
 		
 		textFieldObs = new JTextField();
-		textFieldObs.setBounds(102, 69, 210, 20);
+		textFieldObs.setBounds(129, 69, 210, 20);
 		contentPane.add(textFieldObs);
 		textFieldObs.setColumns(10);
 		
@@ -186,7 +186,7 @@ public class PedidoGUI extends JFrame {
 				rdbtnEntregue.setSelected(false);
 			}
 		});
-		rdbtnMercadoriaExtraviada.setBounds(316, 105, 135, 23);
+		rdbtnMercadoriaExtraviada.setBounds(316, 105, 165, 23);
 		contentPane.add(rdbtnMercadoriaExtraviada);
 		
 		JButton btnNovoPedido = new JButton("Novo pedido");
@@ -249,7 +249,7 @@ public class PedidoGUI extends JFrame {
 				
 			}
 		});
-		btnNovoPedido.setBounds(506, 7, 122, 23);
+		btnNovoPedido.setBounds(604, 35, 144, 23);
 		contentPane.add(btnNovoPedido);
 		
 		JButton btnNewButton = new JButton("Buscar pedido");
@@ -274,7 +274,7 @@ public class PedidoGUI extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(506, 45, 122, 23);
+		btnNewButton.setBounds(604, 68, 144, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Cancelar pedido");
@@ -301,7 +301,7 @@ public class PedidoGUI extends JFrame {
 				}
 			}
 		});
-		btnNewButton_1.setBounds(506, 79, 122, 23);
+		btnNewButton_1.setBounds(604, 105, 144, 23);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Atualizar pedido");
@@ -364,7 +364,7 @@ public class PedidoGUI extends JFrame {
 				
 			}
 		});
-		btnNewButton_2.setBounds(506, 125, 122, 23);
+		btnNewButton_2.setBounds(604, 139, 144, 23);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Listar pedidos");
@@ -386,7 +386,7 @@ public class PedidoGUI extends JFrame {
 					}
 			}
 		});
-		btnNewButton_3.setBounds(506, 172, 122, 23);
+		btnNewButton_3.setBounds(604, 172, 144, 23);
 		contentPane.add(btnNewButton_3);
 		
 		JButton btnAdicionarProdutos = new JButton("Adicionar produtos");
@@ -413,7 +413,7 @@ public class PedidoGUI extends JFrame {
 				
 			}
 		});
-		btnAdicionarProdutos.setBounds(359, 172, 122, 23);
+		btnAdicionarProdutos.setBounds(359, 172, 145, 23);
 		contentPane.add(btnAdicionarProdutos);
 		
 		textFieldProds = new JTextField();
@@ -435,7 +435,7 @@ public class PedidoGUI extends JFrame {
 		textFieldTotal.setColumns(10);
 		
 		JLabel lblEntrarComO = new JLabel("codigo prara remover/buscar:");
-		lblEntrarComO.setBounds(472, 224, 156, 14);
+		lblEntrarComO.setBounds(458, 224, 182, 14);
 		contentPane.add(lblEntrarComO);
 		
 		textFieldPesquisa = new JTextField();

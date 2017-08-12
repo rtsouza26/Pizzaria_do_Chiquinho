@@ -3,6 +3,7 @@ package view;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import dados.LoginBD;
@@ -18,9 +19,11 @@ public class TLogin extends javax.swing.JFrame  {
 	private javax.swing.JPasswordField jPFsenha;
 	private javax.swing.JLabel jSenha;
 
+
 	public TLogin() {
         initComponents();
     }
+	
 	
 	private void initComponents() {
 
@@ -131,10 +134,15 @@ public class TLogin extends javax.swing.JFrame  {
 				if(funcheck.getTipo().equals("Administrador")){
 					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
 					TelaAdm.getInstance().setVisible(true);
+					dispose();
 				}if(funcheck.getTipo().equals("Atendente")){
 					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
+					TelaAtendente.getInstance().setVisible(true);
+					dispose();
 				}if (funcheck.getTipo().equals("Cozinha")){
 					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
+					TelaCozinha.getInstance().setVisible(true);
+					dispose();
 				}
 				
 				

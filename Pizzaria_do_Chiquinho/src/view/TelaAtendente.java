@@ -6,38 +6,31 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
-import javax.swing.JToolBar;
-import javax.swing.JDesktopPane;
-import javax.swing.JEditorPane;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class TelaAdm extends JFrame {
+public class TelaAtendente extends JFrame {
 
 	private JPanel contentPane;
-	private static JFrame telaAdm;
-
+	private static JFrame tela;
 	/**
 	 * Launch the application.
 	 */
-	 public static JFrame getInstance(){
-	        if(TelaAdm.telaAdm == null)
-	            TelaAdm.telaAdm = new TelaAdm();
-	         
-	        return TelaAdm.telaAdm;
-	         
-	    }
+	public static JFrame getInstance(){
+		if(TelaAtendente.tela==null){
+			TelaAtendente.tela= new TelaAtendente();
+		}
+		return TelaAtendente.tela;
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaAdm frame = new TelaAdm();
+					TelaAtendente frame = new TelaAtendente();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,24 +42,25 @@ public class TelaAdm extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaAdm() {
+	public TelaAtendente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblTelaDeAtendente = new JLabel("Tela de Atendente");
+		lblTelaDeAtendente.setBounds(163, 124, 125, 14);
+		contentPane.add(lblTelaDeAtendente);
 		
 		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
-		
-		JButton btnFuncionrio = new JButton("Funcion\u00E1rio");
-		btnFuncionrio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				FuncionarioGUI.getInstance().setVisible(true);
-			}
-		});
-		menuBar.add(btnFuncionrio);
+		menuBar.setBounds(0, 0, 424, 21);
+		contentPane.add(menuBar);
 		
 		JButton btnCliente = new JButton("Cliente");
 		btnCliente.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 				ClienteGUI.getInstance().setVisible(true);
 			}
 		});
@@ -99,13 +93,5 @@ public class TelaAdm extends JFrame {
 			}
 		});
 		menuBar.add(btnVoltar);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JLabel lblTelaDeAdministrador = new JLabel("Tela de admnistrador");
-		lblTelaDeAdministrador.setBounds(144, 97, 126, 14);
-		contentPane.add(lblTelaDeAdministrador);
 	}
 }

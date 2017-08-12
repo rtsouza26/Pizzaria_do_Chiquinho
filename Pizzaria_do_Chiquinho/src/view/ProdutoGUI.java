@@ -99,7 +99,7 @@ public class ProdutoGUI extends JFrame {
 		textFieldNome.setColumns(10);
 		
 		textFieldQTD = new JTextField();
-		textFieldQTD.setBounds(165, 86, 111, 20);
+		textFieldQTD.setBounds(177, 86, 111, 20);
 		contentPane.add(textFieldQTD);
 		textFieldQTD.setColumns(10);
 		
@@ -146,7 +146,7 @@ public class ProdutoGUI extends JFrame {
 				
 			}
 		});
-		btnNovoProduto.setBounds(364, 26, 119, 23);
+		btnNovoProduto.setBounds(364, 26, 140, 23);
 		contentPane.add(btnNovoProduto);
 		
 		JButton btnNewButton = new JButton("Buscar Produto");
@@ -281,15 +281,15 @@ public class ProdutoGUI extends JFrame {
 				}
 			}
 		});
-		btnAtualizarQuantidade.setBounds(493, 26, 160, 23);
+		btnAtualizarQuantidade.setBounds(514, 26, 160, 23);
 		contentPane.add(btnAtualizarQuantidade);
 		
 		JLabel lblCodigoDoProduto = new JLabel("Codigo do produto para atualizar quantidade:");
-		lblCodigoDoProduto.setBounds(383, 242, 250, 14);
+		lblCodigoDoProduto.setBounds(383, 242, 270, 14);
 		contentPane.add(lblCodigoDoProduto);
 		
 		textFieldCod = new JTextField();
-		textFieldCod.setBounds(647, 239, 86, 20);
+		textFieldCod.setBounds(685, 239, 86, 20);
 		contentPane.add(textFieldCod);
 		textFieldCod.setColumns(10);
 		

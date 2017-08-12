@@ -100,16 +100,16 @@ public class ClienteGUI extends JFrame {
 		contentPane.add(lblEndereo);
 		
 		textFieldEndereco = new JTextField();
-		textFieldEndereco.setBounds(62, 102, 271, 20);
+		textFieldEndereco.setBounds(86, 102, 271, 20);
 		contentPane.add(textFieldEndereco);
 		textFieldEndereco.setColumns(10);
 		
 		JLabel lblTelefone = new JLabel("Telefone:");
-		lblTelefone.setBounds(10, 150, 46, 14);
+		lblTelefone.setBounds(10, 150, 60, 14);
 		contentPane.add(lblTelefone);
 		
 		textFieldTel = new JTextField();
-		textFieldTel.setBounds(62, 147, 154, 20);
+		textFieldTel.setBounds(86, 147, 154, 20);
 		contentPane.add(textFieldTel);
 		textFieldTel.setColumns(10);
 		
@@ -155,7 +155,7 @@ public class ClienteGUI extends JFrame {
 				}
 			}
 		});
-		btnCadastrarCliente.setBounds(390, 22, 117, 23);
+		btnCadastrarCliente.setBounds(390, 22, 139, 23);
 		contentPane.add(btnCadastrarCliente);
 		
 		JButton btnNewButton = new JButton("Buscar Cliente");
@@ -182,7 +182,7 @@ public class ClienteGUI extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(390, 61, 117, 23);
+		btnNewButton.setBounds(390, 61, 139, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Remover Cliente");
@@ -207,7 +207,7 @@ public class ClienteGUI extends JFrame {
 				}
 			}
 		});
-		btnNewButton_1.setBounds(390, 101, 117, 23);
+		btnNewButton_1.setBounds(390, 101, 139, 23);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Atualizar Cliente");
@@ -245,7 +245,7 @@ public class ClienteGUI extends JFrame {
 				}
 			}
 		});
-		btnNewButton_2.setBounds(390, 146, 117, 23);
+		btnNewButton_2.setBounds(390, 146, 139, 23);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Listar Clientes");
@@ -266,7 +266,7 @@ public class ClienteGUI extends JFrame {
 					}
 			}
 		});
-		btnNewButton_3.setBounds(390, 186, 117, 23);
+		btnNewButton_3.setBounds(390, 186, 139, 23);
 		contentPane.add(btnNewButton_3);
 		
 		textFieldBusca = new JTextField();
@@ -275,7 +275,7 @@ public class ClienteGUI extends JFrame {
 		textFieldBusca.setColumns(10);
 		
 		JLabel label = new JLabel("Remover/Buscar por CPF:");
-		label.setBounds(427, 243, 130, 14);
+		label.setBounds(427, 243, 152, 14);
 		contentPane.add(label);
 	}
 }

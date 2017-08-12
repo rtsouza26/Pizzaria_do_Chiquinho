@@ -89,7 +89,7 @@ public class FuncionarioGUI extends JFrame {
 		contentPane.add(lblNome);
 		
 		JLabel lblEndereo = new JLabel("Endere\u00E7o");
-		lblEndereo.setBounds(10, 36, 46, 14);
+		lblEndereo.setBounds(10, 36, 61, 14);
 		contentPane.add(lblEndereo);
 		
 		JLabel lblCpf = new JLabel("CPF");
@@ -97,7 +97,7 @@ public class FuncionarioGUI extends JFrame {
 		contentPane.add(lblCpf);
 		
 		JLabel lblTelefone = new JLabel("Telefone");
-		lblTelefone.setBounds(10, 86, 46, 14);
+		lblTelefone.setBounds(10, 86, 61, 14);
 		contentPane.add(lblTelefone);
 		
 		JLabel lblTipo = new JLabel("Tipo");
@@ -118,7 +118,7 @@ public class FuncionarioGUI extends JFrame {
 		textFieldNome.setColumns(10);
 		
 		textField_Endereco = new JTextField();
-		textField_Endereco.setBounds(66, 33, 231, 20);
+		textField_Endereco.setBounds(91, 33, 231, 20);
 		contentPane.add(textField_Endereco);
 		textField_Endereco.setColumns(10);
 		
@@ -128,7 +128,7 @@ public class FuncionarioGUI extends JFrame {
 		textField_Cpf.setColumns(10);
 		
 		textField_Telefone = new JTextField();
-		textField_Telefone.setBounds(66, 83, 86, 20);
+		textField_Telefone.setBounds(81, 83, 86, 20);
 		contentPane.add(textField_Telefone);
 		textField_Telefone.setColumns(10);
 		
@@ -200,7 +200,7 @@ public class FuncionarioGUI extends JFrame {
 				}
 			}
 		});
-		btnCadastrar.setBounds(285, 77, 89, 23);
+		btnCadastrar.setBounds(285, 77, 103, 23);
 		contentPane.add(btnCadastrar);
 		
 		JButton btnBuscar = new JButton("Buscar");
@@ -226,7 +226,7 @@ public class FuncionarioGUI extends JFrame {
 				}
 			}
 		});
-		btnBuscar.setBounds(285, 107, 89, 23);
+		btnBuscar.setBounds(285, 107, 103, 23);
 		contentPane.add(btnBuscar);
 		
 		JButton btnRemover = new JButton("Remover");
@@ -250,7 +250,7 @@ public class FuncionarioGUI extends JFrame {
 				}
 			}
 		});
-		btnRemover.setBounds(285, 142, 89, 23);
+		btnRemover.setBounds(285, 142, 103, 23);
 		contentPane.add(btnRemover);
 		
 		btnAtualizar = new JButton("Atualizar");
@@ -314,7 +314,7 @@ public class FuncionarioGUI extends JFrame {
 					}
 				}
 			});
-		btnAtualizar.setBounds(285, 176, 89, 23);
+		btnAtualizar.setBounds(285, 176, 103, 23);
 		contentPane.add(btnAtualizar);
 		String data[][] = { { "Row1/1", "Row1/2", "Row1/3" },
 	            { "Row2/1", "Row2/2", "Row2/3" },
@@ -347,7 +347,7 @@ public class FuncionarioGUI extends JFrame {
 				
 			}
 		});
-		btnListar.setBounds(285, 204, 89, 23);
+		btnListar.setBounds(285, 204, 103, 23);
 		contentPane.add(btnListar);
 		
 		textField_5 = new JTextField();
