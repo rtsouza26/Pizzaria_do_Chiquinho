@@ -64,6 +64,11 @@ public class TelaAdm extends JFrame {
 		menuBar.add(btnFuncionrio);
 		
 		JButton btnCliente = new JButton("Cliente");
+		btnCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClienteGUI.getInstance().setVisible(true);
+			}
+		});
 		menuBar.add(btnCliente);
 		
 		JButton btnPedido = new JButton("Pedido");
@@ -75,6 +80,11 @@ public class TelaAdm extends JFrame {
 		menuBar.add(btnPedido);
 		
 		JButton btnProduto = new JButton("Produto");
+		btnProduto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProdutoGUI.getInstance().setVisible(true);
+			}
+		});
 		menuBar.add(btnProduto);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -37,8 +37,8 @@ public class ProdutoBD {
 		con = ConexaoBD.getConnection();
 		
 		
-			inserir = con.prepareStatement("INSERT INTO produto(id,nome,quantidade,preco_unitario) "
-					+ "VALUE (?,?,?,?)");
+			inserir = con.prepareStatement("INSERT INTO produto(nome,quantidade,preco_unitario) "
+					+ "VALUE (?,?,?)");
 			remover = con.prepareStatement("DELETE FROM produto WHERE nome = ?");
 			buscar = con.prepareStatement("SELECT * FROM produto WHERE cod = ?");
 			listar = con.prepareStatement("SELECT * FROM produto");
@@ -52,7 +52,7 @@ public class ProdutoBD {
 	public void inserir(Produto produto) throws SQLException,InserirProdutoErro{
 		
 	
-			inserir.setInt(1, produto.getCodigo());
+			//inserir.setInt(1, produto.getCodigo());
 			inserir.setString(1, produto.getNome());
 			inserir.setInt(2, produto.getQuantidade());
 			inserir.setDouble(1, produto.getPreco());

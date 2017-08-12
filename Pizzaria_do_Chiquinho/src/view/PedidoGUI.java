@@ -21,12 +21,14 @@ import javax.swing.table.DefaultTableModel;
 import dados.ClienteBD;
 import dados.FuncionarioBD;
 import dados.ProdutoBD;
+import dados.exception.AtualizarProdutoErro;
 import dados.exception.BuscaProdutoErro;
 import dados.exception.BuscarClienteErro;
 import dados.exception.BuscarFuncionarioErro;
 import dados.exception.ListarFuncionarioErro;
 import dados.exception.RemoverItem_pedidoErro;
 import negocio.Fachada;
+import negocio.exception.ProdutoInvalidoErro;
 import principal.Cliente;
 import principal.Funcionario;
 import principal.Itens_pedido;
@@ -49,7 +51,6 @@ public class PedidoGUI extends JFrame {
 	private JRadioButton rdbtnEspera;
 	private JRadioButton rdbtnEntregue;
 	private JRadioButton rdbtnMercadoriaExtraviada;
-	private ProdutoBD produto;
 	private FuncionarioBD funcionariobd;
 	private ClienteBD clientebd;
 	private Itens_pedido itens;
@@ -393,12 +394,19 @@ public class PedidoGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Produto prodaux = new Produto();
-					prodaux = produto.buscar(textFieldProds.getText());
-					itens.addProduto(prodaux);
-					total= total + prodaux.getPreco();
-					textFieldTotal.setText(String.valueOf(total));
-					JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso");
-				} catch (ClassNotFoundException | SQLException | BuscaProdutoErro e1) {
+					prodaux = Fachada.getInstance().buscar(prodaux);
+					if(prodaux.getQuantidade()>0){
+						prodaux.setQuantidade(prodaux.getQuantidade()-1);
+						Fachada.getInstance().atualizar(prodaux);;
+						prodaux.setQuantidade(1);
+						itens.addProduto(prodaux);
+						total= total + prodaux.getPreco();
+						textFieldTotal.setText(String.valueOf(total));
+						JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso");
+					}else{
+						JOptionPane.showMessageDialog(null, "A quantidade requisitada está indisponível");
+					}	
+				} catch (ClassNotFoundException | SQLException | BuscaProdutoErro | AtualizarProdutoErro | ProdutoInvalidoErro e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 				
