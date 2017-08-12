@@ -66,7 +66,7 @@ public class Pedido {
 	public double getTotal() {
 		return total;
 	}
-	public void setTotal(float valor) {
+	public void setTotal(double valor) {
 		this.total = valor;
 	}
 	public String getStatus() {

@@ -3,18 +3,25 @@ package negocio;
 import java.sql.SQLException;
 import java.util.List;
 
+import dados.exception.AtualizarClienteErro;
 import dados.exception.AtualizarFuncionarioErro;
 import dados.exception.AtualizarProdutoErro;
 import dados.exception.BuscaProdutoErro;
 import dados.exception.BuscarClienteErro;
 import dados.exception.BuscarFuncionarioErro;
+import dados.exception.InserirClienteErro;
 import dados.exception.InserirFuncionarioErro;
 import dados.exception.InserirProdutoErro;
+import dados.exception.ListarClienteErro;
 import dados.exception.ListarFuncionarioErro;
 import dados.exception.ListarProdutoErro;
+import dados.exception.RemoverClienteErro;
 import dados.exception.RemoverFuncionarioErro;
 import dados.exception.RemoverItem_pedidoErro;
 import dados.exception.RemoverProdutoErro;
+import negocio.exception.ClienteExistenteErro;
+import negocio.exception.ClienteInexistenteErro;
+import negocio.exception.ClienteInvalidoErro;
 import negocio.exception.FuncionarioExistente;
 import negocio.exception.FuncionarioInexistente;
 import negocio.exception.FuncionarioInvalido;
@@ -24,15 +31,17 @@ import negocio.exception.ProdutoInvalidoErro;
 import negocio.exception.ProdutoNomeInvalidoErro;
 import negocio.exception.ProdutoPrecoInvalidoErro;
 import negocio.exception.ProdutoQuantidadeInvalidaErro;
+import principal.Cliente;
+import principal.Funcionario;
 import principal.Pedido;
 import principal.Produto;
-import principal.Funcionario;
 
 public class Fachada {
 	private  static Fachada instance;
 	private CadastroPedido pedido;
 	private CadastroProduto produto;
 	private CadastroFuncionario funcionario;
+	private CadastroCliente cliente;
 	
 	public Fachada() throws ClassNotFoundException, SQLException{
 		pedido = new CadastroPedido();
@@ -46,7 +55,7 @@ public class Fachada {
 		return Fachada.instance;
 	}
 	
-	public void inserir(Pedido pedido) throws ClassNotFoundException, SQLException{
+	public void inserir(Pedido pedido) throws ClassNotFoundException, SQLException, BuscarFuncionarioErro, BuscarClienteErro{
 		this.pedido.inserirPedido(pedido);
 	}
 	
@@ -95,6 +104,21 @@ public class Fachada {
 	}
 	public List<Funcionario> listarFuncionario() throws SQLException, ListarFuncionarioErro{
 		return this.funcionario.listarFunc();
+	}
+	public void inserir(Cliente cliente1) throws SQLException, InserirClienteErro, ClienteExistenteErro, ClienteInvalidoErro{
+		this.cliente.inserirCliente(cliente1);
+	}
+	public void remover(Cliente cliente1) throws SQLException, BuscarClienteErro, RemoverClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
+		this.cliente.removerCliente(cliente1.getCpf());
+	}
+	public Cliente buscar(Cliente cliente1) throws SQLException, BuscarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
+		return this.cliente.buscarCliente(cliente1.getCpf());
+	}
+	public void atualizar(Cliente cliente1) throws SQLException, InserirClienteErro, BuscarClienteErro, RemoverClienteErro, AtualizarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
+		this.cliente.atualizarCliente(cliente1);
+	}
+	public List<Cliente> listarCliente() throws SQLException, ListarClienteErro{
+		return this.cliente.listarCliente();
 	}
 
 }

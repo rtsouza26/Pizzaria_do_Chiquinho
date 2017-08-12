@@ -35,8 +35,8 @@ public class PedidoBD {
 		con = ConexaoBD.getConnection();
 		
 	
-			inserir = con.prepareStatement("INSERT INTO Pedido(cod,cpf_cliente,cpf_funcionario,obs,status,total) "
-					+ "VALUE (?,?,?,?,?,?)");
+			inserir = con.prepareStatement("INSERT INTO Pedido(cpf_cliente,cpf_funcionario,obs,status,total) "
+					+ "VALUE (?,?,?,?,?)");
 			remover = con.prepareStatement("DELETE FROM Pedido WHERE cod = ?");
 			buscar = con.prepareStatement("SELECT * FROM Pedido WHERE cod = ?");
 			buscarcod = con.prepareStatement("SELECT * FROM Pedido WHERE cod = ?");
@@ -44,14 +44,19 @@ public class PedidoBD {
 		
 	}
 	
-	public boolean inserirPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException{
+	public boolean inserirPedidoBD(Pedido pedido) throws ClassNotFoundException, SQLException, BuscarFuncionarioErro, BuscarClienteErro{
 		itens = new Itens_pedidoBD();
-		
+		funcBD = new FuncionarioBD(); 
+		Funcionario funcaux = new Funcionario();
+		clienteBD = new ClienteBD();
+		Cliente clienteaux = new Cliente();
+		clienteaux = clienteBD.buscarClienBD(pedido.getCliente().getCpf());
+		funcaux = funcBD.buscarFuncBD(pedido.getFunc().getCpf());
 		boolean inserido = false;
 		
-			inserir.setString(1, pedido.getCodigo());
-			inserir.setString(1,pedido.getCliente().getCpf());
-			inserir.setString(2, pedido.getFunc().getCpf());
+			//inserir.setString(1, pedido.getCodigo());
+			inserir.setString(1,clienteaux.getCpf());
+			inserir.setString(2,funcaux.getCpf());
 			inserir.setString(3,pedido.getObs());
 			inserir.setString(4, pedido.getStatus());
 			inserir.setDouble(5, pedido.getTotal());

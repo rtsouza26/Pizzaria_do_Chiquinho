@@ -144,29 +144,41 @@ public class FuncionarioGUI extends JFrame {
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Funcionario func = new Funcionario();
-				if(!(textFieldNome.getText().isEmpty() || textField_Endereco.getText().isEmpty() || textField_Cpf.getText().isEmpty() || textField_Telefone.getText().isEmpty() || textField_Login.getText().isEmpty() || passwordField.getText().isEmpty() || (!(rdbtnAdministrador.isSelected()) && !(rdbtnAtendente.isSelected()) && !(rdbtnCozinha.isSelected())))){
-					func.setCpf(textField_Cpf.getText());
-					func.setNome(textFieldNome.getText());
-					func.setEndereco(textField_Endereco.getText());
-					func.setTelefone(textField_Telefone.getText());
-					func.setLogin(textField_Login.getText());
-					func.setSenha(passwordField.getText());
-					if(rdbtnAdministrador.isSelected()){
-						func.setTipo(rdbtnAdministrador.getText());
-					}else if(rdbtnAtendente.isSelected()){
-						func.setTipo(rdbtnAtendente.getText());
-					}else if(rdbtnCozinha.isSelected()){
-						func.setTipo(rdbtnCozinha.getText());
-					}
-					try {
-						Fachada.getInstance().inserir(func);
+				if(textField_Cpf.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Preencha O CPF por favor");
+				}else if(textFieldNome.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Preencha O Nome por favor");
+				}else if(textField_Endereco.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Preencha O endereço por favor");
+				}else if(textField_Telefone.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Preencha O telefone por favor");
+				}else if(textField_Login.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Preencha O login por favor");
+				}else if(passwordField.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Preencha a senha por favor");
+				}else if(!(rdbtnAdministrador.isSelected() || rdbtnAtendente.isSelected() || rdbtnCozinha.isSelected())){
+					JOptionPane.showMessageDialog(null, "Marque algum tipo por favor");
+				}else{
+						try {
+							Funcionario func = new Funcionario();
+							func.setCpf(textField_Cpf.getText());
+							func.setNome(textFieldNome.getText());
+							func.setEndereco(textField_Endereco.getText());
+							func.setTelefone(textField_Telefone.getText());
+							func.setLogin(textField_Login.getText());
+							func.setSenha(passwordField.getText());
+							if(rdbtnAdministrador.isSelected()){
+								func.setTipo(rdbtnAdministrador.getText());
+							}else if(rdbtnAtendente.isSelected()){
+								func.setTipo(rdbtnAtendente.getText());
+							}else{
+								func.setTipo(rdbtnCozinha.getText());
+							}
+							Fachada.getInstance().inserir(func);
 					} catch (ClassNotFoundException | SQLException | FuncionarioInvalido | FuncionarioExistente | InserirFuncionarioErro | LoginJaExiste e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 					}
-				}else{
-					JOptionPane.showMessageDialog(null, "Preencha todos os dados por favor");
 				}
 			}
 		});
@@ -177,10 +189,14 @@ public class FuncionarioGUI extends JFrame {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!(textField_5.getText().isEmpty())){
-					Funcionario func = new Funcionario();
-					func.setCpf(textField_5.getText());
 					try {
-						Fachada.getInstance().buscar(func);
+						Funcionario func = new Funcionario();
+						func.setCpf(textField_5.getText());
+						func=Fachada.getInstance().buscar(func);
+						DefaultTableModel modelo = new DefaultTableModel();
+						modelo.setColumnIdentifiers(new String[]{"nome","CPF","codigo","tipo"});
+						modelo.addRow(new String[]{func.getNome()+"" ,func.getCpf()+"",String.valueOf(func.getCodigo())+"", func.getTipo()});
+						table.setModel(modelo);
 					} catch (ClassNotFoundException | SQLException | FuncionarioInexistente | FuncionarioInvalido
 							| BuscarFuncionarioErro e1) {
 						// TODO Auto-generated catch block
@@ -217,34 +233,47 @@ public class FuncionarioGUI extends JFrame {
 		
 		btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { 
-				
-				Funcionario func = new Funcionario();
-				if(!(textFieldNome.getText().isEmpty() || textField_Endereco.getText().isEmpty() || textField_Cpf.getText().isEmpty() || textField_Telefone.getText().isEmpty() || textField_Login.getText().isEmpty() || passwordField.getText().isEmpty() || (!(rdbtnAdministrador.isSelected()) && !(rdbtnAtendente.isSelected()) && !(rdbtnCozinha.isSelected())))){
-					func.setCpf(textField_Cpf.getText());
-					func.setNome(textFieldNome.getText());
-					func.setEndereco(textField_Endereco.getText());
-					func.setTelefone(textField_Telefone.getText());
-					func.setLogin(textField_Login.getText());
-					func.setSenha(passwordField.getText());
-					if(rdbtnAdministrador.isSelected()){
-						func.setTipo(rdbtnAdministrador.getText());
-					}else if(rdbtnAtendente.isSelected()){
-						func.setTipo(rdbtnAtendente.getText());
-					}else if(rdbtnCozinha.isSelected()){
-						func.setTipo(rdbtnCozinha.getText());
+					public void actionPerformed(ActionEvent e) { 
+						if(textField_Cpf.getText().isEmpty()){
+							JOptionPane.showMessageDialog(null, "Preencha O CPF por favor");
+						}else if(textFieldNome.getText().isEmpty()){
+							JOptionPane.showMessageDialog(null, "Preencha O Nome por favor");
+						}else if(textField_Endereco.getText().isEmpty()){
+							JOptionPane.showMessageDialog(null, "Preencha O endereço por favor");
+						}else if(textField_Telefone.getText().isEmpty()){
+							JOptionPane.showMessageDialog(null, "Preencha O telefone por favor");
+						}else if(textField_Login.getText().isEmpty()){
+							JOptionPane.showMessageDialog(null, "Preencha O login por favor");
+						}else if(passwordField.getText().isEmpty()){
+							JOptionPane.showMessageDialog(null, "Preencha a senha por favor");
+						}else if(!(rdbtnAdministrador.isSelected() || rdbtnAtendente.isSelected() || rdbtnCozinha.isSelected())){
+							JOptionPane.showMessageDialog(null, "Marque algum tipo por favor");
+						}else{
+							try {
+							Funcionario func = new Funcionario();
+							func.setCpf(textField_Cpf.getText());
+							func.setNome(textFieldNome.getText());
+							func.setEndereco(textField_Endereco.getText());
+							func.setTelefone(textField_Telefone.getText());
+							func.setLogin(textField_Login.getText());
+							func.setSenha(passwordField.getText());
+							if(rdbtnAdministrador.isSelected()){
+								func.setTipo(rdbtnAdministrador.getText());
+							}else if(rdbtnAtendente.isSelected()){
+								func.setTipo(rdbtnAtendente.getText());
+							}else if(rdbtnCozinha.isSelected()){
+								func.setTipo(rdbtnCozinha.getText());
+							}
+							
+								Fachada.getInstance().atualizar(func);
+							} catch (ClassNotFoundException | SQLException | FuncionarioInvalido | InserirFuncionarioErro | FuncionarioInexistente | RemoverFuncionarioErro | BuscarFuncionarioErro | AtualizarFuncionarioErro e1) {
+								// TODO Auto-generated catch block
+								JOptionPane.showMessageDialog(null, e1.getMessage());
+							}
+						
 					}
-					try {
-						Fachada.getInstance().atualizar(func);
-					} catch (ClassNotFoundException | SQLException | FuncionarioInvalido | InserirFuncionarioErro | FuncionarioInexistente | RemoverFuncionarioErro | BuscarFuncionarioErro | AtualizarFuncionarioErro e1) {
-						// TODO Auto-generated catch block
-						JOptionPane.showMessageDialog(null, e1.getMessage());
-					}
-				}else{
-					JOptionPane.showMessageDialog(null, "Preencha todos os dados por favor");
 				}
-			}
-		});
+			});
 		btnAtualizar.setBounds(285, 176, 89, 23);
 		contentPane.add(btnAtualizar);
 		String data[][] = { { "Row1/1", "Row1/2", "Row1/3" },
@@ -259,21 +288,22 @@ public class FuncionarioGUI extends JFrame {
 		JButton btnListar = new JButton("Listar");
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Listar funcionarios
+				try {
 				DefaultTableModel modelo = new DefaultTableModel();
 				modelo.setColumnIdentifiers(new String[]{"nome","CPF"});
-				try {
+				
 					funcio = Fachada.getInstance().listarFuncionario();
+					for (Funcionario func1: funcio) {
+						modelo.addRow(new String[]{func1.getNome()+"" ,func1.getCpf()});
+					}
+					
+					table.setModel(modelo);
 				} catch (ClassNotFoundException | SQLException | ListarFuncionarioErro e1) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 				
-				for (Funcionario func1: funcio) {
-					modelo.addRow(new String[]{func1.getNome()+"" ,func1.getCpf()});
-				}
 				
-				table.setModel(modelo);
 				
 			}
 		});

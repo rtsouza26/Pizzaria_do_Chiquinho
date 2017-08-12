@@ -22,7 +22,7 @@ public class CadastroPedido {
 	}
 	
 	
-	public void inserirPedido(Pedido pedido) throws ClassNotFoundException, SQLException{
+	public void inserirPedido(Pedido pedido) throws ClassNotFoundException, SQLException, BuscarFuncionarioErro, BuscarClienteErro{
 		if(pedido!= null){
 			
 			if(!(pedidoBD.inserirPedidoBD(pedido))){

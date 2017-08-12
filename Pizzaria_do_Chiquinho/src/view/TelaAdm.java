@@ -67,6 +67,11 @@ public class TelaAdm extends JFrame {
 		menuBar.add(btnCliente);
 		
 		JButton btnPedido = new JButton("Pedido");
+		btnPedido.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PedidoGUI.getInstance().setVisible(true);
+			}
+		});
 		menuBar.add(btnPedido);
 		
 		JButton btnProduto = new JButton("Produto");
