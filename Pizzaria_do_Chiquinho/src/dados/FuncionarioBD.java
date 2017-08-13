@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ArrayList;
 import dados.exception.*;
 
@@ -34,72 +33,78 @@ public class FuncionarioBD{
 		con = ConexaoBD.getConnection();
 		
 		
-			inserir = con.prepareStatement("INSERT INTO funcionarios(nome,cod_endereco,cpf,telefone,cod_tipo,login,senha) "
+			inserir = con.prepareStatement("INSERT INTO funcionarios(nome,endereco,cpf,telefone,cod_tipo,login,senha) "
 					+ "VALUE (?,?,?,?,?,?,?)");
 			remover = con.prepareStatement("DELETE FROM funcionarios WHERE cpf = ?");
 			buscar = con.prepareStatement("SELECT * FROM funcionarios WHERE cpf = ?");
 			buscarlogin = con.prepareStatement("SELECT * FROM funcionarios WHERE login = ?");
-			listar = con.prepareStatement("SELECT * FROM Funcionarios");
-			atualizar = con.prepareStatement("UPDATE produto SET nome = ?, cod_endereco = ?, telefone = ?, cod_tipo = ?, login = ?, senha = ? WHERE cpf = ? ");
+			listar = con.prepareStatement("SELECT * FROM funcionarios");
+			atualizar = con.prepareStatement("UPDATE funcionarios SET nome = ?, endereco = ?, telefone = ?, cod_tipo = ?, login = ?, senha = ? WHERE cpf = ? ");
 	}
 	
-	
+	//Função testada e funcionando !!!
 	public void inserirFuncBD(Funcionario func) throws SQLException, InserirFuncionarioErro{
 		
-		
-		
+		if(func != null){
 			inserir.setString(1, func.getNome());
 			inserir.setString(2, func.getEndereco());
-			inserir.setString(3,func.getCpf());
+			inserir.setString(3, func.getCpf());
 			inserir.setString(4, func.getTelefone());
-			inserir.setString(5,func.getTipo());
-			inserir.setString(6,func.getLogin());
-			inserir.setString(7,func.getSenha());
+			inserir.setString(5, func.getTipo());
+			inserir.setString(6, func.getLogin());
+			inserir.setString(7, func.getSenha());
+			inserir.executeUpdate();
 			
-			if(!inserir.execute()){
+		}else{
 				throw new InserirFuncionarioErro(); 
-			};
-			
-		
-	}public boolean existeLoginBD(String login) throws SQLException{
+		}	
+	}
+	
+	//Função testada e funcionando !!!
+	public boolean existeLoginBD(String login) throws SQLException{
 		boolean existe = false;
 		
 		buscarlogin.setString(1, login);
-		if((rs = buscarlogin.executeQuery())!=null){
+		rs = buscarlogin.executeQuery();
+		
+		if(rs.next()){
 			existe = true;
 		}
 		//ConexaoBD.closeConnection(con);
-	
 	
 		return existe;
 
 	}
 	
-	
+	//Função testada e funcionando !!!
 	public boolean existeBD(String cpf) throws SQLException{
 		boolean existe = false;
 			
-				buscar.setString(1, cpf);
-				if((rs = buscar.executeQuery())!=null){
+				buscar.setString(1, cpf);	
+				rs = buscar.executeQuery();
+				
+				if(rs.next()){
 					existe = true;
+					System.out.println("Passei aqui");
 				}
-				//ConexaoBD.closeConnection(con);
-			
-			
-		 return existe;
-		
+				
+		 //ConexaoBD.closeConnection(con);	
+		 return existe;	
 	}
 	
+	//Função testada e funcionando !!!
 	public Funcionario buscarFuncBD(String cpf) throws SQLException, BuscarFuncionarioErro{
 		Funcionario func = null;
 
-			buscar.setString(1, cpf);
+			buscar.setString(1, cpf);	
 			
-			if((rs = buscar.executeQuery())!=null){;
+			rs = buscar.executeQuery();
+			
+			if(rs.next()){;
 				func = new Funcionario();
-				func.setCodigo(rs.getInt("cod"));
+				func.setCodigo(rs.getInt("idfuncionario"));
 				func.setNome(rs.getString("nome"));
-				func.setEndereco(rs.getString("cod_endereco"));
+				func.setEndereco(rs.getString("endereco"));
 				func.setCpf(rs.getString("cpf"));
 				func.setTelefone(rs.getString("telefone"));
 				func.setTipo(rs.getString("cod_tipo"));
@@ -111,62 +116,74 @@ public class FuncionarioBD{
 				throw new BuscarFuncionarioErro();
 			}
 		
-		
 	}
 	
-	
+	//Função testada e funcionando !!!
 	public void removerFuncBD(String cpf) throws SQLException, RemoverFuncionarioErro, BuscarFuncionarioErro{
-	
 		
-		remover.setInt(1, this.buscarFuncBD(cpf).getCodigo());
-		
-		if(!remover.execute()){
+		if(cpf == null){
 			throw new RemoverFuncionarioErro();
-		}
-			
-		
+		}else{		
+			remover.setString(1, cpf);	
+			remover.executeUpdate();
+		}	
 	}
+	
+	//Função testada e funcionando !!!
 	public void atualizarFuncBD(Funcionario func) throws SQLException, BuscarFuncionarioErro, AtualizarFuncionarioErro{
-		buscarFuncBD(func.getCpf());
+
 		
-		atualizar.setString(1, func.getNome());
-		atualizar.setString(2, func.getEndereco());
-		atualizar.setString(3, func.getTelefone());
-		atualizar.setString(4, func.getTipo());
-		atualizar.setString(5,func.getLogin());
-		atualizar.setString(6, func.getSenha());
-		atualizar.setString(7,func.getCpf());
-		
-		if(!atualizar.execute()){
+		if(existeBD(func.getCpf())){
+			
+			System.out.println(func.getCpf());
+			
+			atualizar.setString(1, func.getNome());
+			atualizar.setString(2, func.getEndereco());
+			atualizar.setString(3, func.getTelefone());
+			atualizar.setString(4, func.getTipo());
+			atualizar.setString(5, func.getLogin());
+			atualizar.setString(6, func.getSenha());
+			atualizar.setString(7, func.getCpf());
+			atualizar.executeUpdate();
+			
+			System.out.println("Atualização concluida!");
+			
+		}else{
 			throw new AtualizarFuncionarioErro();
 		}
 		
-		
 	}
 	
-	public List<Funcionario> listarFuncBD() throws SQLException, ListarFuncionarioErro{
-		List<Funcionario> funcionarios = null;
+	//Função testada e funcionando !!!
+	public ArrayList<Funcionario> listarFuncBD() throws SQLException, ListarFuncionarioErro{
+		ArrayList<Funcionario> funcionarios = null;
+			
+			rs = null;
+			rs = listar.executeQuery();
 		
-		
-			if((rs = listar.executeQuery())!=null){
+			if(rs != null){
+
 				funcionarios = new ArrayList<Funcionario>();
+
 				while(rs.next()){
-					funcionarios.add(new Funcionario(
-							rs.getInt("cod"),
-							rs.getString("nome"),
-							rs.getString("cod_endereco"),
-							rs.getString("cpf"),
-							rs.getString("telefone"),
-							rs.getString("cod_tipo"),
-							rs.getString("login")));
+					
+					Funcionario func_aux = new Funcionario();
+					func_aux.setNome(rs.getString("nome"));
+					func_aux.setEndereco(rs.getString("endereco"));
+					func_aux.setCpf(rs.getString("cpf"));
+					func_aux.setTelefone(rs.getString("telefone"));
+					func_aux.setTipo(rs.getString("cod_tipo"));
+					func_aux.setLogin(rs.getString("login"));
+					
+					funcionarios.add(func_aux);			
 				}
+					
 				return funcionarios;
 			}else{
 			
 				throw new ListarFuncionarioErro();
 		}
 			
-		
 	}
 	
 }

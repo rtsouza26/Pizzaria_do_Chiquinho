@@ -9,13 +9,13 @@ package principal;
  */
 
 public class Funcionario {
+	
 	private int codigo;
 	private String nome;
 	private String endereco;
 	private String cpf;
 	private String telefone;
 	private String tipo;
-	
 	private String senha;
 	private String login;
 	
@@ -24,7 +24,9 @@ public class Funcionario {
 		
 	}
 	public Funcionario( 
-			int cod,String nome, String endereco,String cpf,String telefone,String tipo,String login){
+			
+		int cod, String nome, String endereco, String cpf, String telefone, String tipo, String login){
+		
 		this.codigo=cod;
 		this.nome=nome;
 		this.endereco=endereco;

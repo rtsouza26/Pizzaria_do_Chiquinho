@@ -8,6 +8,10 @@ public class Endereco {
 	private String cep;
 	private String complemento;
 	
+	public Endereco(){
+		
+	}
+	
 	public String getLogradouro() {
 		return logradouro;
 	}

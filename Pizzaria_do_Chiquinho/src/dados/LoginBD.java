@@ -34,7 +34,7 @@ public class LoginBD {
 			if(rs  != null){
 				check = new Funcionario();
 				rs.next();
-				check.setCodigo(rs.getInt("cod"));
+				check.setCodigo(rs.getInt("idfuncionario"));
 				check.setTipo(rs.getString("cod_tipo"));
 					
 			}

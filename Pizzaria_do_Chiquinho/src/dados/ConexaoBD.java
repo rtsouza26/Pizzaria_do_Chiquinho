@@ -14,7 +14,7 @@ public class ConexaoBD {
 	static final String driver = "com.mysql.jdbc.Driver";
 	static final String user = "admin";
 	static final String pass = "12345";
-	static final String url = "jdbc:mysql://localhost:3306/pizzaria";
+	static final String url = "jdbc:mysql://localhost:3306/pizzaria?useSSL=false";
 	
 	static final String nao  = "Não conectou";
 	static final String sim = "Conectou";

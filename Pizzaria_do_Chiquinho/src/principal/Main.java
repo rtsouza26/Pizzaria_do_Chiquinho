@@ -1,10 +1,20 @@
 package principal;
 
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import dados.ClienteBD;
 import dados.FuncionarioBD;
 import dados.LoginBD;
+import dados.exception.AtualizarFuncionarioErro;
+import dados.exception.BuscarFuncionarioErro;
+import dados.exception.InserirClienteErro;
+import dados.exception.InserirFuncionarioErro;
+import dados.exception.ListarFuncionarioErro;
+import dados.exception.RemoverFuncionarioErro;
 import view.TLogin;
 
 /**Pizzaria do Chiquinho
@@ -20,7 +30,7 @@ import view.TLogin;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, InserirClienteErro, InserirFuncionarioErro, BuscarFuncionarioErro, ListarFuncionarioErro, RemoverFuncionarioErro, AtualizarFuncionarioErro {
 		// TODO Auto-generated method stub
 		
 		
