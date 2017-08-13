@@ -128,30 +128,35 @@ public class TLogin extends javax.swing.JFrame  {
        
 		
 		try {
-			if((funcheck=funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword())))!=null){
-			 // new Principal().setVisible(true);
-				this.dispose();
-				if(funcheck.getTipo().equals("Administrador")){
-					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
-					TelaAdm.getInstance().setVisible(true);
-					dispose();
-				}if(funcheck.getTipo().equals("Atendente")){
-					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
-					TelaAtendente.getInstance().setVisible(true);
-					dispose();
-				}if (funcheck.getTipo().equals("Cozinha")){
-					JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
-					TelaCozinha.getInstance().setVisible(true);
-					dispose();
-				}
-				
-				
+			if(jFlogin.getText().isEmpty() || String.valueOf(jPFsenha.getPassword()).isEmpty()){
+				JOptionPane.showMessageDialog(null,"Preencha o login e a senha");
 			}else{
-				JOptionPane.showMessageDialog(null,"Login ou Senha errados");
+				if((funcheck=funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword())))!=null){
+					 // new Principal().setVisible(true);
+						this.dispose();
+						if(funcheck.getTipo().equals("Administrador")){
+							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
+							TelaAdm.getInstance().setVisible(true);
+							dispose();
+						}if(funcheck.getTipo().equals("Atendente")){
+							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
+							TelaAtendente.getInstance().setVisible(true);
+							dispose();
+						}if (funcheck.getTipo().equals("Cozinha")){
+							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
+							TelaCozinha.getInstance().setVisible(true);
+							dispose();
+						}
+						
+						
+					}else{
+						JOptionPane.showMessageDialog(null,"Login ou Senha errados");
+					}
 			}
+			
 		} catch (HeadlessException | SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,e.getMessage());
 		}
         
     }   
