@@ -41,8 +41,6 @@ public class ProdutoGUI extends JFrame {
 	private JTextField textFieldQTD;
 	private JTextField textFieldPreco;
 	private JTextField textFieldPesquisa;
-	private JTextField textFieldCod;
-	private JTextField textFieldQtdNova;
 	private ProdutoBD produto;
 	private JTable table;
 	private List<Produto> produtos;
@@ -264,43 +262,31 @@ public class ProdutoGUI extends JFrame {
 		JButton btnAtualizarQuantidade = new JButton("Atualizar quantidade");
 		btnAtualizarQuantidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textFieldQtdNova.getText().isEmpty() || textFieldCod.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null, "Preencha a quantidade nova e o código do produto para atualizar o estoque");
+				if(textFieldNome.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Informe o Nome do produto");
+				}else if(textFieldQTD.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Informe a quantidade que há no estoque");
 				}else{
 					try {
-						produto.atualizarQuatidade(Integer.parseInt(textFieldQtdNova.getText()), Integer.parseInt(textFieldCod.getText()));
-						JOptionPane.showMessageDialog(null, "Estoque atualizado com sucesso!");
-						textFieldCod.setText("");
-						textFieldQtdNova.setText("");
-					} catch (NumberFormatException | SQLException e1) {
+						Produto prod = new Produto();
+						prod.setNome(textFieldNome.getText());
+						prod=Fachada.getInstance().buscar(prod);
+						prod.setQuantidade(Integer.parseInt(textFieldQTD.getText()));
+						Fachada.getInstance().atualizar(prod);
+						JOptionPane.showMessageDialog(null, "Produto inserido com sucesso!");
+						textFieldNome.setText("");
+						textFieldQTD.setText("");
+					} catch (ClassNotFoundException | SQLException | BuscaProdutoErro | AtualizarProdutoErro | ProdutoInvalidoErro  e1) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, e1.getMessage());
-						textFieldCod.setText("");
-						textFieldQtdNova.setText("");
+						textFieldNome.setText("");
+						textFieldQTD.setText("");
 					}
 				}
 			}
 		});
 		btnAtualizarQuantidade.setBounds(514, 26, 160, 23);
 		contentPane.add(btnAtualizarQuantidade);
-		
-		JLabel lblCodigoDoProduto = new JLabel("Codigo do produto para atualizar quantidade:");
-		lblCodigoDoProduto.setBounds(383, 242, 270, 14);
-		contentPane.add(lblCodigoDoProduto);
-		
-		textFieldCod = new JTextField();
-		textFieldCod.setBounds(685, 239, 86, 20);
-		contentPane.add(textFieldCod);
-		textFieldCod.setColumns(10);
-		
-		JLabel lblQuantidadeAtualizada = new JLabel("Quantidade atualizada:");
-		lblQuantidadeAtualizada.setBounds(383, 267, 146, 14);
-		contentPane.add(lblQuantidadeAtualizada);
-		
-		textFieldQtdNova = new JTextField();
-		textFieldQtdNova.setBounds(553, 264, 121, 20);
-		contentPane.add(textFieldQtdNova);
-		textFieldQtdNova.setColumns(10);
 	}
 
 }

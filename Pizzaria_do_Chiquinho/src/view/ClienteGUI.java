@@ -35,7 +35,6 @@ public class ClienteGUI extends JFrame {
 	private JPanel contentPane;
 	private static JFrame tela_cliente;
 	private JTextField textFieldNome;
-	private JTextField textFieldCpf;
 	private JTextField textFieldEndereco;
 	private JTextField textFieldTel;
 	private JTable table;
@@ -86,30 +85,21 @@ public class ClienteGUI extends JFrame {
 		contentPane.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
-		JLabel lblCpf = new JLabel("CPF:");
-		lblCpf.setBounds(10, 65, 46, 14);
-		contentPane.add(lblCpf);
-		
-		textFieldCpf = new JTextField();
-		textFieldCpf.setBounds(52, 62, 130, 20);
-		contentPane.add(textFieldCpf);
-		textFieldCpf.setColumns(10);
-		
 		JLabel lblEndereo = new JLabel("Endere\u00E7o:");
-		lblEndereo.setBounds(10, 105, 60, 14);
+		lblEndereo.setBounds(10, 65, 60, 14);
 		contentPane.add(lblEndereo);
 		
 		textFieldEndereco = new JTextField();
-		textFieldEndereco.setBounds(86, 102, 271, 20);
+		textFieldEndereco.setBounds(80, 62, 271, 20);
 		contentPane.add(textFieldEndereco);
 		textFieldEndereco.setColumns(10);
 		
 		JLabel lblTelefone = new JLabel("Telefone:");
-		lblTelefone.setBounds(10, 150, 60, 14);
+		lblTelefone.setBounds(10, 105, 60, 14);
 		contentPane.add(lblTelefone);
 		
 		textFieldTel = new JTextField();
-		textFieldTel.setBounds(86, 147, 154, 20);
+		textFieldTel.setBounds(90, 102, 154, 20);
 		contentPane.add(textFieldTel);
 		textFieldTel.setColumns(10);
 		
@@ -127,28 +117,23 @@ public class ClienteGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "Escreva o Nome por favor");
 				}else if(textFieldEndereco.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Escreva o Endereço por favor");
-				}else if(textFieldCpf.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null, "Escreva o CPF por favor");
 				}else if(textFieldTel.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Escreva o Telefone por favor");
 				}else{
 					try {	
 						Cliente cliente = new Cliente();
 						cliente.setNome(textFieldNome.getText());
-						cliente.setCpf(textFieldCpf.getText());
 						cliente.setEndereco(textFieldEndereco.getText());
 						cliente.setTelefone(textFieldTel.getText());
 						Fachada.getInstance().inserir(cliente);
 						JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso!");
 						textFieldNome.setText("");
-						textFieldCpf.setText("");
 						textFieldEndereco.setText("");
 						textFieldTel.setText("");
 					} catch (ClassNotFoundException | SQLException | InserirClienteErro | ClienteExistenteErro
 							| ClienteInvalidoErro e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 						textFieldNome.setText("");
-						textFieldCpf.setText("");
 						textFieldEndereco.setText("");
 						textFieldTel.setText("");
 					}
@@ -166,11 +151,11 @@ public class ClienteGUI extends JFrame {
 				}else{
 					try {	
 						Cliente cliente = new Cliente();
-						cliente.setCpf(textFieldBusca.getText());
+						cliente.setTelefone(textFieldBusca.getText());
 						cliente = Fachada.getInstance().buscar(cliente);
 						DefaultTableModel modelo = new DefaultTableModel();
-						modelo.setColumnIdentifiers(new String[]{"nome","CPF","telefone"});
-						modelo.addRow(new String[]{cliente.getNome()+"" ,cliente.getCpf()+"",cliente.getTelefone()});
+						modelo.setColumnIdentifiers(new String[]{"nome","Endereço","telefone"});
+						modelo.addRow(new String[]{cliente.getNome()+"" ,cliente.getEndereco()+"",cliente.getTelefone()});
 						table.setModel(modelo);
 						textFieldBusca.setText("");
 					} catch (ClassNotFoundException | SQLException | BuscarClienteErro | ClienteInexistenteErro
@@ -193,7 +178,7 @@ public class ClienteGUI extends JFrame {
 				}else{
 					try {
 						Cliente cliente = new Cliente();
-						cliente.setCpf(textFieldBusca.getText());
+						cliente.setTelefone(textFieldBusca.getText());
 						Fachada.getInstance().remover(cliente);
 						JOptionPane.showMessageDialog(null,"Remoção realizada com sucesso!");
 						textFieldBusca.setText("");
@@ -217,28 +202,23 @@ public class ClienteGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "Escreva o Nome por favor");
 				}else if(textFieldEndereco.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Escreva o Endereço por favor");
-				}else if(textFieldCpf.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null, "Escreva o CPF por favor");
 				}else if(textFieldTel.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Escreva o Telefone por favor");
 				}else{
 					try {	
 						Cliente cliente = new Cliente();
 						cliente.setNome(textFieldNome.getText());
-						cliente.setCpf(textFieldCpf.getText());
 						cliente.setEndereco(textFieldEndereco.getText());
 						cliente.setTelefone(textFieldTel.getText());
 						Fachada.getInstance().atualizar(cliente);
 						JOptionPane.showMessageDialog(null, "Cliente atualizado com sucesso!");
 						textFieldNome.setText("");
-						textFieldCpf.setText("");
 						textFieldEndereco.setText("");
 						textFieldTel.setText("");
 					} catch (ClassNotFoundException | SQLException | InserirClienteErro
 							| ClienteInvalidoErro | BuscarClienteErro | RemoverClienteErro | AtualizarClienteErro | ClienteInexistenteErro e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 						textFieldNome.setText("");
-						textFieldCpf.setText("");
 						textFieldEndereco.setText("");
 						textFieldTel.setText("");
 					}
@@ -253,10 +233,10 @@ public class ClienteGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 						DefaultTableModel modelo = new DefaultTableModel();
-						modelo.setColumnIdentifiers(new String[]{"nome","CPF","telefone"});
+						modelo.setColumnIdentifiers(new String[]{"nome","endereço","telefone"});
 						clientes = Fachada.getInstance().listarCliente();
 						for (Cliente cliente: clientes) {
-							modelo.addRow(new String[]{cliente.getNome()+"" ,cliente.getCpf()+"",cliente.getTelefone()});
+							modelo.addRow(new String[]{cliente.getNome()+"" ,cliente.getEndereco()+"",cliente.getTelefone()});
 						}
 						
 						table.setModel(modelo);
@@ -274,8 +254,8 @@ public class ClienteGUI extends JFrame {
 		contentPane.add(textFieldBusca);
 		textFieldBusca.setColumns(10);
 		
-		JLabel label = new JLabel("Remover/Buscar por CPF:");
-		label.setBounds(427, 243, 152, 14);
-		contentPane.add(label);
+		JLabel lblRemoverbuscarPorTel = new JLabel("Remover/Buscar por TEL:");
+		lblRemoverbuscarPorTel.setBounds(427, 243, 152, 14);
+		contentPane.add(lblRemoverbuscarPorTel);
 	}
 }

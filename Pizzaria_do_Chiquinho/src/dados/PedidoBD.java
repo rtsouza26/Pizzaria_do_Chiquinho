@@ -50,7 +50,7 @@ public class PedidoBD {
 		Funcionario funcaux = new Funcionario();
 		clienteBD = new ClienteBD();
 		Cliente clienteaux = new Cliente();
-		clienteaux = clienteBD.buscarClienBD(pedido.getCliente().getCpf());
+		clienteaux = clienteBD.buscarClienBD(pedido.getCliente().getTelefone());
 		funcaux = funcBD.buscarFuncBD(pedido.getFunc().getCpf());
 		boolean inserido = false;
 		

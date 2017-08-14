@@ -263,8 +263,8 @@ public class PedidoGUI extends JFrame {
 					pedidoaux.setCodigo(textFieldPesquisa.getText());
 					pedidoaux = Fachada.getInstance().buscar(pedidoaux);
 					DefaultTableModel modelo = new DefaultTableModel();
-					modelo.setColumnIdentifiers(new String[]{"Codigo","CPF-cliente","CPF-funcio","Total"});
-					modelo.addRow(new String[]{pedidoaux.getCodigo() +"",pedidoaux.getCliente().getCpf() +"", pedidoaux.getFunc().getCpf() +"",String.valueOf(pedidoaux.getTotal()) });
+					modelo.setColumnIdentifiers(new String[]{"Codigo","Telefone-clien","CPF-funcio","Total"});
+					modelo.addRow(new String[]{pedidoaux.getCodigo() +"",pedidoaux.getCliente().getTelefone() +"", pedidoaux.getFunc().getCpf() +"",String.valueOf(pedidoaux.getTotal()) });
 					table.setModel(modelo);
 					} catch (ClassNotFoundException | SQLException | BuscaProdutoErro | BuscarFuncionarioErro | BuscarClienteErro e) {
 						// TODO Auto-generated catch block
@@ -372,11 +372,11 @@ public class PedidoGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 						DefaultTableModel modelo = new DefaultTableModel();
-						modelo.setColumnIdentifiers(new String[]{"Codigo","CPF-cliente","CPF-funcio","Total"});
+						modelo.setColumnIdentifiers(new String[]{"Codigo","Telefone-clien","CPF-funcio","Total"});
 						pedidos = Fachada.getInstance().listar();
 						for (Pedido pedi: pedidos) {
 							
-							modelo.addRow(new String[]{pedi.getCodigo() +"",pedi.getCliente().getCpf() +"", pedi.getFunc().getCpf() +"",String.valueOf(pedi.getTotal()) });
+							modelo.addRow(new String[]{pedi.getCodigo() +"",pedi.getCliente().getTelefone() +"", pedi.getFunc().getCpf() +"",String.valueOf(pedi.getTotal()) });
 						}
 						
 						table.setModel(modelo);

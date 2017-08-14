@@ -86,7 +86,7 @@ public class Fachada {
 	public void atualizar(Produto produto) throws SQLException, ClassNotFoundException, BuscaProdutoErro, AtualizarProdutoErro, ProdutoInvalidoErro{
 		this.produto.atualizarProduto(produto);
 	}
-	public List<Produto> listarProduto() throws SQLException, ListarProdutoErro{
+	public List<Produto> listarProduto() throws SQLException, ListarProdutoErro, ClassNotFoundException{
 		return this.produto.listarProdutos();
 	}
 	
@@ -108,11 +108,11 @@ public class Fachada {
 	public void inserir(Cliente cliente1) throws SQLException, InserirClienteErro, ClienteExistenteErro, ClienteInvalidoErro{
 		this.cliente.inserirCliente(cliente1);
 	}
-	public void remover(Cliente cliente1) throws SQLException, BuscarClienteErro, RemoverClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
-		this.cliente.removerCliente(cliente1.getCpf());
+	public void remover(Cliente cliente1) throws SQLException, BuscarClienteErro, RemoverClienteErro, ClienteInexistenteErro, ClienteInvalidoErro, ClassNotFoundException{
+		this.cliente.removerCliente(cliente1.getTelefone());
 	}
 	public Cliente buscar(Cliente cliente1) throws SQLException, BuscarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
-		return this.cliente.buscarCliente(cliente1.getCpf());
+		return this.cliente.buscarCliente(cliente1.getTelefone());
 	}
 	public void atualizar(Cliente cliente1) throws SQLException, InserirClienteErro, BuscarClienteErro, RemoverClienteErro, AtualizarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
 		this.cliente.atualizarCliente(cliente1);
