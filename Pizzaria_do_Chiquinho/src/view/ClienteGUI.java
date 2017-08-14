@@ -17,18 +17,17 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import dados.ClienteBD;
 import dados.exception.AtualizarClienteErro;
 import dados.exception.BuscarClienteErro;
 import dados.exception.InserirClienteErro;
 import dados.exception.ListarClienteErro;
-import dados.exception.ListarFuncionarioErro;
 import dados.exception.RemoverClienteErro;
 import negocio.Fachada;
 import negocio.exception.ClienteExistenteErro;
 import negocio.exception.ClienteInexistenteErro;
 import negocio.exception.ClienteInvalidoErro;
 import principal.Cliente;
-import principal.Funcionario;
 
 public class ClienteGUI extends JFrame {
 
@@ -40,6 +39,7 @@ public class ClienteGUI extends JFrame {
 	private JTable table;
 	private JTextField textFieldBusca;
 	private List<Cliente> clientes;
+	private ClienteBD cliente1;
 	
 
 	/**
@@ -128,13 +128,12 @@ public class ClienteGUI extends JFrame {
 						cliente.setNome(textFieldNome.getText());
 						cliente.setEndereco(textFieldEndereco.getText());
 						cliente.setTelefone(textFieldTel.getText());
-						Fachada.getInstance().inserir(cliente);
+						cliente1.inserirClienBD(cliente);
 						JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso!");
 						textFieldNome.setText("");
 						textFieldEndereco.setText("");
 						textFieldTel.setText("");
-					} catch (ClassNotFoundException | SQLException | InserirClienteErro | ClienteExistenteErro
-							| ClienteInvalidoErro e1) {
+					} catch (SQLException | InserirClienteErro e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 						textFieldNome.setText("");
 						textFieldEndereco.setText("");
