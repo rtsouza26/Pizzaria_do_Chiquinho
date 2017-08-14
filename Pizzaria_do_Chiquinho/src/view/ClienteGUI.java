@@ -51,7 +51,10 @@ public class ClienteGUI extends JFrame {
          
         return ClienteGUI.tela_cliente;
          
+    }public ClienteGUI() {
+        initComponents();
     }
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -68,7 +71,7 @@ public class ClienteGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ClienteGUI() {
+	private void initComponents() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 654, 488);
 		contentPane = new JPanel();
