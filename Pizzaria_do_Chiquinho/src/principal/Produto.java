@@ -2,7 +2,7 @@ package principal;
 
 import java.sql.SQLException;
 
-import dados.CodigosBD;
+//import dados.CodigosBD;
 
 /**Classe para objetos do tipo Produtos, onde serão contidos, valores e métodos para o mesmo.
  * @author 

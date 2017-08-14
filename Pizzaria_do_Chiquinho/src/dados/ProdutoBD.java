@@ -10,7 +10,6 @@ import dados.exception.*;
 
 import java.util.ArrayList;
 
-import principal.Pedido;
 import principal.Produto;
 
 /**Classe para a conexão do classe produto com o banco de dados, onde serão contidos, valores e métodos para o mesmo.
@@ -27,7 +26,6 @@ public class ProdutoBD {
 	private PreparedStatement buscar = null;
 	private PreparedStatement buscarnome = null;
 	private PreparedStatement atualizar = null;
-	private PreparedStatement buscarquantidade = null;
 	private ResultSet rs = null;
 	private Connection con = null;
 	
@@ -168,7 +166,7 @@ public class ProdutoBD {
 		return atualizado;
 	}
 	
-	
+	//Função testada e funcionando !!!
 	public List<Produto> listarProdBD() throws SQLException,ListarProdutoErro, ClassNotFoundException{
 		List<Produto> produtos = null;
 			

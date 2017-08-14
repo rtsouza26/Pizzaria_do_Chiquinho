@@ -23,6 +23,7 @@ public class CadastroProduto{
 		
 	}
 	
+	//Função testada e funcionando !!!
 	public void inserirProduto(Produto prod) throws SQLException,InserirProdutoErro,ProdutoInvalidoErro,
 	ProdutoExistenteErro,ProdutoPrecoInvalidoErro,ProdutoNomeInvalidoErro,ProdutoQuantidadeInvalidaErro{
 		
@@ -30,8 +31,8 @@ public class CadastroProduto{
 			if(prod.getQuantidade()>=0){
 				if(prod.getNome()!= null){
 					if(prod.getPreco()>=0.0){
-						if(!(this.prodBD.existe(prod.getNome()))){
-							this.prodBD.inserir(prod);
+						if(!(this.prodBD.existeProdutoBD(prod.getNome()))){
+							this.prodBD.inserirProdutoBD(prod);
 			
 						}else{
 							throw new ProdutoExistenteErro();
@@ -51,11 +52,11 @@ public class CadastroProduto{
 	}
 	
 
-	
+	//Função testada e funcionando !!!
 	public Produto buscarProduto(String nome) throws SQLException,ProdutoInvalidoErro, ClassNotFoundException, BuscaProdutoErro{
 		Produto aux = null;
 		if(nome !=null){
-			aux = prodBD.buscar(nome);
+			aux = prodBD.buscarProdutoBD(nome);
 			
 		}else{
 			throw new ProdutoInvalidoErro() ;
@@ -63,11 +64,11 @@ public class CadastroProduto{
 		return aux;
 	}
 	
+	//Função testada e funcionando !!!
 	public void removerProduto(String nome) throws SQLException, ClassNotFoundException, BuscaProdutoErro, RemoverProdutoErro, ProdutoInvalidoErro{
 		if(nome!=null){
-			Produto aux = null;
-			aux= this.prodBD.buscar(nome);
-			this.prodBD.remover(aux.getCodigo());
+
+			this.prodBD.removerProdutoBD(nome);
 			
 		}else{
 			throw new ProdutoInvalidoErro();
@@ -75,11 +76,11 @@ public class CadastroProduto{
 		
 	}
 	
+	//Função testada e funcionando !!!
 	public void atualizarProduto(Produto produto) throws SQLException, ClassNotFoundException, BuscaProdutoErro, AtualizarProdutoErro, ProdutoInvalidoErro{
 
 		if(produto!= null){
-			this.prodBD.buscar(produto.getCodigo());
-			this.prodBD.atualizar(produto);
+			this.prodBD.atualizarProdutoBD(produto);
 					
 		}else{
 			throw new ProdutoInvalidoErro();
@@ -87,7 +88,8 @@ public class CadastroProduto{
 		
 	}
 	
-	public List<Produto> listarProdutos() throws SQLException, ListarProdutoErro{
+	//Função testada e funcionando !!!
+	public List<Produto> listarProdutos() throws SQLException, ListarProdutoErro, ClassNotFoundException{
 		return this.prodBD.listarProdBD();
 	}
 }
