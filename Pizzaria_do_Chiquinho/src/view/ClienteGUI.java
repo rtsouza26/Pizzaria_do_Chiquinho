@@ -39,7 +39,7 @@ public class ClienteGUI extends JFrame {
 	private JTable table;
 	private JTextField textFieldBusca;
 	private List<Cliente> clientes;
-	private ClienteBD cliente1;
+	
 	
 
 	/**
@@ -128,12 +128,12 @@ public class ClienteGUI extends JFrame {
 						cliente.setNome(textFieldNome.getText());
 						cliente.setEndereco(textFieldEndereco.getText());
 						cliente.setTelefone(textFieldTel.getText());
-						cliente1.inserirClienBD(cliente);
+						Fachada.getInstance().inserir(cliente);
 						JOptionPane.showMessageDialog(null, "Cliente inserido com sucesso!");
 						textFieldNome.setText("");
 						textFieldEndereco.setText("");
 						textFieldTel.setText("");
-					} catch (SQLException | InserirClienteErro e1) {
+					} catch (SQLException | InserirClienteErro | ClassNotFoundException | ClienteExistenteErro | ClienteInvalidoErro e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 						textFieldNome.setText("");
 						textFieldEndereco.setText("");
