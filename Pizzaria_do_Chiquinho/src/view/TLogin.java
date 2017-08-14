@@ -136,15 +136,15 @@ public class TLogin extends javax.swing.JFrame  {
 						this.dispose();
 						if(funcheck.getTipo().equals("Administrador")){
 							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
-							TelaAdm.getInstance().setVisible(true);
+							new TelaAdm().setVisible(true);
 							dispose();
 						}if(funcheck.getTipo().equals("Atendente")){
 							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
-							TelaAtendente.getInstance().setVisible(true);
+							new TelaAtendente().setVisible(true);
 							dispose();
 						}if (funcheck.getTipo().equals("Cozinha")){
 							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
-							TelaCozinha.getInstance().setVisible(true);
+							new TelaCozinha().setVisible(true);
 							dispose();
 						}
 						

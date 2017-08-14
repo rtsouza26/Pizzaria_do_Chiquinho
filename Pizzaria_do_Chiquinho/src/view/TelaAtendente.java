@@ -61,7 +61,7 @@ public class TelaAtendente extends JFrame {
 		JButton btnCliente = new JButton("Cliente");
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClienteGUI.getInstance().setVisible(true);
+				new ClienteGUI().setVisible(true);
 			}
 		});
 		menuBar.add(btnCliente);
@@ -69,7 +69,7 @@ public class TelaAtendente extends JFrame {
 		JButton btnPedido = new JButton("Pedido");
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PedidoGUI.getInstance().setVisible(true);
+				new PedidoGUI().setVisible(true);
 			}
 		});
 		menuBar.add(btnPedido);
@@ -77,7 +77,7 @@ public class TelaAtendente extends JFrame {
 		JButton btnProduto = new JButton("Produto");
 		btnProduto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ProdutoGUI.getInstance().setVisible(true);
+				new ProdutoGUI().setVisible(true);
 			}
 		});
 		menuBar.add(btnProduto);

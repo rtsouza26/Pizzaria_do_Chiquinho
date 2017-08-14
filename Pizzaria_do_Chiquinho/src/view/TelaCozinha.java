@@ -64,7 +64,7 @@ public class TelaCozinha extends JFrame {
 		JButton btnPedido = new JButton("Pedido");
 		btnPedido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PedidoGUI.getInstance().setVisible(true);
+				new PedidoGUI().setVisible(true);
 			}
 		});
 		menuBar.add(btnPedido);
