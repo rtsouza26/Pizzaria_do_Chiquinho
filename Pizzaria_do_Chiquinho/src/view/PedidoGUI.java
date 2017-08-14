@@ -40,7 +40,7 @@ public class PedidoGUI extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private static JFrame pedi;
-	private JTextField textFieldCpfcliente;
+	private JTextField textFieldTelcliente;
 	private JTextField textFieldCpfFunc;
 	private JTextField textFieldObs;
 	private JTextField textFieldProds;
@@ -98,8 +98,8 @@ public class PedidoGUI extends JFrame {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		JLabel lblNewLabel = new JLabel("CPF Cliente:");
-		lblNewLabel.setBounds(28, 11, 81, 14);
+		JLabel lblNewLabel = new JLabel("Telefone Cliente:");
+		lblNewLabel.setBounds(28, 11, 99, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblCpfFuncionario = new JLabel("CPF Funcion\u00E1rio:");
@@ -114,10 +114,10 @@ public class PedidoGUI extends JFrame {
 		lblStatus.setBounds(28, 109, 46, 14);
 		contentPane.add(lblStatus);
 		
-		textFieldCpfcliente = new JTextField();
-		textFieldCpfcliente.setBounds(134, 8, 145, 20);
-		contentPane.add(textFieldCpfcliente);
-		textFieldCpfcliente.setColumns(10);
+		textFieldTelcliente = new JTextField();
+		textFieldTelcliente.setBounds(167, 8, 145, 20);
+		contentPane.add(textFieldTelcliente);
+		textFieldTelcliente.setColumns(10);
 		
 		textFieldCpfFunc = new JTextField();
 		textFieldCpfFunc.setBounds(151, 36, 128, 20);
@@ -196,8 +196,8 @@ public class PedidoGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "Não há mercadorias inseridas");
 				}else if(textFieldCpfFunc.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Preencher CPF do funcionário");
-				}else if(textFieldCpfcliente.getText().isEmpty()){
-					JOptionPane.showMessageDialog(null, "Preencher CPF do Cliente");
+				}else if(textFieldTelcliente.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Preencher telefone do Cliente");
 				}else if(!(rdbtnMercadoriaExtraviada.isSelected() || rdbtnEntregue.isSelected() || rdbtnEspera.isSelected() || rdbtnACaminho.isSelected() || rdbtnNaCozinha.isSelected())){
 					JOptionPane.showMessageDialog(null, "Marcar um status do pedido");
 				}else{
@@ -206,7 +206,7 @@ public class PedidoGUI extends JFrame {
 								Cliente cliente = new Cliente();
 								Funcionario funcionario = new Funcionario();
 								funcionario = funcionariobd.buscarFuncBD(textFieldCpfFunc.getText());
-								cliente = clientebd.buscarClienBD(textFieldCpfcliente.getText());
+								cliente = clientebd.buscarClienBD(textFieldTelcliente.getText());
 								pedido.setObs(textFieldObs.getText());
 								pedido.setCliente(cliente);
 								pedido.setFunc(funcionario);
@@ -230,7 +230,7 @@ public class PedidoGUI extends JFrame {
 								itens= new Itens_pedido();
 								textFieldTotal.setText("");
 								textFieldProds.setText("");
-								textFieldCpfcliente.setText("");
+								textFieldTelcliente.setText("");
 								textFieldCpfFunc.setText("");
 								textFieldObs.setText("");
 							} catch (SQLException | BuscarFuncionarioErro | BuscarClienteErro | ClassNotFoundException e1) {
@@ -241,7 +241,7 @@ public class PedidoGUI extends JFrame {
 								itens= new Itens_pedido();
 								textFieldTotal.setText("");
 								textFieldProds.setText("");
-								textFieldCpfcliente.setText("");
+								textFieldTelcliente.setText("");
 								textFieldCpfFunc.setText("");
 								textFieldObs.setText("");
 							}
@@ -311,7 +311,7 @@ public class PedidoGUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "Não há mercadorias inseridas");
 				}else if(textFieldCpfFunc.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Preencher CPF do funcionário");
-				}else if(textFieldCpfcliente.getText().isEmpty()){
+				}else if(textFieldTelcliente.getText().isEmpty()){
 					JOptionPane.showMessageDialog(null, "Preencher CPF do Cliente");
 				}else if(!(rdbtnMercadoriaExtraviada.isSelected() || rdbtnEntregue.isSelected() || rdbtnEspera.isSelected() || rdbtnACaminho.isSelected() || rdbtnNaCozinha.isSelected())){
 					JOptionPane.showMessageDialog(null, "Marcar um status do pedido");
@@ -321,7 +321,7 @@ public class PedidoGUI extends JFrame {
 								Cliente cliente = new Cliente();
 								Funcionario funcionario = new Funcionario();
 								funcionario = funcionariobd.buscarFuncBD(textFieldCpfFunc.getText());
-								cliente = clientebd.buscarClienBD(textFieldCpfcliente.getText());
+								cliente = clientebd.buscarClienBD(textFieldTelcliente.getText());
 								pedido.setObs(textFieldObs.getText());
 								pedido.setCliente(cliente);
 								pedido.setFunc(funcionario);
@@ -345,7 +345,7 @@ public class PedidoGUI extends JFrame {
 								itens= new Itens_pedido();
 								textFieldTotal.setText("");
 								textFieldProds.setText("");
-								textFieldCpfcliente.setText("");
+								textFieldTelcliente.setText("");
 								textFieldCpfFunc.setText("");
 								textFieldObs.setText("");
 							} catch (SQLException | ClassNotFoundException | BuscaProdutoErro | BuscarFuncionarioErro | BuscarClienteErro | RemoverItem_pedidoErro e1) {
@@ -356,7 +356,7 @@ public class PedidoGUI extends JFrame {
 								itens= new Itens_pedido();
 								textFieldTotal.setText("");
 								textFieldProds.setText("");
-								textFieldCpfcliente.setText("");
+								textFieldTelcliente.setText("");
 								textFieldCpfFunc.setText("");
 								textFieldObs.setText("");
 							}
