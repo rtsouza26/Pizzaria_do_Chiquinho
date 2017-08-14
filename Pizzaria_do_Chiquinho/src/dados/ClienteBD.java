@@ -26,146 +26,159 @@ public class ClienteBD {
 	private PreparedStatement inserir = null;
 	private PreparedStatement remover = null;
 	private PreparedStatement listar = null;
-	private PreparedStatement buscar = null;
-	private PreparedStatement buscarcpf = null;
+	private PreparedStatement buscartelefone = null;
+	private PreparedStatement atualizar = null;
 	private ResultSet rs = null;
 	private Connection con = null;
 
-	
+
 	public ClienteBD() throws ClassNotFoundException, SQLException{
 	
 		con = ConexaoBD.getConnection();
 	
 	
-			inserir = con.prepareStatement("INSERT INTO Clientes(nome,endereco,cpf,telefone) "
+			inserir = con.prepareStatement("INSERT INTO clientes(nome,endereco,telefone,cod_forma_pagamento) "
 				+ "VALUE (?,?,?,?)");
-			remover = con.prepareStatement("DELETE FROM Clientes WHERE cod = ?");
-			buscar = con.prepareStatement("SELECT * FROM Clientes WHERE nome = ?");
-			buscarcpf = con.prepareStatement("SELECT * FROM Clientes WHERE cpf = ?");
-			listar = con.prepareStatement("SELECT * FROM Clientes");
+			remover = con.prepareStatement("DELETE FROM clientes WHERE telefone = ?");
+			buscartelefone = con.prepareStatement("SELECT * FROM clientes WHERE telefone = ?");
+			listar = con.prepareStatement("SELECT * FROM clientes");
+			atualizar = con.prepareStatement("UPDATE clientes SET nome = ?, endereco = ?, cod_forma_pagamento = ? WHERE telefone = ? ");
+
 		
 	}
 	
-	public boolean inserirClienBD(Cliente cliente) throws SQLException, InserirClienteErro{
+	//Função testada e duncionando (Mas precisa ser otimizada)
+	public void inserirClienBD(Cliente cliente) throws SQLException, InserirClienteErro{
 		
-		boolean inserido = false;
+		if(cliente != null){
 		
-		inserir.setString(1, cliente.getNome());
-		inserir.setString(2, cliente.getEndereco());
-		inserir.setString(3, cliente.getCpf());
-		inserir.setString(4, cliente.getTelefone());
+			inserir.setString(1, cliente.getNome());
+			inserir.setString(2, cliente.getEndereco());
+			inserir.setString(3, cliente.getTelefone());
+			inserir.setInt(4, cliente.getCod_forma_pagamento());
+			inserir.executeUpdate();
 			
-		inserido = inserir.execute();
-		
-		if(inserido == false){
+		}else{
 			
 			throw new InserirClienteErro();
-			
-		}
-			
-	
-		return inserido;
-	}
 
-	public boolean existeBD(String cpf) throws SQLException{
-		boolean existe = false;
-			try {
-				buscarcpf.setString(3, cpf);
-				if((rs = buscarcpf.executeQuery())!=null){
-					existe = true;
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			finally{
-				ConexaoBD.closeConnection(con);
-			}
-			
-		 return existe;
-		
+		}
+
 	}
 	
-	public Cliente buscarClienBD(String cpf) throws SQLException, BuscarClienteErro{
+	//Função testada e funcionando !!!
+	public boolean existeBD(String telefone) throws SQLException{
+		boolean existe = false;
+		
+		buscartelefone.setString(1, telefone);	
+		rs = buscartelefone.executeQuery();
+		
+		if(rs.next()){
+			existe = true;
+			//System.out.println("Passei aqui");
+		}
+		
+		//ConexaoBD.closeConnection(con,rs);
+		return existe;	
+	}
+	
+	//Função testada e funcionando !!!
+	public Cliente buscarClienBD(String telefone) throws SQLException, BuscarClienteErro{
 		Cliente clien = null;
 		
-			buscarcpf.setString(1, cpf);
+			buscartelefone.setString(1, telefone);
 			
-			if((rs = buscar.executeQuery())!=null){;
+			rs = buscartelefone.executeQuery();
+			
+			if(rs.next()){;
 				clien = new Cliente();
-				clien.setCodigo(rs.getInt("cod"));
+				clien.setCodigo(rs.getInt("idcliente"));
 				clien.setNome(rs.getString("nome"));
 				clien.setEndereco(rs.getString("endereco"));
-				clien.setCpf(rs.getString("cpf"));		
+				clien.setTelefone(rs.getString("telefone"));
+				clien.setCod_forma_pagamento(rs.getInt("cod_forma_pagamento"));
 				
 			}else{
-				
 				throw new BuscarClienteErro();
-				
 			}
 			
-		ConexaoBD.closeConnection(con,rs);
+		//ConexaoBD.closeConnection(con,rs);
 		return clien;
 	}
 	
-	public boolean removerClienBD(String cpf) throws SQLException, BuscarClienteErro, RemoverClienteErro{
+	//Função testada e funcionando (Mas precisa ser otimizada)
+	public boolean removerClienBD(String telefone) throws SQLException, BuscarClienteErro, RemoverClienteErro, ClassNotFoundException{
 		
 		boolean removido = false;
-		Cliente clien = new Cliente();
-		
-		clien = this.buscarClienBD(cpf);
-		remover.setString(3, clien.getCpf());
-		removido = remover.execute();
-		
-		if(removido==false){
 			
-			throw new RemoverClienteErro();
+		if(telefone != null){
 			
+			remover.setString(1, telefone);
+			//System.out.println("Removeu");
+			remover.execute();
+			removido = true;
+			
+		}else{
+			//System.out.println("Não removeu");
+			throw new RemoverClienteErro();	
 		}
-				
-		ConexaoBD.closeConnection(con, remover);	
+		//ConexaoBD.closeConnection(con, remover);	
 		return removido;
 	}
 	
-	public List<Cliente> listarClienBD() throws SQLException, ListarClienteErro {
-		List<Cliente> clientes = null;
-		
-
-		if((rs = listar.executeQuery())!=null){
-			clientes = new ArrayList<Cliente>();
-			while(rs.next()){
-				clientes.add(new Cliente(
-					rs.getInt("cod"),
-					rs.getString("nome"),
-					rs.getString("endereco"),
-					rs.getString("cpf"),
-					rs.getString("telefone")));
-			}
-		}else{
-			
-			throw new ListarClienteErro();
-			
-		}
-
-		ConexaoBD.closeConnection(con,rs);
-		return clientes;
-	}
-	
+	//Função testada e funcionando (Mas precisa ser otimizada)
 	public boolean atualizarClienBD(Cliente cliente) throws SQLException, InserirClienteErro, BuscarClienteErro, RemoverClienteErro, AtualizarClienteErro{
+		
 		boolean atualizado = false;
 		
-		if(this.removerClienBD(cliente.getCpf())){
-			if(this.inserirClienBD(cliente)){
-				atualizado = true;
-			}
-		}
-		if(atualizado==false){
+		if(this.existeBD(cliente.getTelefone())){
 			
+			atualizar.setString(1, cliente.getNome());
+			atualizar.setString(2, cliente.getEndereco());
+			atualizar.setInt(3, cliente.getCod_forma_pagamento());
+			atualizar.setString(4, cliente.getTelefone());
+			atualizar.executeUpdate();
+			
+			atualizado = true;
+			return atualizado;
+			
+			//System.out.println("Atualização concluida !!!");
+					
+		}else{
+			
+			//System.out.println("Erro na atualização !!!");
 			throw new AtualizarClienteErro();
 		}
-		
-		return atualizado;
-	}
+	}	
 	
+	//Função testada e funcionando !!!
+	public List<Cliente> listarClienBD() throws SQLException, ListarClienteErro {
+		List<Cliente> clientes = null;	
+
+		rs = null;
+		rs = listar.executeQuery(); 
+		
+		if(rs != null){
+			
+			clientes = new ArrayList<Cliente>();
+			
+			while(rs.next()){
+				
+				Cliente clienteaux = new Cliente();
+				clienteaux.setCodigo(rs.getInt("idcliente"));
+				clienteaux.setNome(rs.getString("nome"));
+				clienteaux.setEndereco(rs.getString("endereco"));
+				clienteaux.setTelefone(rs.getString("telefone"));
+				clienteaux.setCod_forma_pagamento(rs.getInt("cod_forma_pagamento"));
+				
+				clientes.add(clienteaux);
+			}
+		}else{		
+			throw new ListarClienteErro();	
+		}
+
+		//ConexaoBD.closeConnection(con,rs);
+		return clientes;
+	}
 }
 

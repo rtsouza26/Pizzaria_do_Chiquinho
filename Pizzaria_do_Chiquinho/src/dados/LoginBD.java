@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+import negocio.exception.FuncionarioExistente;
 import principal.Funcionario;
 
 public class LoginBD {
@@ -20,26 +20,22 @@ public class LoginBD {
 		
 			String sql = "SELECT * FROM funcionarios WHERE login =? AND senha =?" ;
 			testelogin = con.prepareStatement(sql);
-			
 		
 	}
+	
 	public Funcionario checkLogin( String login, String senha) throws SQLException{
 
-		
-			
 			testelogin.setString(1, login);
 			testelogin.setString(2, senha);
 			rs = testelogin.executeQuery();
 			
-			if(rs  != null){
+			if(rs.next()){
 				check = new Funcionario();
 				rs.next();
 				check.setCodigo(rs.getInt("idfuncionario"));
-				check.setTipo(rs.getString("cod_tipo"));
-					
+				check.setTipo(rs.getString("cod_tipo"));		
 			}
 			
-	
 		return check;
 	}
 	

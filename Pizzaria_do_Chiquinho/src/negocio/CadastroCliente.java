@@ -22,15 +22,13 @@ public class CadastroCliente {
 		clienteBD= new ClienteBD();
 }
 	
+	//Função testada e funcioando (Mas precisa sr otimizada)
 	public void inserirCliente(Cliente cliente) throws SQLException, InserirClienteErro, ClienteExistenteErro, ClienteInvalidoErro{
 		
 		if(cliente != null){
-			if(!(clienteBD.existeBD(cliente.getCpf()))){	
-				if(clienteBD.inserirClienBD(cliente)){
-						System.out.println("Cliente cadastrado com sucesso");
-					}else{
-						System.out.println("Não foi possível cadastrar o cliente");
-					}			
+			if(!(clienteBD.existeBD(cliente.getTelefone()))){	
+						clienteBD.inserirClienBD(cliente);
+						System.out.println("Cliente cadastrado com sucesso");		
 				}else{
 					throw new ClienteExistenteErro();
 				}			
@@ -38,13 +36,13 @@ public class CadastroCliente {
 				throw new ClienteInvalidoErro();
 			}	
 		}
-		
 	
-	public void removerCliente(String cpf) throws SQLException, BuscarClienteErro, RemoverClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
+	//Função testada e funcionando !!!
+	public void removerCliente(String telefone) throws SQLException, BuscarClienteErro, RemoverClienteErro, ClienteInexistenteErro, ClienteInvalidoErro, ClassNotFoundException{
 		
-		if(cpf != null){
-			if(clienteBD.existeBD(cpf)){
-				if(clienteBD.removerClienBD(cpf)){
+		if(telefone != null){
+			if(clienteBD.existeBD(telefone)){
+				if(clienteBD.removerClienBD(telefone)){
 					System.out.println("Cliente deletado com sucesso");
 				}
 			}else{
@@ -55,12 +53,12 @@ public class CadastroCliente {
 		}
 	}
 	
-	
-	public Cliente buscarCliente(String cpf) throws SQLException, BuscarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro {
+	//Função testada e funcionando !!!
+	public Cliente buscarCliente(String telefone) throws SQLException, BuscarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro {
 		Cliente aux = null;
-		if(cpf != null){
-			if(clienteBD.existeBD(cpf)){
-				aux = clienteBD.buscarClienBD(cpf);
+		if(telefone != null){
+			if(clienteBD.existeBD(telefone)){
+				aux = clienteBD.buscarClienBD(telefone);
 			}else{
 				throw new ClienteInexistenteErro();
 			}
@@ -70,10 +68,11 @@ public class CadastroCliente {
 		return aux;
 	}
 	
+	//Função testada e funcionando !!!
 	public void atualizarCliente(Cliente cliente) throws SQLException, InserirClienteErro, BuscarClienteErro, RemoverClienteErro, AtualizarClienteErro, ClienteInexistenteErro, ClienteInvalidoErro{
 		
 		if(cliente != null){
-			if(clienteBD.existeBD(cliente.getCpf())){
+			if(clienteBD.existeBD(cliente.getTelefone())){
 				if(clienteBD.atualizarClienBD(cliente)){
 					System.out.println("Cliente atualizado com sucesso");
 				}
@@ -85,7 +84,7 @@ public class CadastroCliente {
 		}
 	}
 	
-	
+	//Função testada e funcionando !!!
 	public List<Cliente> listarCliente() throws SQLException, ListarClienteErro{
 		
 		return clienteBD.listarClienBD();

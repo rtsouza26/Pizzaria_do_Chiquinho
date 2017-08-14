@@ -18,9 +18,9 @@ public class Produto {
 	private double preco;
 	
 	public Produto() throws SQLException, ClassNotFoundException{
-		CodigosBD codigo = new CodigosBD();
+		//CodigosBD codigo = new CodigosBD();
 		
-		this.codigo = codigo.buscar("cod_produto").getCodigo_produto();
+		//this.codigo = codigo.buscar("cod_produto").getCodigo_produto();
 	}
 	
 	public Produto( int cod,String nome,int quantidade,double preco){

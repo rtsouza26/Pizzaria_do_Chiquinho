@@ -24,6 +24,7 @@ public class CadastroFuncionario {
 		funcBD = new FuncionarioBD();
 	}
 	
+	//Função testada e funcionando !!!
 	public void inserirFunc(Funcionario func) throws SQLException, FuncionarioInvalido, FuncionarioExistente, InserirFuncionarioErro, LoginJaExiste{
 		
 		if(func != null){
@@ -41,7 +42,7 @@ public class CadastroFuncionario {
 		}
 	}
 	
-	
+	//Função testada e funcionando !!!
 	public Funcionario buscarFunc(String cpf) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, BuscarFuncionarioErro{
 		Funcionario aux = null;
 		if(cpf!=null){
@@ -55,6 +56,8 @@ public class CadastroFuncionario {
 		}
 		return aux;
 	}
+	
+	//Função testada e funcionando !!!
 	public void removerFunc(String cpf) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, RemoverFuncionarioErro, BuscarFuncionarioErro{
 		if(cpf!=null){
 			if(this.funcBD.existeBD(cpf)){	
@@ -67,6 +70,8 @@ public class CadastroFuncionario {
 			throw new FuncionarioInvalido();
 		}		
 	}
+	
+	//Função testada e funcionando !!!
 	public void atualizarFunc(Funcionario func) throws SQLException, FuncionarioInexistente, FuncionarioInvalido, AtualizarFuncionarioErro, BuscarFuncionarioErro{
 			
 			if(func!=null){
@@ -86,6 +91,7 @@ public class CadastroFuncionario {
 			}
 	}
 	
+	//Função testada e funcionando !!!
 	public List<Funcionario> listarFunc() throws SQLException, ListarFuncionarioErro{
 		
 		return this.funcBD.listarFuncBD();

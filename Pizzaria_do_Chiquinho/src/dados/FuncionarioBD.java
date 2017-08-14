@@ -42,9 +42,9 @@ public class FuncionarioBD{
 			atualizar = con.prepareStatement("UPDATE funcionarios SET nome = ?, endereco = ?, telefone = ?, cod_tipo = ?, login = ?, senha = ? WHERE cpf = ? ");
 	}
 	
-	//Função testada e funcionando !!!
+	//Função testada e funcionando (Mas precisa ser otimizada)
 	public void inserirFuncBD(Funcionario func) throws SQLException, InserirFuncionarioErro{
-		
+			
 		if(func != null){
 			inserir.setString(1, func.getNome());
 			inserir.setString(2, func.getEndereco());
@@ -80,16 +80,16 @@ public class FuncionarioBD{
 	public boolean existeBD(String cpf) throws SQLException{
 		boolean existe = false;
 			
-				buscar.setString(1, cpf);	
-				rs = buscar.executeQuery();
+		buscar.setString(1, cpf);	
+		rs = buscar.executeQuery();
 				
-				if(rs.next()){
-					existe = true;
-					System.out.println("Passei aqui");
-				}
+		if(rs.next()){
+			existe = true;
+			//System.out.println("Passei aqui");
+		}
 				
-		 //ConexaoBD.closeConnection(con);	
-		 return existe;	
+		//ConexaoBD.closeConnection(con, rs);	
+		return existe;	
 	}
 	
 	//Função testada e funcionando !!!
@@ -111,22 +111,32 @@ public class FuncionarioBD{
 				func.setLogin("*****");
 				func.setSenha("*****");
 				
+				//ConexaoBD.closeConnection(con, rs);	
 				return func;
+				
 			}else{
+				
+				//ConexaoBD.closeConnection(con, rs);	
 				throw new BuscarFuncionarioErro();
-			}
-		
+			}	
 	}
 	
-	//Função testada e funcionando !!!
-	public void removerFuncBD(String cpf) throws SQLException, RemoverFuncionarioErro, BuscarFuncionarioErro{
+	//Função testada e funcionando (Mas precisa ser otimizada)
+	public boolean removerFuncBD(String cpf) throws SQLException, RemoverFuncionarioErro, BuscarFuncionarioErro{
 		
-		if(cpf == null){
+		boolean removido = false;
+		
+		if(cpf != null){
+			remover.setString(1, cpf);
+			removido = remover.execute();
+			removido = true;
+		
+		}else{
+			
 			throw new RemoverFuncionarioErro();
-		}else{		
-			remover.setString(1, cpf);	
-			remover.executeUpdate();
-		}	
+		}
+		//ConexaoBD.closeConnection(con, remover);
+		return removido;	
 	}
 	
 	//Função testada e funcionando !!!
@@ -135,7 +145,7 @@ public class FuncionarioBD{
 		
 		if(existeBD(func.getCpf())){
 			
-			System.out.println(func.getCpf());
+			//System.out.println(func.getCpf());
 			
 			atualizar.setString(1, func.getNome());
 			atualizar.setString(2, func.getEndereco());
@@ -146,7 +156,7 @@ public class FuncionarioBD{
 			atualizar.setString(7, func.getCpf());
 			atualizar.executeUpdate();
 			
-			System.out.println("Atualização concluida!");
+			//System.out.println("Atualização concluida!");
 			
 		}else{
 			throw new AtualizarFuncionarioErro();

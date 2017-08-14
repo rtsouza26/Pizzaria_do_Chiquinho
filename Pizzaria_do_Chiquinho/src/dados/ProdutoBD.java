@@ -37,152 +37,161 @@ public class ProdutoBD {
 		con = ConexaoBD.getConnection();
 		
 		
-			inserir = con.prepareStatement("INSERT INTO produto(nome,quantidade,preco_unitario) "
+			inserir = con.prepareStatement("INSERT INTO produtos(nome,quantidade,preco_unitario) "
 					+ "VALUE (?,?,?)");
-			remover = con.prepareStatement("DELETE FROM produto WHERE nome = ?");
-			buscar = con.prepareStatement("SELECT * FROM produto WHERE cod = ?");
-			listar = con.prepareStatement("SELECT * FROM produto");
-			buscarnome = con.prepareStatement("SELECT * FROM produto WHERE nome= ?");
-			atualizar = con.prepareStatement("UPDATE produto SET nome = ?, quantidade = ?, preco_unitario = ? WHERE id = ? ");
+			remover = con.prepareStatement("DELETE FROM produtos WHERE nome = ?");
+			buscar = con.prepareStatement("SELECT * FROM produtos WHERE nome = ?");
+			listar = con.prepareStatement("SELECT * FROM produtos");
+			buscarnome = con.prepareStatement("SELECT * FROM produtos WHERE nome= ?");
+			atualizar = con.prepareStatement("UPDATE produtos SET quantidade = ?, preco_unitario = ? WHERE nome = ? ");
 			
 			
 	}
 	
-	
-	public void inserir(Produto produto) throws SQLException,InserirProdutoErro{
-		
-	
-			//inserir.setInt(1, produto.getCodigo());
-			inserir.setString(1, produto.getNome());
-			inserir.setInt(2, produto.getQuantidade());
-			inserir.setDouble(1, produto.getPreco());
-		
-			
-			if(!inserir.execute()){
+	//Função testada e duncionando (Mas precisa ser otimizada)
+	public void inserirProdutoBD(Produto produto) throws SQLException,InserirProdutoErro{
+				
+			if(produto != null){
+				
+				//inserir.setInt(1, produto.getCodigo());
+				inserir.setString(1, produto.getNome());
+				inserir.setInt(2, produto.getQuantidade());
+				inserir.setDouble(3, produto.getPreco());
+				inserir.executeUpdate();
+			}else{				
 				throw new InserirProdutoErro();
-			};
-		
-			
-		
+			}
+	
 	}
-	public boolean existe(String nome) throws SQLException{
+
+	//Função testada e funcionando !!!
+	public boolean existeProdutoBD(String nome) throws SQLException{
 		boolean existe = false;
-		
+				
+				rs = null;
 				buscarnome.setString(1,nome);
-				if((rs = buscarnome.executeQuery())!=null){
+				rs = buscarnome.executeQuery();
+				
+				if(rs.next()){
 					existe = true;
 				}
 			
-			
-		 return existe;
-		
+		 return existe;	
 	}
 	
-	public Produto buscar(int id) throws SQLException, ClassNotFoundException,BuscaProdutoErro{
+	//Função testada e funcionando !!!
+	public Produto buscarProdutoBD(String nome) throws SQLException, ClassNotFoundException,BuscaProdutoErro{
 		Produto prod = null;
-
-			buscar.setInt(1, id);
 			
-			if((rs = buscar.executeQuery())!=null){;
+			rs = null;
+			buscar.setString(1, nome);
+			rs = buscar.executeQuery();
+			
+			if(rs.next()){
 				prod = new Produto();
-				prod.setCodigo(rs.getInt("id"));
-				prod.setQuantidade(rs.getInt("nome"));
-				prod.setPreco(rs.getDouble("quantidade"));
-				prod.setNome(rs.getString("preco_unitario"));
+				prod.setCodigo(rs.getInt("idproduto"));
+				prod.setQuantidade(rs.getInt("quantidade"));
+				prod.setPreco(rs.getDouble("preco_unitario"));
+				prod.setNome(rs.getString("nome"));
 				
 				return prod;
 			}else{
 				throw new BuscaProdutoErro();
 			}
-			
-		
-		
-	}
-	public Produto buscar(String nome) throws SQLException, ClassNotFoundException,BuscaProdutoErro{
-		Produto prod = null;
-	
-			buscarnome.setString(1, nome);
-			
-			if((rs = buscarnome.executeQuery())!=null){;
-				prod = new Produto();
-				prod.setCodigo(rs.getInt("id"));
-				prod.setQuantidade(rs.getInt("quantidade"));
-				prod.setPreco(rs.getDouble("preco"));
-				prod.setNome(rs.getString("nome"));
-				return prod;
-					
-			}else{
-				throw new BuscaProdutoErro();
-			}
-			
 	}
 	
-	
-	public void remover( int id) throws SQLException, ClassNotFoundException,RemoverProdutoErro, BuscaProdutoErro{
-	
+	//Função testada e funcionando (Mas precisa ser otimizada)
+	public boolean removerProdutoBD(String nome) throws SQLException, ClassNotFoundException,RemoverProdutoErro, BuscaProdutoErro{
+		boolean removido = false;
 
-			remover.setString(1, this.buscar(id).getNome());
-			if(!remover.execute()){
+			if(nome != null){
+				
+				remover.setString(1, this.buscarProdutoBD(nome).getNome());
+				removido = remover.execute();
+				removido = true;
+			}else{
+				
 				throw new RemoverProdutoErro();
+				
 			}
-		
+			
+		return removido;
+				
 	}
 	
-	public void atualizar(Produto produto) throws SQLException, ClassNotFoundException,AtualizarProdutoErro, BuscaProdutoErro{
-		buscar(produto.getCodigo());
-		atualizar.setString(1, produto.getNome());
-		atualizar.setInt(2, produto.getQuantidade());
-		atualizar.setDouble(3, produto.getPreco());
-		atualizar.setInt(4, produto.getCodigo());
+	//Função testada e funcionando !!!
+	public void atualizarProdutoBD(Produto produto) throws SQLException, ClassNotFoundException,AtualizarProdutoErro, BuscaProdutoErro{
 		
-		if(!atualizar.execute()){
+		if(this.existeProdutoBD(produto.getNome())){
+			
+			atualizar.setInt(1, produto.getQuantidade());
+			atualizar.setDouble(2, produto.getPreco());
+			atualizar.setString(3, produto.getNome());
+			atualizar.executeUpdate();
+
+		}else{
 			throw new AtualizarProdutoErro();
 		}
-			
+
 	}
 	
+	//Função testada e funcionando !!!
 	public int buscarQuantidade(String nome) throws SQLException, ClassNotFoundException, BuscaProdutoErro{
-		Produto auxproduto = null;
-		int aux = 0;
+		int quantidade;
 		
-		auxproduto = buscar(nome);
-		aux = auxproduto.getQuantidade();
-		return aux;
+		if(this.buscarProdutoBD(nome) != null){
+			
+			quantidade = this.buscarProdutoBD(nome).getQuantidade();
+			return quantidade;
+			
+		}else{		
+			throw new BuscaProdutoErro();	
+		}	
 	}
 	
-	
-	public boolean atualizarQuatidade(int quantidade,int cod) throws SQLException{
+	//Função testada e funcionando !!!
+	public boolean atualizarQuatidade(String nome, int quantidade) throws SQLException, AtualizarProdutoErro, ClassNotFoundException, BuscaProdutoErro{
 		boolean atualizado = false;
 	
+		if(this.existeProdutoBD(nome)){
+			
 			atualizar.setInt(1, quantidade);
-			atualizar.setInt(2, cod);
-			if(atualizar.execute()){
-				atualizado = true;
-			}
-		
+			atualizar.setDouble(2, this.buscarProdutoBD(nome).getPreco());
+			atualizar.setString(3, nome);
+			atualizar.executeUpdate();
+			atualizado = true;
+
+		}else{
+			throw new AtualizarProdutoErro();
+		}
+
 		return atualizado;
 	}
 	
-	public List<Produto> listarProdBD() throws SQLException,ListarProdutoErro{
+	
+	public List<Produto> listarProdBD() throws SQLException,ListarProdutoErro, ClassNotFoundException{
 		List<Produto> produtos = null;
+			
+			rs = null;
+			rs = listar.executeQuery();
 		
-		
-			if((rs = listar.executeQuery())!=null){
+			if(rs != null){
 				produtos = new ArrayList<Produto>();
 				while(rs.next()){
-					produtos.add(new Produto(
-							rs.getInt("cod"),
-							rs.getString("nome"),
-							rs.getInt("quantidade"),
-							rs.getDouble("preco")));
+					Produto produtoaux = new Produto();
+					
+					produtoaux.setCodigo(rs.getInt("idproduto"));
+					produtoaux.setNome(rs.getString("nome"));
+					produtoaux.setQuantidade(rs.getInt("quantidade"));
+					produtoaux.setPreco(rs.getDouble("preco_unitario"));
+					produtos.add(produtoaux);
+			
 				}
+				
 				return produtos;
+				
 			}else{
 				throw new ListarProdutoErro();
 			}
-		
-		
-		
 	}
-	
 }

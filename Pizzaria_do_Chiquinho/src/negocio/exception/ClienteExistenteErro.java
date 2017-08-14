@@ -9,7 +9,7 @@ public class ClienteExistenteErro extends Exception{
 	
 	public ClienteExistenteErro(){
 		
-		super("Cliente jpa existe!");
+		super("Cliente já existe!");
 		
 	}
 

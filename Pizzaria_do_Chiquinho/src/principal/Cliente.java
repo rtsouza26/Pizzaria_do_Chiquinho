@@ -11,9 +11,8 @@ public class Cliente {
 	private int codigo;
 	private String nome;
 	private String endereco;
-	private String cep;
-	private String cpf;
 	private String telefone;
+	private int cod_forma_pagamento;
 	
 	public Cliente(){
 		
@@ -21,16 +20,15 @@ public class Cliente {
 	
 	public Cliente( 
 			
-			int cod,String nome,String endereco,String cpf,String telefone){
-		this.codigo=cod;
-		this.nome=nome;
-		this.endereco=endereco;
-		this.cpf=cpf;
-		this.telefone=telefone;
+		int cod,String nome,String endereco,String telefone, int cod_forma_pagamento){
+		
+		this.codigo = cod;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.telefone = telefone;
+		this.cod_forma_pagamento = cod_forma_pagamento;
 
 	}
-	
-	
 	
 	public int getCodigo() {
 		return codigo;
@@ -50,23 +48,19 @@ public class Cliente {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public String getCep() {
-		return cep;
-	}
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-	public String getCpf() {
-		return cpf;
-	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
 	public String getTelefone() {
 		return telefone;
 	}
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public int getCod_forma_pagamento() {
+		return cod_forma_pagamento;
+	}
+
+	public void setCod_forma_pagamento(int cod_forma_pagamento) {
+		this.cod_forma_pagamento = cod_forma_pagamento;
 	}
 	
 	
