@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 
 import dados.LoginBD;
 import principal.Funcionario;
+import security.LoginSemTipo;
+import security.LoginSenhaIncorretos;
+import security.Supervisao;
 
 public class TLogin extends javax.swing.JFrame  {
 	
@@ -117,47 +120,42 @@ public class TLogin extends javax.swing.JFrame  {
 	
 	
 	private void jBokActionPerformed(java.awt.event.ActionEvent evt) {                                     
-        LoginBD funcbd = null;
-		try {
-			funcbd = new LoginBD();
-		} catch (ClassNotFoundException | SQLException e) {
+       
+        try {
+			Supervisao supervisor = new Supervisao();
+			
+			if(jFlogin.getText().isEmpty() || String.valueOf(jPFsenha.getPassword()).isEmpty()){
+					JOptionPane.showMessageDialog(null,"Preencha o login e a senha");
+				}else{
+					try {
+						supervisor.Consulta(jFlogin.getText(), String.valueOf(jPFsenha.getPassword()));
+						this.dispose();
+					} catch (LoginSenhaIncorretos e) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null,"Login ou senha incorretos");
+						e.printStackTrace();
+						
+					} catch (LoginSemTipo e) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null,"Login sem permissão de acesso");
+						e.printStackTrace();
+					}
+
+						
+								
+				}
+			
+			
+		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-        Funcionario funcheck = null;
+	
        
 		
-		try {
-			if(jFlogin.getText().isEmpty() || String.valueOf(jPFsenha.getPassword()).isEmpty()){
-				JOptionPane.showMessageDialog(null,"Preencha o login e a senha");
-			}else{
-				if((funcheck=funcbd.checkLogin(jFlogin.getText(),String.valueOf(jPFsenha.getPassword())))!=null){
-					 // new Principal().setVisible(true);
-						this.dispose();
-						if(funcheck.getTipo().equals("Administrador")){
-							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Administrador");
-							new TelaAdm().setVisible(true);
-							dispose();
-						}if(funcheck.getTipo().equals("Atendente")){
-							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Atendente");
-							new TelaAtendente().setVisible(true);
-							dispose();
-						}if (funcheck.getTipo().equals("Cozinha")){
-							JOptionPane.showMessageDialog(null,"Login efetivado com sucesso como Cozinha");
-							new TelaCozinha().setVisible(true);
-							dispose();
-						}
-						
-						
-					}else{
-						JOptionPane.showMessageDialog(null,"Login ou Senha errados");
-					}
-			}
-			
-		} catch (HeadlessException | SQLException e) {
-			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null,e.getMessage());
-		}
         
     }   
 	
