@@ -90,7 +90,7 @@ public class ClienteBD {
 			
 			rs = buscartelefone.executeQuery();
 			
-			if(rs.next()){;
+			if(rs.next()){
 				clien = new Cliente();
 				clien.setCodigo(rs.getInt("idcliente"));
 				clien.setNome(rs.getString("nome"));

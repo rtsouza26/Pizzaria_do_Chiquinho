@@ -33,7 +33,7 @@ public class LoginBD {
 				check = new Funcionario();
 				rs.next();
 				check.setCodigo(rs.getInt("idfuncionario"));
-				check.setTipo(rs.getString("cod_tipo"));		
+//				check.setTipo(rs.getString("cod_tipo"));		
 			}
 			
 		return check;

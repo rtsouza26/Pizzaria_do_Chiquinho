@@ -58,7 +58,7 @@ public class Main {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, InserirClienteErro, InserirFuncionarioErro, BuscarFuncionarioErro, ListarFuncionarioErro, RemoverFuncionarioErro, AtualizarFuncionarioErro, ClienteExistenteErro, ClienteInvalidoErro, BuscarClienteErro, RemoverClienteErro, AtualizarClienteErro, ListarClienteErro, ClienteInexistenteErro, FuncionarioInvalido, FuncionarioExistente, LoginJaExiste, FuncionarioInexistente, InserirProdutoErro, BuscaProdutoErro, RemoverProdutoErro, AtualizarProdutoErro, ListarProdutoErro, ProdutoInvalidoErro, ProdutoExistenteErro, ProdutoPrecoInvalidoErro, ProdutoNomeInvalidoErro, ProdutoQuantidadeInvalidaErro {
 		// TODO Auto-generated method stub
 		
-		Produto produto_1 = new Produto();
+	/*	Produto produto_1 = new Produto();
 		
 		produto_1.setNome("Coca Cola");
 		produto_1.setQuantidade(30);
@@ -91,9 +91,9 @@ public class Main {
 			System.out.println("Nome: " + cadastroproduto.listarProdutos().get(i).getNome());
 			
 		}
+		*/
 		
-		
-		//new TLogin().setVisible(true);	
+		new TLogin().setVisible(true);	
 		
 	}
 

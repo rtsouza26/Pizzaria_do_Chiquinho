@@ -15,7 +15,7 @@ public class Funcionario {
 	private String endereco;
 	private String cpf;
 	private String telefone;
-	private String tipo;
+	private int cod_tipo;
 	private String senha;
 	private String login;
 	
@@ -25,22 +25,22 @@ public class Funcionario {
 	}
 	public Funcionario( 
 			
-		int cod, String nome, String endereco, String cpf, String telefone, String tipo, String login){
+		int cod, String nome, String endereco, String cpf, String telefone, int cod_tipo, String login){
 		
 		this.codigo=cod;
 		this.nome=nome;
 		this.endereco=endereco;
 		this.cpf=cpf;
 		this.telefone=telefone;
-		this.tipo=tipo;
+		this.cod_tipo=cod_tipo;
 		this.login=login;
 	}
 	
-	public String getTipo() {
-		return tipo;
+	public int getTipo() {
+		return cod_tipo;
 	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setTipo(int cod_tipo) {
+		this.cod_tipo = cod_tipo;
 	}
 	
 	public int getCodigo() {

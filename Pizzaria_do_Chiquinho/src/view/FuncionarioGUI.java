@@ -168,11 +168,11 @@ public class FuncionarioGUI extends JFrame {
 							func.setLogin(textField_Login.getText());
 							func.setSenha(passwordField.getText());
 							if(rdbtnAdministrador.isSelected()){
-								func.setTipo(rdbtnAdministrador.getText());
+								func.setTipo(1);
 							}else if(rdbtnAtendente.isSelected()){
-								func.setTipo(rdbtnAtendente.getText());
+								func.setTipo(2);
 							}else{
-								func.setTipo(rdbtnCozinha.getText());
+								func.setTipo(3);
 							}
 							Fachada.getInstance().inserir(func);
 							textFieldNome.setText("");
@@ -213,7 +213,7 @@ public class FuncionarioGUI extends JFrame {
 						func=Fachada.getInstance().buscar(func);
 						DefaultTableModel modelo = new DefaultTableModel();
 						modelo.setColumnIdentifiers(new String[]{"nome","CPF","codigo","tipo"});
-						modelo.addRow(new String[]{func.getNome()+"" ,func.getCpf()+"",String.valueOf(func.getCodigo())+"", func.getTipo()});
+						modelo.addRow(new String[]{func.getNome()+"" ,func.getCpf()+"",String.valueOf(func.getCodigo())});
 						table.setModel(modelo);
 						textField_5.setText("");
 					} catch (ClassNotFoundException | SQLException | FuncionarioInexistente | FuncionarioInvalido
@@ -280,11 +280,11 @@ public class FuncionarioGUI extends JFrame {
 							func.setLogin(textField_Login.getText());
 							func.setSenha(passwordField.getText());
 							if(rdbtnAdministrador.isSelected()){
-								func.setTipo(rdbtnAdministrador.getText());
+								func.setTipo(1);
 							}else if(rdbtnAtendente.isSelected()){
-								func.setTipo(rdbtnAtendente.getText());
+								func.setTipo(2);
 							}else if(rdbtnCozinha.isSelected()){
-								func.setTipo(rdbtnCozinha.getText());
+								func.setTipo(3);
 							}
 							
 								Fachada.getInstance().atualizar(func);

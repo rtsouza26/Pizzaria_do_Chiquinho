@@ -30,7 +30,7 @@ ENGINE = InnoDB;
 
 
 CREATE TABLE `pizzaria`.`endereco` (
-  `idendereco` INT UNSIGNED NOT NULL,
+  `idendereco` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   
                                       `logradouro` VARCHAR(200) NOT NULL,
   
@@ -61,7 +61,7 @@ CREATE TABLE `pizzaria`.`tipo_funcionario` (
 
 
 CREATE TABLE `pizzaria`.`funcionario` (
-  `idfuncionario` INT UNSIGNED NOT NULL,
+  `idfuncionario` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   
                                          `nome` VARCHAR(200) NOT NULL,
   
